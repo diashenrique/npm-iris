@@ -1,0 +1,71 @@
+[{
+  "id": 1,
+  "text": "Root",
+  "icon": "fa fa-cloud text-warning",
+  "state": {"opened": true},
+  "children": [{
+    "id": 2,
+    "text": "Twitter",
+    "icon": "fab fa-twitter-square text-twitter",
+    "children": [{
+      "id": 3,
+      "text": "Sub node",
+      "icon": "fa fa-male"
+    }, {
+      "id": 4,
+      "text": "Sub node",
+      "icon": "fa fa-female"
+    }, {
+      "id": 5,
+      "text": "Sub node",
+      "icon": "fa fa-hashtag"
+    }]
+  }, {
+    "id": 6,
+    "text": "Trello",
+    "icon": "fab fa-trello",
+    "state": {"disabled": true}
+  }, {
+    "id": 7,
+    "text": "Facebook",
+    "icon": "fab fa-facebook-square text-facebook",
+    "children": [{
+      "id": 8,
+      "text": "Sub node",
+      "icon": "fa fa-heart",
+      "state": {"disabled": true}
+    }, {
+      "id": 9,
+      "text": "Sub node",
+      "icon": "fa fa-comment"
+    }]
+  }, {
+    "id": 10,
+    "text": "Google+",
+    "icon": "fab fa-google-plus-square text-google-plus",
+    "state": {"opened": true},
+    "children": [{
+      "id": 11,
+      "text": "Sub node",
+      "icon": "fa fa-fire",
+      "children": [{
+        "id": 12,
+        "text": "Grand sub node",
+        "icon": "fa fa-envelope-open",
+        "children": [{
+          "id": 13,
+          "text": "Another sub node",
+          "icon": "fa fa-heart"
+        }]
+      }]
+    }, {
+      "id": 14,
+      "text": "Sub node",
+      "icon": "fa fa-star"
+    }]
+  }, {
+    "id": 15,
+    "text": "Github",
+    "icon": "fab fa-github"
+  }]
+}]

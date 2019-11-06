@@ -1,0 +1,144 @@
+{
+  "data": [
+    {
+      "number": "INV-65D9E592",
+      "status": "Sent",
+      "client": "Jaquelyn Tran",
+      "duedate": "27/11/2019",
+      "amount": "$5,945.00",
+      "paid": "$0.00",
+      "balance": "$5,945.00",
+      "context": "warning"
+    },
+    {
+      "number": "INV-5E5A00A7",
+      "status": "Overdue",
+      "client": "Patrick Sloan",
+      "duedate": "05/04/2019",
+      "amount": "$5,992.00",
+      "paid": "$2,110.00",
+      "balance": "$3,882.00",
+      "context": "danger"
+    },
+    {
+      "number": "INV-26BBD529",
+      "status": "Sent",
+      "client": "Victoria Best",
+      "duedate": "23/07/2019",
+      "amount": "$9,510.00",
+      "paid": "$0.00",
+      "balance": "$9,510.00",
+      "context": "warning"
+    },
+    {
+      "number": "INV-DD941A05",
+      "status": "Paid",
+      "client": "Roth Andrews",
+      "duedate": "27/09/2019",
+      "amount": "$5,903.00",
+      "paid": "$5,903.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-53BD0C2D",
+      "status": "Paid",
+      "client": "Burton Torres",
+      "duedate": "23/09/2018",
+      "amount": "$5,616.00",
+      "paid": "$5,616.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-6302F2DB",
+      "status": "Sent",
+      "client": "Britanni Reilly",
+      "duedate": "23/05/2018",
+      "amount": "$9,708.00",
+      "paid": "$5,000.00",
+      "balance": "$4,708.00",
+      "context": "warning"
+    },
+    {
+      "number": "INV-FFDEBA5D",
+      "status": "Sent",
+      "client": "Sacha Chase",
+      "duedate": "06/11/2019",
+      "amount": "$6,635.00",
+      "paid": "$1,200.00",
+      "balance": "$5,435.00",
+      "context": "warning"
+    },
+    {
+      "number": "INV-805F65EB",
+      "status": "Paid",
+      "client": "Lewis Mendez",
+      "duedate": "08/05/2018",
+      "amount": "$5,642.00",
+      "paid": "$5,642.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-3ECA7A8D",
+      "status": "Paid",
+      "client": "Bruno Campos",
+      "duedate": "01/09/2018",
+      "amount": "$8,707.00",
+      "paid": "$8,707.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-6E5C29B0",
+      "status": "Paid",
+      "client": "Keegan Glass",
+      "duedate": "20/03/2019",
+      "amount": "$9,257.00",
+      "paid": "$9,257.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-A16CF963",
+      "status": "Paid",
+      "client": "Sonia Gould",
+      "duedate": "27/01/2018",
+      "amount": "$8,092.00",
+      "paid": "$8,092.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-4E391A2B",
+      "status": "Paid",
+      "client": "Tashya Lang",
+      "duedate": "03/06/2018",
+      "amount": "$8,091.00",
+      "paid": "$8,091.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-BC2F7603",
+      "status": "Paid",
+      "client": "Christine Gonzalez",
+      "duedate": "09/04/2018",
+      "amount": "$9,829.00",
+      "paid": "$9,829.00",
+      "balance": "$0.00",
+      "context": "success"
+    },
+    {
+      "number": "INV-B8A9AB03",
+      "status": "Paid",
+      "client": "Callie Houston",
+      "duedate": "20/07/2019",
+      "amount": "$6,793.00",
+      "paid": "$6,793.00",
+      "balance": "$0.00",
+      "context": "success"
+    }
+  ]
+}

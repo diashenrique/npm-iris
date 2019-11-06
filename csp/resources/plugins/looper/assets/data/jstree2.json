@@ -1,0 +1,51 @@
+[{
+  "text": "Root",
+  "icon": "fa fa-hdd text-warning",
+  "state": {"opened": true},
+  "children": [{
+    "text": "Directory",
+    "icon": "fa fa-folder text-warning"
+  }, {
+    "text": "File unread",
+    "icon": "far fa-file"
+  }, {
+    "text": "Another directory",
+    "icon": "fa fa-folder text-warning",
+    "state": {"opened": true},
+    "children": [{
+      "text": "File text",
+      "icon": "far fa-file-alt"
+    }, {
+      "text": "File word",
+      "icon": "far fa-file-alt"
+    }, {
+      "text": "File excel",
+      "icon": "far fa-file-excel"
+    }, {
+      "text": "File powerpoint",
+      "icon": "far fa-file-powerpoint",
+      "state": {"disabled": true}
+    }, {
+      "text": "File pdf",
+      "icon": "far fa-file-pdf"
+    }, {
+      "text": "File archive",
+      "icon": "far fa-file-archive"
+    }, {
+      "text": "File image",
+      "icon": "far fa-file-image"
+    }, {
+      "text": "File audio",
+      "icon": "far fa-file-audio"
+    }, {
+      "text": "File video",
+      "icon": "far fa-file-video"
+    }]
+  }, {
+    "text": "Something else",
+    "icon": "fa fa-folder text-warning"
+  }, {
+    "text": "File unread",
+    "icon": "far fa-file"
+  }]
+}]

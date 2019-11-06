@@ -1,0 +1,78 @@
+[
+  {
+    "title": "Redesign website",
+    "start": "2019-07-01",
+    "textColor": "rgb(52, 108, 176)",
+    "backgroundColor": "rgba(52, 108, 176, .12)",
+    "borderColor": "rgb(52, 108, 176)"
+  },
+  {
+    "title": "Write new content",
+    "start": "2019-07-07",
+    "end": "2019-07-10",
+    "textColor": "rgb(0, 162, 138)",
+    "backgroundColor": "rgba(0, 162, 138, .12)",
+    "borderColor": "rgb(0, 162, 138)"
+  },
+  {
+    "id": 999,
+    "title": "Apply new styles",
+    "start": "2019-07-09T16:00:00",
+    "textColor": "rgb(95, 75, 139)",
+    "backgroundColor": "rgba(95, 75, 139, .12)",
+    "borderColor": "rgb(95, 75, 139)"
+  },
+  {
+    "id": 999,
+    "title": "Review",
+    "start": "2019-07-16T16:00:00",
+    "textColor": "rgb(0, 162, 138)",
+    "backgroundColor": "rgba(0, 162, 138, .12)",
+    "borderColor": "rgb(0, 162, 138)"
+  },
+  {
+    "title": "Conference",
+    "start": "2019-07-11",
+    "end": "2019-07-13",
+    "textColor": "rgb(1, 121, 168)",
+    "backgroundColor": "rgba(1, 121, 168, .12)",
+    "borderColor": "rgb(1, 121, 168)"
+  },
+  {
+    "title": "Meeting",
+    "start": "2019-07-12T10:30:00",
+    "end": "2019-07-12T12:30:00",
+    "textColor": "rgb(249, 172, 47)",
+    "backgroundColor": "rgba(249, 172, 47, .12)",
+    "borderColor": "rgb(249, 172, 47)"
+  },
+  {
+    "title": "Deploy",
+    "start": "2019-07-12T12:00:00",
+    "textColor": "rgb(0, 162, 138)",
+    "backgroundColor": "rgba(0, 162, 138, .12)",
+    "borderColor": "rgb(0, 162, 138)"
+  },
+  {
+    "title": "Meeting",
+    "start": "2019-07-25T14:30:00",
+    "textColor": "rgb(249, 172, 47)",
+    "backgroundColor": "rgba(249, 172, 47, .12)",
+    "borderColor": "rgb(249, 172, 47)"
+  },
+  {
+    "title": "Go live!",
+    "start": "2019-07-30T07:00:00",
+    "textColor": "rgb(183, 107, 163)",
+    "backgroundColor": "rgba(183, 107, 163, .12)",
+    "borderColor": "rgb(183, 107, 163)"
+  },
+  {
+    "title": "Click for Project",
+    "url": "page-project.html",
+    "start": "2019-07-28",
+    "textColor": "rgb(95, 75, 139)",
+    "backgroundColor": "rgba(95, 75, 139, .12)",
+    "borderColor": "rgb(95, 75, 139)"
+  }
+]

@@ -1,0 +1,48 @@
+[{
+  "text": "Root",
+  "type": "root",
+  "state": {"opened": true},
+  "children": [{
+    "text": "Directory"
+  }, {
+    "text": "File unread",
+    "type": "file"
+  }, {
+    "text": "Another directory",
+    "state": {"opened": true},
+    "children": [{
+      "text": "File text",
+      "type": "text"
+    }, {
+      "text": "File word",
+      "type": "text"
+    }, {
+      "text": "File excel",
+      "type": "excel"
+    }, {
+      "text": "File powerpoint",
+      "type": "ppt",
+      "state": {"disabled": true}
+    }, {
+      "text": "File pdf",
+      "type": "pdf"
+    }, {
+      "text": "File archive",
+      "type": "archive"
+    }, {
+      "text": "File image",
+      "type": "image"
+    }, {
+      "text": "File audio",
+      "type": "audio"
+    }, {
+      "text": "File video",
+      "type": "video"
+    }]
+  }, {
+    "text": "Something else"
+  }, {
+    "text": "File unread",
+    "type": "file"
+  }]
+}]
