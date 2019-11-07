@@ -55,18 +55,18 @@
     background: #86C285;
 }
 
-.priority-1 {
+.Low {
     background: #ADADAD;
 }
 
-.priority-2 {
+.Normal {
     background: #86C285;
 }
 
-.priority-3 {
+.Medium {
     background: #EDC578;
 }
 
-.priority-4 {
+.High {
     background: #EF7D59;
 }

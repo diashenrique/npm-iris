@@ -1,7 +1,7 @@
 Class REST.Routes.Task Extends %CSP.REST
 {
 
-ClassMethod List() As %Status
+ClassMethod TreeList() As %Status
 {
     set %response.ContentType = "application/json"
 
@@ -13,7 +13,7 @@ ClassMethod List() As %Status
 
         set oRS = ##class(%SQL.Statement).%New()
 
-        set sql = "SELECT ID, TaskName, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, AssignedUser, ParentId, PredecessorId, SucessorId FROM SQLUser.Task"
+        set sql = "SELECT ID, TaskName, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, AssignedUser, NVL(ParentId,0) as ParentId, ProjectId FROM SQLUser.Task"
 
         set tSC = oRS.%Prepare(sql)
 
@@ -62,11 +62,18 @@ ClassMethod Update(id As %Integer) As %Status
 
     set iter = obj.%GetIterator()
     while iter.%GetNext(.key , .value )  {
+        set ^zHGD($zname,"Update",key) = value
         if ((key = "StartDate") || (key = "DueDate")) {
             set $property(objTask, key) = $zdateh($replace(value,"/",""),8)
         }
         elseif (key = "AssignedUser") {
             set $property(objTask, key) = ##class(User.Person).%OpenId(value) 
+        }	 
+        elseif (key = "ParentId") {
+            set $property(objTask, key) = ##class(User.Task).%OpenId(value)
+        }	 
+        elseif (key = "ProjectId") {
+            set $property(objTask, key) = ##class(User.Project).%OpenId(value)
         }	 
         else {
             set $property(objTask, key) = value
@@ -109,7 +116,7 @@ ClassMethod NewTask() As %Status
     set objTask.Priority = obj.Priority
     set objTask.Status = obj.Status
     set objTask.AssignedUser = ##class(User.Person).%OpenId(obj.AssignedUser)
-    ;set objTask.ParentId = obj.ParentId
+    set objTask.ParentId = ##class(User.Task).%OpenId(obj.ParentId)
     ;set objTask.PredecessorId = obj.PredecessorId
     ;set objTask.SucessorId = obj.SucessorId
 

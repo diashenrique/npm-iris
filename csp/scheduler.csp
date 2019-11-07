@@ -292,20 +292,25 @@
         <!-- .page -->
         <div class="page">
           <!-- .page-inner -->
-          <div class="page-inner">
-            <!-- .page-title-bar -->
-            <header class="page-title-bar">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item active">
-                    <a href="#">Home <i class="breadcrumb-icon fa fa-angle-right mr-2"></i> Scheduler </a>
-                  </li>
-                </ol>
-              </nav>
-              <!-- page title stuff goes here -->
-              <h1 class="page-title"> Scheduler </h1>
+          <div class="page-inner page-inner-fill">
+            <!-- .page-navs -->
+            <header class="page-navs shadow-sm pr-3">
+              <!-- .btn-account -->
+              <a href="page-project.html" class="btn-account">
+                <div class="has-badge">
+                  <span class="tile bg-pink text-white">SP</span>
+                  <span class="user-avatar user-avatar-xs">
+                    <img src="resources/plugins/looper/assets/images/avatars/team4.jpg" alt="">
+                  </span>
+                </div>
+                <div class="account-summary">
+                  <h1 class="card-title"> IS Project - Tasks Management</h1>
+                  <h6 class="card-subtitle text-muted"> 4 deadline - 2 overdue </h6>
+                </div>
+              </a>
+              <!-- /.btn-account -->
             </header>
-            <!-- /.page-title-bar -->
+            <!-- /.page-navs -->
             <!-- .page-section -->
             <div class="page-section">
               <!-- .card -->
@@ -326,11 +331,13 @@
           </div>
           <!-- /.page-inner -->
         </div>
-        <!-- /.page -->
+        <!-- /.page-inner -->
       </div>
-      <!-- /.wrapper -->
-    </main>
-    <!-- /.app-main -->
+      <!-- /.page -->
+  </div>
+  <!-- /.wrapper -->
+  </main>
+  <!-- /.app-main -->
   </div>
   <!-- /.app -->
   <!-- BEGIN BASE JS -->

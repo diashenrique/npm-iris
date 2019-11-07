@@ -21,6 +21,8 @@ Property PredecessorId As User.Task;
 
 Property SucessorId As User.Task;
 
+Property ProjectId As User.Project;
+
 Index TaskIndex On TaskName [ Unique ];
 
 Storage Default
@@ -67,6 +69,9 @@ Storage Default
 </Value>
 <Value name="14">
 <Value>ParentId</Value>
+</Value>
+<Value name="15">
+<Value>ProjectId</Value>
 </Value>
 </Data>
 <DataLocation>^User.TaskD</DataLocation>

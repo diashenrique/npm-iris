@@ -27,6 +27,7 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <!-- .Project -->
 <Route Url="/project" Method="GET" Call="REST.Routes.Project:List" Cors="true"/>
 <Route Url="/project" Method="POST" Call="REST.Routes.Project:NewProject" Cors="true"/>
+<Route Url="/project/lookup" Method="GET" Call="REST.Routes.Project:Lookup" Cors="true"/>
 <Route Url="/project/:id" Method="GET" Call="REST.Routes.Project:GetProject" Cors="true"/>
 <Route Url="/project/:id" Method="PUT" Call="REST.Routes.Project:Update" Cors="true"/>
 <Route Url="/project/:id" Method="DELETE" Call="REST.Routes.Project:Delete" Cors="true"/>
@@ -49,7 +50,7 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <!-- ./Scheduler -->
 
 <!-- .Task -->
-<Route Url="/task" Method="GET" Call="REST.Routes.Task:List" Cors="true"/>
+<Route Url="/task" Method="GET" Call="REST.Routes.Task:TreeList" Cors="true"/>
 <Route Url="/task" Method="POST" Call="REST.Routes.Task:NewTask" Cors="true"/>
 <Route Url="/task/:id" Method="GET" Call="REST.Routes.Task:GetTask" Cors="true"/>
 <Route Url="/task/:id" Method="PUT" Call="REST.Routes.Task:Update" Cors="true"/>

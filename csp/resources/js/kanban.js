@@ -64,14 +64,6 @@ $(function() {
             idTask = info.itemElement[0].id;
             newStatus = info.toComponent._$element[0].offsetParent.parentElement.parentElement.parentElement.previousElementSibling.outerText;
 
-            // console.log(
-            //   "id: " +
-            //     info.itemElement[0].id +
-            //     " oldStatus: " +
-            //     info.component._$element[0].offsetParent.parentElement.parentElement.parentElement.previousElementSibling.outerText,
-            //   " newStatus: " + info.toComponent._$element[0].offsetParent.parentElement.parentElement.parentElement.previousElementSibling.outerText
-            // );
-
             $.ajax({
               url: urlREST + "/kanban/" + idTask,
               method: "PUT",
@@ -100,7 +92,7 @@ $(function() {
 
         $("<div>")
           .addClass("card-priority")
-          .addClass("priority-" + task.Priority)
+          .addClass(task.Priority)
           .appendTo($item);
         $("<div>")
           .addClass("card-subject")
