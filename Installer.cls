@@ -9,15 +9,21 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
   <Default Name="NAMESPACE" Value="NPM"/>
   <Default Name="DBNAME" Value="NPM"/>
   <Default Name="APPPATH" Dir="/opt/app/" />
+  <Default Name="CSPURL" Dir="/csp/npm" />
   <Default Name="SOURCESPATH" Dir="${APPPATH}src" />
   <Default Name="RESOURCE" Value="%DB_${DBNAME}" /> 
 
+  <Resource Name="%DB_NPM" Description="Resource for NPM application" Permission="RW"/>
+
   <Namespace Name="${NAMESPACE}" Code="${DBNAME}" Data="${DBNAME}" Create="yes" Ensemble="0">
     <Configuration>
-      <Database Name="${DBNAME}" Dir="${APPPATH}${DBNAME}" Create="yes" Resource="${RESOURCE}"/>
+      <Database Name="${DBNAME}" Dir="${APPPATH}data" Create="yes" Resource="${RESOURCE}" MountAtStartup="true"/>
     </Configuration>
 
-    <CSPApplication Url="/csp/npm" Directory="${APPPATH}csp/" AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="1" />
+    <CSPApplication Url="${CSPURL}" Directory="${APPPATH}csp/" AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="1" ServeFiles="1"/>
+    <CSPApplication Url="/npm/rest" DispatchClass="REST.Dispatch" AuthenticationMethods="64"/>
+
+    <LoadPage Dir="${CSPURL}" Flags="ck" IgnoreErrors="1" />
 
     <Import File="${SOURCESPATH}" Recurse="1"/>
 

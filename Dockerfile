@@ -3,10 +3,9 @@ FROM $IMAGE
 
 WORKDIR /opt/app
 
-COPY ./csp/resources ./Csp/resources
-COPY ./csp/*.csp ./Csp/
+COPY ./csp ./csp
 COPY ./Installer.cls ./
-COPY ./src/cls ./src/
+COPY ./src ./src
 
 RUN iris start $ISC_PACKAGE_INSTANCENAME quietly EmergencyId=sys,sys && \
     /bin/echo -e "sys\nsys\n" \
