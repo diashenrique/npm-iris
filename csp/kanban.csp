@@ -314,12 +314,11 @@
               <!-- right actions -->
               <div class="ml-auto">
                 <!-- Add Tasks -->
-                <button type="button" class="btn btn-light btn-icon" data-toggle="modal" data-target="#modalLayer2" title="Add task">
-                  <i class="fas fa-tasks"></i>
-                </button>
-                <button type="button" class="btn btn-light btn-icon" data-toggle="page-expander" title="Expand board">
-                  <i class="oi oi-fullscreen-enter fa-rotate-90 fa-fw"></i>
-                </button>
+                <div id="btnAddTask" style="border: none; -webkit-box-shadow: none"></div>
+                <div id="btnExpandPage" data-toggle="page-expander" style="border: none; -webkit-box-shadow: none"></div>
+                <div id="popup">
+                  <div class="popup"></div>
+                </div>  
               </div>
               <!-- /right actions -->
             </header>
@@ -402,7 +401,7 @@
   <!-- BEGIN THEME JS -->
   <script src="resources/plugins/looper/assets/javascript/theme.min.js"></script>
   <!-- BEGIN DevExtreme library -->
-  <script type="text/javascript" src="resources/plugins/extreme19.2/js/dx.web.js"></script>
+  <script type="text/javascript" src="resources/plugins/extreme19.2/js/dx.all.js"></script>
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
   <script type="text/javascript" src="resources/js/kanban.js"></script>

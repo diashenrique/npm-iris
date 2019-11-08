@@ -99,4 +99,35 @@ ClassMethod GetKanban(id As %Integer) As %Status
     quit $$$OK
 }
 
+ClassMethod NewTask() As %Status
+{
+    #dim task As User.Task
+
+    set obj = {}.%FromJSON(%request.Content)
+
+    set objTask = ##class(User.Task).%New()
+
+    set ^zHGD($zname,"NewTask",1) =  obj.TaskName
+    set ^zHGD($zname,"NewTask",2) =  obj.StartDate
+    set ^zHGD($zname,"NewTask",3) =  obj.DueDate
+    set ^zHGD($zname,"NewTask",4) =  obj.Progress
+    set ^zHGD($zname,"NewTask",5) =  obj.Priority
+    set ^zHGD($zname,"NewTask",6) =  obj.Status
+    set ^zHGD($zname,"NewTask",7) =  obj.AssignedUser
+
+    set objTask.TaskName = obj.TaskName
+    set objTask.StartDate = $zdateh($replace(obj.StartDate,"/",""),8)
+    set objTask.DueDate = $zdateh($replace(obj.DueDate,"/",""),8)
+    set objTask.Progress = obj.Progress
+    set objTask.Priority = obj.Priority
+    set objTask.Status = obj.Status
+    if (obj.AssignedUser '= "") {
+        set objTask.AssignedUser = ##class(User.Person).%OpenId(obj.AssignedUser)
+    }
+
+    set tSC = objTask.%Save()
+
+    quit tSC
+}
+
 }

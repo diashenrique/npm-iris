@@ -4,6 +4,232 @@ var urlREST = urlOrigin + "/isproject/rest";
 var tasks, idTask, newStatus;
 
 $(function() {
+  var taskStore = new DevExpress.data.CustomStore({
+    key: "ID",
+    insert: function(values) {
+      return $.ajax({
+        url: urlREST + "/task",
+        method: "POST",
+        processData: false,
+        contentType: "application/json",
+        data: JSON.stringify(values)
+      });
+    },
+    onBeforeSend: function(method, ajaxOptions) {
+      ajaxOptions.xhrFields = { withCredentials: true };
+    }
+  });
+
+  var lookupDataSource = {
+    store: new DevExpress.data.CustomStore({
+      key: "ID",
+      loadMode: "raw",
+      load: function() {
+        return $.getJSON(urlREST + "/user/lookup");
+      }
+    }),
+    sort: "UserName"
+  };
+
+  var lookupProject = {
+    store: new DevExpress.data.CustomStore({
+      key: "ID",
+      loadMode: "raw",
+      load: function() {
+        return $.getJSON(urlREST + "/project/lookup");
+      }
+    }),
+    sort: "code"
+  };
+
+  var popup = null,
+    popupOptions = {
+      width: 600,
+      height: 420,
+      contentTemplate: function(e) {
+        var formContainer = $("<div id='formPopup'>");
+        formContainer
+          .dxForm({
+            dataSource: taskStore,
+            readOnly: false,
+            showColonAfterLabel: false,
+            labelLocation: "top",
+            minColWidth: 300,
+            showValidationSummary: true,
+            colCount: 2,
+            items: [
+              {
+                dataField: "Project",
+                editorType: "dxSelectBox",
+                lookup: {
+                  dataSource: lookupProject,
+                  valueExpr: "ID",
+                  displayExpr: "code"
+                }
+              },
+              {
+                dataField: "TaskName"
+              },
+              {
+                dataField: "StartDate",
+                dataType: "date",
+                editorType: "dxDateBox"
+              },
+              {
+                dataField: "DueDate",
+                dataType: "date",
+                editorType: "dxDateBox"
+              },
+              {
+                dataField: "Progress",
+                editorType: "dxSlider",
+                editorOptions: {
+                  min: 0,
+                  max: 100,
+                  value: 0,
+                  rtlEnabled: false,
+                  tooltip: {
+                    enabled: true,
+                    format: function(value) {
+                      return value + "%";
+                    },
+                    showMode: "onHover",
+                    position: "bottom"
+                  }
+                }
+              },
+              {
+                dataField: "Priority",
+                editorType: "dxSelectBox",
+                editorOptions: {
+                  dataSource: [
+                    {
+                      id: 1,
+                      name: "Normal"
+                    },
+                    {
+                      id: 2,
+                      name: "Low"
+                    },
+                    {
+                      id: 3,
+                      name: "Medium"
+                    },
+                    {
+                      id: 4,
+                      name: "High"
+                    }
+                  ],
+                  valueExpr: "name",
+                  displayExpr: "name"
+                }
+              },
+              {
+                dataField: "Status",
+                editorType: "dxSelectBox",
+                editorOptions: {
+                  dataSource: [
+                    {
+                      id: 1,
+                      name: "Not Started"
+                    },
+                    {
+                      id: 2,
+                      name: "In Progress"
+                    },
+                    {
+                      id: 3,
+                      name: "Deferred"
+                    },
+                    {
+                      id: 4,
+                      name: "Need Assistance"
+                    },
+                    {
+                      id: 5,
+                      name: "Completed"
+                    }
+                  ],
+                  valueExpr: "name",
+                  displayExpr: "name"
+                }
+              },
+              {
+                dataField: "AssignedUser",
+                editorType: "dxSelectBox",
+                lookup: {
+                  dataSource: lookupDataSource,
+                  valueExpr: "ID",
+                  displayExpr: "UserName"
+                }
+              },
+              {
+                itemType: "button",
+                colSpan: 2,
+                horizontalAlignment: "right",
+                buttonOptions: {
+                  text: "Register",
+                  type: "success",
+                  onClick: function() {
+                    var dataForm = $("#formPopup")
+                      .dxForm("instance")
+                      .option("formData");
+
+                    $.ajax({
+                      url: urlREST + "/kanban",
+                      method: "POST",
+                      processData: false,
+                      contentType: "application/json",
+                      data: JSON.stringify(dataForm)
+                    }).done(function(msg) {
+                      DevExpress.ui.notify("The Outlined button was clicked");
+                    });
+
+                    $(".popup").remove();
+                  }
+                }
+              }
+            ]
+          })
+          .dxForm("instance");
+        e.append(formContainer);
+      },
+      showTitle: true,
+      title: "Add Task",
+      visible: false,
+      dragEnabled: false,
+      closeOnOutsideClick: true
+    };
+
+  var showPopup = function(data) {
+    if (popup) {
+      $(".popup").remove();
+    }
+    var $popupContainer = $("<div />")
+      .addClass("popup")
+      .appendTo($("#popup"));
+    popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+    popup.show();
+  };
+
+  // Button Add Task
+  $("#btnAddTask").dxButton({
+    icon: "fas fa-tasks",
+    hint: "Add Task",
+    onClick: function(e) {
+      showPopup();
+      //DevExpress.ui.notify("The button was clicked");
+    }
+  });
+  // Button Expand Page
+  $("#btnExpandPage").dxButton({
+    icon: "fas fa-expand-arrows-alt",
+    hint: "Expange Page"
+    /* onClick: function(e) {
+      DevExpress.ui.notify("The button was clicked");
+    } */
+  });
+
   var retTasks = $.getJSON(urlREST + "/kanban")
     .done(function() {
       var tasks = retTasks.responseJSON;

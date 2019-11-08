@@ -59,6 +59,7 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 
 <!-- .Kanban --> 
 <Route Url="/kanban" Method="GET" Call="REST.Routes.Kanban:List" Cors="true"/>
+<Route Url="/kanban" Method="POST" Call="REST.Routes.Kanban:NewTask" Cors="true"/>
 <Route Url="/kanban/:id" Method="GET" Call="REST.Routes.Kanban:GetKanban" Cors="true"/>
 <Route Url="/kanban/:id" Method="PUT" Call="REST.Routes.Kanban:Update" Cors="true"/>
 <!-- ./Kanban -->
