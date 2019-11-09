@@ -1,3 +1,12 @@
 {
-    "objectscript.conn.active": false
+    "objectscript.conn": {
+        "active": true,
+        "label": "IRISHEALTH",
+        "host": "localhost",
+        "port": 52773,
+        "username": "superuser",
+        "password": "SYS",
+        "ns": "NPM",
+        "https": false
+    }
 }
