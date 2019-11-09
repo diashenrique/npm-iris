@@ -8,10 +8,7 @@ COPY ./Installer.cls  /opt/app
 COPY ./src  /opt/app/src
 COPY ./gbl  /opt/gbl
 
-# Used by runinstaller.sh to load the installer manifest class and run it
 ENV IRIS_USERNAME="SuperUser" 
-
-# Used by runinstaller.sh and to set instance's default password (this is just a demo!)
 ENV IRIS_PASSWORD="sys"
 
 RUN iris start $ISC_PACKAGE_INSTANCENAME quietly && \
