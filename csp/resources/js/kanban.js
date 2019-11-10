@@ -6,6 +6,9 @@ var tasks, idTask, newStatus;
 $(function() {
   var taskStore = new DevExpress.data.CustomStore({
     key: "ID",
+    load: function() {
+      return $.getJSON(urlREST + "/task");
+    },
     insert: function(values) {
       return $.ajax({
         url: urlREST + "/task",
@@ -309,7 +312,10 @@ $(function() {
           .addClass("dx-theme-text-color")
           .addClass("dx-theme-background-color")
           .bind({
-            click: function() {}
+            click: function() {
+              // TODO: Adapt function to open popup form with specific values
+              showPopup();
+            }
           })
           .appendTo($container);
 

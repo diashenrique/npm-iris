@@ -64,21 +64,16 @@
 
 <body>
   <!-- .app -->
-  <div class="app">
-    <!--[if lt IE 10]>
-          <div class="page-message" role="alert">
-            You are using an <strong>outdated</strong> browser. Please <a class="alert-link" href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and
-            security.
-          </div>
-        <![endif]-->
-    <!-- .app-header -->
+  <div class="app has-fullwidth">
     <header class="app-header app-header-dark">
       <!-- .top-bar -->
       <div class="top-bar">
         <!-- .top-bar-brand -->
-        <div class="top-bar-brand">
-          <a href="home.csp">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
+        <div class="top-bar-brand bg-transparent">
+          <!-- toggle menu -->
+          <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside" aria-label="toggle menu"><span class="hamburger-box"><span
+                class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+          <a href="index.html"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
               <defs>
                 <path id="a"
                   d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z">
@@ -90,8 +85,7 @@
                 </path>
                 <use class="fill-warning" xlink:href="#a"></use>
               </g>
-            </svg>
-          </a>
+            </svg></a>
         </div>
         <!-- /.top-bar-brand -->
         <!-- .top-bar-list -->
@@ -99,13 +93,13 @@
           <!-- .top-bar-item -->
           <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
             <!-- toggle menu -->
-            <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu">
-              <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+            <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="Menu">
+              <span class="hamburger-box">
+                  <span class="hamburger-inner"></span>
+              </span>
             </button>
             <!-- /toggle menu -->
           </div>
-          <!-- /.top-bar-item -->
-          <!-- .top-bar-item -->
           <!-- /.top-bar-item -->
           <!-- .top-bar-item -->
           <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
@@ -180,11 +174,11 @@
     </header>
     <!-- /.app-header -->
     <!-- .app-aside -->
-    <aside class="app-aside app-aside-expand-md app-aside-light">
+    <aside class="app-aside app-aside-light">
       <!-- .aside-content -->
       <div class="aside-content">
         <!-- .aside-header -->
-        <header class="aside-header d-block d-md-none">
+        <header class="aside-header">
           <!-- .btn-account -->
           <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside">
             <span class="user-avatar user-avatar-lg"><img src="resources/plugins/looper/assets/images/avatars/profile.jpg" alt="" /></span>
@@ -207,7 +201,7 @@
         </header>
         <!-- /.aside-header -->
         <!-- .aside-menu -->
-        <div class="aside-menu overflow-hidden">
+        <div class="aside-menu">
           <!-- .stacked-menu -->
           <nav id="stacked-menu" class="stacked-menu">
             <!-- .menu -->
