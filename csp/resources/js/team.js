@@ -1,5 +1,5 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/isproject/rest";
+var urlREST = urlOrigin + "/npm/rest";
 var idFormPopup;
 
 $(document).ready(function() {

@@ -1,5 +1,5 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/isproject/rest";
+var urlREST = urlOrigin + "/npm/rest";
 
 $(document).ready(function() {
   var calendarStore = new DevExpress.data.DataSource({

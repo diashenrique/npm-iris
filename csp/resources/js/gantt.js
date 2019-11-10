@@ -1,5 +1,5 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/isproject/rest";
+var urlREST = urlOrigin + "/npm/rest";
 
 $(function() {
   var ganttStore = new DevExpress.data.CustomStore({

@@ -1,5 +1,5 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/isproject/rest";
+var urlREST = urlOrigin + "/npm/rest";
 
 var tasks, idTask, newStatus;
 
@@ -42,164 +42,165 @@ $(function() {
     sort: "code"
   };
 
-  var popup = null,
-    popupOptions = {
-      width: 600,
-      height: 420,
-      contentTemplate: function(e) {
-        var formContainer = $("<div id='formPopup'>");
-        formContainer
-          .dxForm({
-            dataSource: taskStore,
-            readOnly: false,
-            showColonAfterLabel: false,
-            labelLocation: "top",
-            minColWidth: 300,
-            showValidationSummary: true,
-            colCount: 2,
-            items: [
-              {
-                dataField: "Project",
-                editorType: "dxSelectBox",
-                lookup: {
-                  dataSource: lookupProject,
-                  valueExpr: "ID",
-                  displayExpr: "code"
-                }
-              },
-              {
-                dataField: "TaskName"
-              },
-              {
-                dataField: "StartDate",
-                dataType: "date",
-                editorType: "dxDateBox"
-              },
-              {
-                dataField: "DueDate",
-                dataType: "date",
-                editorType: "dxDateBox"
-              },
-              {
-                dataField: "Progress",
-                editorType: "dxSlider",
-                editorOptions: {
-                  min: 0,
-                  max: 100,
-                  value: 0,
-                  rtlEnabled: false,
-                  tooltip: {
-                    enabled: true,
-                    format: function(value) {
-                      return value + "%";
-                    },
-                    showMode: "onHover",
-                    position: "bottom"
-                  }
-                }
-              },
-              {
-                dataField: "Priority",
-                editorType: "dxSelectBox",
-                editorOptions: {
-                  dataSource: [
-                    {
-                      id: 1,
-                      name: "Normal"
-                    },
-                    {
-                      id: 2,
-                      name: "Low"
-                    },
-                    {
-                      id: 3,
-                      name: "Medium"
-                    },
-                    {
-                      id: 4,
-                      name: "High"
-                    }
-                  ],
-                  valueExpr: "name",
-                  displayExpr: "name"
-                }
-              },
-              {
-                dataField: "Status",
-                editorType: "dxSelectBox",
-                editorOptions: {
-                  dataSource: [
-                    {
-                      id: 1,
-                      name: "Not Started"
-                    },
-                    {
-                      id: 2,
-                      name: "In Progress"
-                    },
-                    {
-                      id: 3,
-                      name: "Deferred"
-                    },
-                    {
-                      id: 4,
-                      name: "Need Assistance"
-                    },
-                    {
-                      id: 5,
-                      name: "Completed"
-                    }
-                  ],
-                  valueExpr: "name",
-                  displayExpr: "name"
-                }
-              },
-              {
-                dataField: "AssignedUser",
-                editorType: "dxSelectBox",
-                lookup: {
-                  dataSource: lookupDataSource,
-                  valueExpr: "ID",
-                  displayExpr: "UserName"
-                }
-              },
-              {
-                itemType: "button",
-                colSpan: 2,
-                horizontalAlignment: "right",
-                buttonOptions: {
-                  text: "Register",
-                  type: "success",
-                  onClick: function() {
-                    var dataForm = $("#formPopup")
-                      .dxForm("instance")
-                      .option("formData");
-
-                    $.ajax({
-                      url: urlREST + "/kanban",
-                      method: "POST",
-                      processData: false,
-                      contentType: "application/json",
-                      data: JSON.stringify(dataForm)
-                    }).done(function(msg) {
-                      DevExpress.ui.notify("The Outlined button was clicked");
-                    });
-
-                    $(".popup").remove();
-                  }
+  // Popup to create new tasks
+  var popup = null;
+  var popupOptions = {
+    width: 600,
+    height: 420,
+    contentTemplate: function(e) {
+      var formContainer = $("<div id='formPopup'>");
+      formContainer
+        .dxForm({
+          dataSource: taskStore,
+          readOnly: false,
+          showColonAfterLabel: false,
+          labelLocation: "top",
+          minColWidth: 300,
+          showValidationSummary: true,
+          colCount: 2,
+          items: [
+            {
+              dataField: "Project",
+              editorType: "dxSelectBox",
+              lookup: {
+                dataSource: lookupProject,
+                valueExpr: "ID",
+                displayExpr: "code"
+              }
+            },
+            {
+              dataField: "TaskName"
+            },
+            {
+              dataField: "StartDate",
+              dataType: "date",
+              editorType: "dxDateBox"
+            },
+            {
+              dataField: "DueDate",
+              dataType: "date",
+              editorType: "dxDateBox"
+            },
+            {
+              dataField: "Progress",
+              editorType: "dxSlider",
+              editorOptions: {
+                min: 0,
+                max: 100,
+                value: 0,
+                rtlEnabled: false,
+                tooltip: {
+                  enabled: true,
+                  format: function(value) {
+                    return value + "%";
+                  },
+                  showMode: "onHover",
+                  position: "bottom"
                 }
               }
-            ]
-          })
-          .dxForm("instance");
-        e.append(formContainer);
-      },
-      showTitle: true,
-      title: "Add Task",
-      visible: false,
-      dragEnabled: false,
-      closeOnOutsideClick: true
-    };
+            },
+            {
+              dataField: "Priority",
+              editorType: "dxSelectBox",
+              editorOptions: {
+                dataSource: [
+                  {
+                    id: 1,
+                    name: "Normal"
+                  },
+                  {
+                    id: 2,
+                    name: "Low"
+                  },
+                  {
+                    id: 3,
+                    name: "Medium"
+                  },
+                  {
+                    id: 4,
+                    name: "High"
+                  }
+                ],
+                valueExpr: "name",
+                displayExpr: "name"
+              }
+            },
+            {
+              dataField: "Status",
+              editorType: "dxSelectBox",
+              editorOptions: {
+                dataSource: [
+                  {
+                    id: 1,
+                    name: "Not Started"
+                  },
+                  {
+                    id: 2,
+                    name: "In Progress"
+                  },
+                  {
+                    id: 3,
+                    name: "Deferred"
+                  },
+                  {
+                    id: 4,
+                    name: "Need Assistance"
+                  },
+                  {
+                    id: 5,
+                    name: "Completed"
+                  }
+                ],
+                valueExpr: "name",
+                displayExpr: "name"
+              }
+            },
+            {
+              dataField: "AssignedUser",
+              editorType: "dxSelectBox",
+              lookup: {
+                dataSource: lookupDataSource,
+                valueExpr: "ID",
+                displayExpr: "UserName"
+              }
+            },
+            {
+              itemType: "button",
+              colSpan: 2,
+              horizontalAlignment: "right",
+              buttonOptions: {
+                text: "Register",
+                type: "success",
+                onClick: function() {
+                  var dataForm = $("#formPopup")
+                    .dxForm("instance")
+                    .option("formData");
+
+                  $.ajax({
+                    url: urlREST + "/kanban",
+                    method: "POST",
+                    processData: false,
+                    contentType: "application/json",
+                    data: JSON.stringify(dataForm)
+                  }).done(function(msg) {
+                    DevExpress.ui.notify("The Outlined button was clicked");
+                  });
+
+                  $(".popup").remove();
+                }
+              }
+            }
+          ]
+        })
+        .dxForm("instance");
+      e.append(formContainer);
+    },
+    showTitle: true,
+    title: "Add Task",
+    visible: false,
+    dragEnabled: true,
+    closeOnOutsideClick: false
+  };
 
   var showPopup = function(data) {
     if (popup) {
@@ -218,18 +219,15 @@ $(function() {
     hint: "Add Task",
     onClick: function(e) {
       showPopup();
-      //DevExpress.ui.notify("The button was clicked");
     }
   });
   // Button Expand Page
   $("#btnExpandPage").dxButton({
     icon: "fas fa-expand-arrows-alt",
     hint: "Expange Page"
-    /* onClick: function(e) {
-      DevExpress.ui.notify("The button was clicked");
-    } */
   });
 
+  // Script to render Kanban cards and lists
   var retTasks = $.getJSON(urlREST + "/kanban")
     .done(function() {
       var tasks = retTasks.responseJSON;
@@ -310,6 +308,9 @@ $(function() {
           .addClass("dx-card")
           .addClass("dx-theme-text-color")
           .addClass("dx-theme-background-color")
+          .bind({
+            click: function() {}
+          })
           .appendTo($container);
 
         var user = users.filter(function(user) {
