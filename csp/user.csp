@@ -48,8 +48,8 @@
   <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/theme-dark.min.css" data-skin="dark" />
   <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/custom.css" />
   <!-- DevExtreme themes -->
-  <link rel="stylesheet" type="text/css" href="resources/plugins/extreme19.2/css/dx.common.css" />
-  <link rel="stylesheet" type="text/css" href="resources/plugins/extreme19.2/css/dx.light.css" />
+  <link rel="dx-theme" data-theme="generic.light" href="resources/plugins/extreme19.2/css/dx.light.css" data-active="false" />
+  <link rel="dx-theme" data-theme="generic.dark" href="resources/plugins/extreme19.2/css/dx.generic.custom-dark.css" data-active="false" />
   <!-- Disable unused skin immediately -->
   <script>
     var skin = localStorage.getItem("skin") || "default";
@@ -331,6 +331,7 @@
   <script type="text/javascript" src="resources/plugins/extreme19.2/js/dx.web.js"></script>
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
+  <script type="text/javascript" src="resources/js/custom-theme-changer.js"></script>
   <script type="text/javascript" src="resources/js/user.js"></script>
   <!-- END ISProject Custom -->
 

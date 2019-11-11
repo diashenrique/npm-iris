@@ -49,7 +49,8 @@
   <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/custom.css" />
   <!-- DevExtreme themes -->
   <link rel="stylesheet" type="text/css" href="resources/plugins/extreme19.2/css/dx.common.css" />
-  <link rel="stylesheet" type="text/css" href="resources/plugins/extreme19.2/css/dx.light.css" />
+  <link rel="dx-theme" data-theme="generic.light" href="resources/plugins/extreme19.2/css/dx.light.css" data-active="true" />
+  <link rel="dx-theme" data-theme="generic.dark" href="resources/plugins/extreme19.2/css/dx.generic.custom-dark.css" data-active="false" />
   <link rel="stylesheet" type="text/css" href="resources/css/kanban.css" />
 
   <!-- Disable unused skin immediately -->
@@ -398,6 +399,7 @@
   <script type="text/javascript" src="resources/plugins/extreme19.2/js/dx.all.js"></script>
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
+  <script type="text/javascript" src="resources/js/custom-theme-changer.js"></script>
   <script type="text/javascript" src="resources/js/kanban.js"></script>
   <!-- END ISProject Custom -->
 </body>
