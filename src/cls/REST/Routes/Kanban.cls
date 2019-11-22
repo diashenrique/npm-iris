@@ -3,7 +3,7 @@ Class REST.Routes.Kanban Extends %CSP.REST
 
 ClassMethod List() As %Status
 {
-    //set %response.ContentType = "application/json"
+    set %response.ContentType = "application/json"
 
     set tSC = $system.Status.OK()
     set arrayTask = []
@@ -42,8 +42,6 @@ ClassMethod List() As %Status
         set tSC = oException.AsStatus()
     }
 
-    //do dynamicTask.%Set("data",arrayTask)
-
     write arrayTask.%ToJSON() 
 
     quit tSC
@@ -60,9 +58,21 @@ ClassMethod Update(id As %Integer) As %Status
         quit $$$OK
     }
 
+    kill ^zHGD
+
     set iter = obj.%GetIterator()
     while iter.%GetNext(.key , .value )  {
-        set $property(objTask, key) = value
+        continue:key="ID"
+        set ^zHGD($zname,"Update",key) = value
+        if ((key = "StartDate") || (key = "DueDate")) {
+            ;set $property(objTask, key) = $zdateh(value,3)
+        }
+        elseif (key = "AssignedUser") {
+            set $property(objTask, key) = ##class(User.Person).%OpenId(value) 
+        }	 
+        else {
+            set $property(objTask, key) = value
+        }
     }
 
     set tSC = objTask.%Save()
@@ -106,14 +116,6 @@ ClassMethod NewTask() As %Status
     set obj = {}.%FromJSON(%request.Content)
 
     set objTask = ##class(User.Task).%New()
-
-    set ^zHGD($zname,"NewTask",1) =  obj.TaskName
-    set ^zHGD($zname,"NewTask",2) =  obj.StartDate
-    set ^zHGD($zname,"NewTask",3) =  obj.DueDate
-    set ^zHGD($zname,"NewTask",4) =  obj.Progress
-    set ^zHGD($zname,"NewTask",5) =  obj.Priority
-    set ^zHGD($zname,"NewTask",6) =  obj.Status
-    set ^zHGD($zname,"NewTask",7) =  obj.AssignedUser
 
     set objTask.TaskName = obj.TaskName
     set objTask.StartDate = $zdateh($replace(obj.StartDate,"/",""),8)
