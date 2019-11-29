@@ -13,6 +13,8 @@ Property Priority As %String;
 
 Property Status As %String;
 
+Property Estimate As %Float;
+
 Property AssignedUser As User.Person;
 
 Property ParentId As User.Task;
@@ -72,6 +74,9 @@ Storage Default
 </Value>
 <Value name="15">
 <Value>ProjectId</Value>
+</Value>
+<Value name="16">
+<Value>Estimate</Value>
 </Value>
 </Data>
 <DataLocation>^User.TaskD</DataLocation>

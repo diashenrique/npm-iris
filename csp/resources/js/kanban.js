@@ -191,7 +191,7 @@ $(function () {
               colSpan: 2,
               horizontalAlignment: "right",
               buttonOptions: {
-                text: "Register",
+                text: "Update Task",
                 type: "success",
                 onClick: function () {
                   var dataForm = $("#formPopup")
@@ -240,6 +240,15 @@ $(function () {
   $("#btnAddTask").dxButton({
     icon: "fas fa-tasks",
     hint: "Add Task",
+    onClick: function (e) {
+      showPopup();
+    }
+  });
+
+  // Button Add Task
+  $("#btnAddList").dxButton({
+    icon: "fas fa-th-list",
+    hint: "Add New List",
     onClick: function (e) {
       showPopup();
     }
@@ -341,6 +350,8 @@ $(function () {
           .bind({
             click: function () {
               $("#modalViewTaskLabel").text(task.TaskName);
+              console.log(task.DueDate);
+
               var taskDetails = [{
                 "ID": task.ID,
                 "TaskName": task.TaskName,
@@ -351,6 +362,8 @@ $(function () {
                 "Status": task.Status,
                 "AssignedUser": task.AssignedUser
               }];
+
+              console.log(taskDetails[0]);
 
               var form = $("#form").dxForm({
                 dateSerializationFormat: "MM-dd-yyyy",
@@ -426,7 +439,7 @@ $(function () {
                     colSpan: 2,
                     horizontalAlignment: "right",
                     buttonOptions: {
-                      text: "Register",
+                      text: "Update Task",
                       type: "default",
                       onClick: function () {
                         var dataForm = $("#form")
@@ -449,7 +462,7 @@ $(function () {
               }).dxForm("instance");
 
               $("#btn-startTrack").dxButton({
-                icon: "far fa-play-circle",
+                icon: "fas fa-play-circle",
                 hint: "Start Tracking",
                 type: "success",
                 onClick: function () {
@@ -457,19 +470,31 @@ $(function () {
                 }
               });
 
-              $("#btn-pauseTrack").dxButton({
-                icon: "far fa-pause-circle",
-                hint: "Pause Tracking",
-                type: "default",
+              $("#btn-stopTrack").dxButton({
+                icon: "fas fa-stop-circle",
+                hint: "Stop Tracking",
+                type: "danger",
                 onClick: function () {
-                  DevExpress.ui.notify("The pause button was clicked");
+                  DevExpress.ui.notify("The stop button was clicked");
                 }
               });
 
-              $("#btn-stopTrack").dxButton({
-                icon: "far fa-stop-circle",
-                hint: "Stop Tracking",
-                type: "danger",
+              $("#logHours").dxNumberBox({
+                placeholder: "Hours...",
+                showSpinButtons: true,
+                showClearButton: true,
+                value: "",
+                min: 0,
+                maxLength: 10,
+                width: 120
+              });
+
+
+              $("#updateHours").dxButton({
+                icon: "fas fa-stopwatch",
+                text: "Log work",
+                hint: "Log work against this issue",
+                type: "default",
                 onClick: function () {
                   DevExpress.ui.notify("The stop button was clicked");
                 }

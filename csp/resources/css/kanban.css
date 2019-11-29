@@ -80,3 +80,16 @@
 #form {
     margin-top: 20px;
 }
+
+.column {
+    display: inline-block;
+}
+
+.column .field {
+    padding: 5px 0;
+}
+
+.column .field>div {
+    display: inline-block;
+    vertical-align: middle;
+}

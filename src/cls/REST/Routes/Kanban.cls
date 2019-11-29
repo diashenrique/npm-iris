@@ -13,7 +13,8 @@ ClassMethod List() As %Status
 
         set oRS = ##class(%SQL.Statement).%New()
 
-        set sql = "SELECT ID, AssignedUser, TaskName, %EXTERNAL(StartDate) as StartDate, %EXTERNAL(DueDate) as DueDate, Status, Priority, Progress, ParentId FROM SQLUser.Task"
+        ;set sql = "SELECT ID, AssignedUser, TaskName, %EXTERNAL(StartDate) as StartDate, %EXTERNAL(DueDate) as DueDate, Status, Priority, Progress, ParentId FROM SQLUser.Task"
+        set sql = "SELECT ID, AssignedUser, TaskName, TO_CHAR(StartDate,'YYYY/MM/DD') As StartDate, TO_CHAR(DueDate,'YYYY/MM/DD') As DueDate, Status, Priority, Progress, ParentId FROM SQLUser.Task"
 
         set tSC = oRS.%Prepare(sql)
 
@@ -63,9 +64,8 @@ ClassMethod Update(id As %Integer) As %Status
     set iter = obj.%GetIterator()
     while iter.%GetNext(.key , .value )  {
         continue:key="ID"
-        set ^zHGD($zname,"Update",key) = value
         if ((key = "StartDate") || (key = "DueDate")) {
-            ;set $property(objTask, key) = $zdateh(value,3)
+            set $property(objTask, key) = $zdateh($replace(value,"/","-"),3)
         }
         elseif (key = "AssignedUser") {
             set $property(objTask, key) = ##class(User.Person).%OpenId(value) 
