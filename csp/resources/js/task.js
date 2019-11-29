@@ -2,13 +2,13 @@ var urlOrigin = window.location.origin;
 var urlREST = urlOrigin + "/npm/rest";
 var idFormPopup;
 
-$(document).ready(function() {
+$(document).ready(function () {
   var taskStore = new DevExpress.data.CustomStore({
     key: "ID",
-    load: function() {
+    load: function () {
       return $.getJSON(urlREST + "/task");
     },
-    insert: function(values) {
+    insert: function (values) {
       return $.ajax({
         url: urlREST + "/task",
         method: "POST",
@@ -17,7 +17,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    update: function(key, values) {
+    update: function (key, values) {
       return $.ajax({
         url: urlREST + "/task/" + encodeURIComponent(key),
         method: "PUT",
@@ -26,14 +26,16 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    remove: function(key) {
+    remove: function (key) {
       return $.ajax({
         url: urlREST + "/task/" + encodeURIComponent(key),
         method: "DELETE"
       });
     },
-    onBeforeSend: function(method, ajaxOptions) {
-      ajaxOptions.xhrFields = { withCredentials: true };
+    onBeforeSend: function (method, ajaxOptions) {
+      ajaxOptions.xhrFields = {
+        withCredentials: true
+      };
     }
   });
 
@@ -41,7 +43,7 @@ $(document).ready(function() {
     store: new DevExpress.data.CustomStore({
       key: "ID",
       loadMode: "raw",
-      load: function() {
+      load: function () {
         return $.getJSON(urlREST + "/user/lookup");
       }
     }),
@@ -52,7 +54,7 @@ $(document).ready(function() {
     store: new DevExpress.data.CustomStore({
       key: "ID",
       loadMode: "raw",
-      load: function() {
+      load: function () {
         return $.getJSON(urlREST + "/project/lookup");
       }
     }),
@@ -71,7 +73,7 @@ $(document).ready(function() {
       keyExpr: "ID",
       rowDragging: {
         allowDropInsideItem: true,
-        onDragChange: function(e) {
+        onDragChange: function (e) {
           var visibleRows = treeList.getVisibleRows(),
             sourceNode = treeList.getNodeByKey(e.itemData.ID),
             targetNode = visibleRows[e.toIndex].node;
@@ -84,7 +86,7 @@ $(document).ready(function() {
             targetNode = targetNode.parent;
           }
         },
-        onReorder: function(e) {
+        onReorder: function (e) {
           var visibleRows = e.component.getVisibleRows(),
             sourceData = e.itemData,
             targetData = visibleRows[e.toIndex].data;
@@ -112,8 +114,10 @@ $(document).ready(function() {
             method: "PUT",
             processData: false,
             contentType: "application/json",
-            data: JSON.stringify({ ParentId: e.itemData.ParentId })
-          }).done(function(msg) {
+            data: JSON.stringify({
+              ParentId: e.itemData.ParentId
+            })
+          }).done(function (msg) {
             //alert("Data Saved: " + msg);
           });
 
@@ -127,7 +131,7 @@ $(document).ready(function() {
         allowUpdating: true,
         allowDeleting: true
       },
-      onEditorPreparing: function(e) {
+      onEditorPreparing: function (e) {
         if (e.dataField === "Status" && e.parentType === "dataRow") {
           e.editorName = "dxSelectBox";
         }
@@ -155,8 +159,7 @@ $(document).ready(function() {
         pageSize: 15
       },
       parentIdExpr: "ParentId",
-      columns: [
-        {
+      columns: [{
           dataField: "ID",
           visible: false
         },
@@ -171,11 +174,14 @@ $(document).ready(function() {
         },
         {
           dataField: "TaskName",
-          validationRules: [
-            {
-              type: "required"
-            }
-          ]
+          validationRules: [{
+            type: "required"
+          }]
+        },
+        {
+          caption: "Estimate (Hours)",
+          dataField: "Estimate",
+          dataType: "number"
         },
         {
           dataField: "StartDate",
@@ -186,14 +192,14 @@ $(document).ready(function() {
           dataType: "date"
         },
         {
+          caption: "Progress %",
           dataField: "Progress",
           dataType: "number"
         },
         {
           dataField: "Priority",
           editorOptions: {
-            dataSource: [
-              {
+            dataSource: [{
                 id: 1,
                 name: "Normal"
               },
@@ -217,8 +223,7 @@ $(document).ready(function() {
         {
           dataField: "Status",
           editorOptions: {
-            dataSource: [
-              {
+            dataSource: [{
                 id: 1,
                 name: "Not Started"
               },
@@ -253,7 +258,7 @@ $(document).ready(function() {
           }
         }
       ],
-      onInitNewRow: function(e) {
+      onInitNewRow: function (e) {
         e.data.Status = "Not Started";
         e.data.Priority = "Normal";
         e.data.StartDate = new Date();
