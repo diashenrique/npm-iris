@@ -350,11 +350,11 @@
                     <div id="form"></div>
                   </div>
                   <hr>
-                  <h5 class="modal-title">Time Tracking</h5>
+                  <h5 id="modalTimeTrackingStatus" class="modal-title">Time Tracking</h5>
                   <div class="widget-container">
                       <div id="btn-startTrack" style="border: none; -webkit-box-shadow: none"></div>
                       <div id="btn-stopTrack" style="border: none; -webkit-box-shadow: none"></div>
-                      <span style="font-size: 20px;font-weight: bold;">&nbsp;&nbsp;&nbsp;Time Spent: #()#</span>
+                      <span style="font-size: 20px;font-weight: bold;">&nbsp;&nbsp;&nbsp;Time Spent: </span><span id="idTotalTime"></span>
                   </div>
                   <hr>
                   <h5 class="modal-title">Log work</h5>

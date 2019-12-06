@@ -14,7 +14,7 @@ ClassMethod List() As %Status
         set oRS = ##class(%SQL.Statement).%New()
 
         ;set sql = "SELECT ID, AssignedUser, TaskName, %EXTERNAL(StartDate) as StartDate, %EXTERNAL(DueDate) as DueDate, Status, Priority, Progress, ParentId FROM SQLUser.Task"
-        set sql = "SELECT ID, AssignedUser, TaskName, TO_CHAR(StartDate,'YYYY/MM/DD') As StartDate, TO_CHAR(DueDate,'YYYY/MM/DD') As DueDate, Status, Priority, Progress, ParentId FROM SQLUser.Task"
+        set sql = "SELECT ID, AssignedUser, TaskName, TO_CHAR(StartDate,'YYYY/MM/DD') As StartDate, TO_CHAR(DueDate,'YYYY/MM/DD') As DueDate, Status, Priority, Progress, %EXTERNAL(TrackingStatus) As TrackingStatus, ParentId FROM SQLUser.Task"
 
         set tSC = oRS.%Prepare(sql)
 

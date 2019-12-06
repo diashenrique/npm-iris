@@ -7,12 +7,12 @@ ClassMethod GetTotalTimeByTask(pTaskId) As %Integer
 
     &SQL(SELECT SUM({fn TIMESTAMPDIFF(SQL_TSI_SECOND, StartTracking, EndTracking)}) as Seconds INTO :TotalTime FROM SQLUser.TimeTracking WHERE TaskId = :pTaskId GROUP BY TaskId)
 
-    quit TotalTime
+    quit ..CalcTimeConsumed(TotalTime)
 }
 
 ClassMethod CalcTimeConsumed(pTotalSeconds As %Integer) As %String
 {
-    set strTotalTime = ""
+    set strTotalTime = "0h 0min"
 
     if (pTotalSeconds = "") {
         quit strTotalTime

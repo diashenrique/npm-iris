@@ -350,6 +350,7 @@ $(function () {
           .bind({
             click: function () {
               $("#modalViewTaskLabel").text(task.TaskName);
+              $("#modalTimeTrackingStatus").text("Time Tracking - " + task.TrackingStatus);
               console.log(task.DueDate);
 
               var taskDetails = [{
@@ -360,7 +361,8 @@ $(function () {
                 "Progress": task.Progress,
                 "Priority": task.Priority,
                 "Status": task.Status,
-                "AssignedUser": task.AssignedUser
+                "AssignedUser": task.AssignedUser,
+                "TrackingStatus": task.TrackingStatus
               }];
 
               console.log(taskDetails[0]);
@@ -461,23 +463,33 @@ $(function () {
                 ]
               }).dxForm("instance");
 
-              $("#btn-startTrack").dxButton({
+              var btnStart = $("#btn-startTrack").dxButton({
                 icon: "fas fa-play-circle",
                 hint: "Start Tracking",
                 type: "success",
                 onClick: function () {
-                  DevExpress.ui.notify("The start button was clicked");
+                  $("#btn-stopTrack").dxButton("instance").option("disabled", false);
+                  $("#btn-startTrack").dxButton("instance").option("disabled", true);
+                  $("#modalTimeTrackingStatus").text("Time Tracking - Running");
                 }
-              });
+              }).dxButton("instance");
 
-              $("#btn-stopTrack").dxButton({
+              var btnStop = $("#btn-stopTrack").dxButton({
                 icon: "fas fa-stop-circle",
                 hint: "Stop Tracking",
                 type: "danger",
                 onClick: function () {
-                  DevExpress.ui.notify("The stop button was clicked");
+                  $("#btn-stopTrack").dxButton("instance").option("disabled", true);
+                  $("#btn-startTrack").dxButton("instance").option("disabled", false);
+                  $("#modalTimeTrackingStatus").text("Time Tracking - Stopped");
                 }
-              });
+              }).dxButton("instance");
+
+              if (task.TrackingStatus == "Stopped") {
+                btnStop.option("disabled", true);
+              } else {
+                btnStart.option("disabled", true);
+              }
 
               $("#logHours").dxNumberBox({
                 placeholder: "Hours...",

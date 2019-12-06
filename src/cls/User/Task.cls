@@ -15,6 +15,8 @@ Property Status As %String;
 
 Property Estimate As %Float;
 
+Property TrackingStatus As %String(DISPLAYLIST = ",Running,Stopped", VALUELIST = ",R,S") [ InitialExpression = "S" ];
+
 Property AssignedUser As User.Person;
 
 Property ParentId As User.Task;
@@ -77,6 +79,9 @@ Storage Default
 </Value>
 <Value name="16">
 <Value>Estimate</Value>
+</Value>
+<Value name="17">
+<Value>TrackingStatus</Value>
 </Value>
 </Data>
 <DataLocation>^User.TaskD</DataLocation>
