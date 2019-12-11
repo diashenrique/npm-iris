@@ -64,6 +64,13 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <Route Url="/kanban/:id" Method="PUT" Call="REST.Routes.Kanban:Update" Cors="true"/>
 <!-- ./Kanban -->
 
+<!-- .TimeTracking --> 
+<Route Url="/timetracking" Method="GET" Call="REST.Routes.TimeTracking:List" Cors="true"/>
+<Route Url="/timetracking/:id" Method="POST" Call="REST.Routes.TimeTracking:NewTimeTracking" Cors="true"/>
+<Route Url="/timetracking/:id" Method="GET" Call="REST.Routes.TimeTracking:GetTimeTrackingByTask" Cors="true"/>
+<Route Url="/timetracking/:id" Method="PUT" Call="REST.Routes.TimeTracking:Update" Cors="true"/>
+<!-- ./TimeTracking -->
+
 <!-- .Gantt --> 
 <Route Url="/gantt" Method="GET" Call="REST.Routes.Gantt:List" Cors="true"/>
 <Route Url="/gantt" Method="POST" Call="REST.Routes.Gantt:NewTask" Cors="true"/>

@@ -351,7 +351,18 @@ $(function () {
             click: function () {
               $("#modalViewTaskLabel").text(task.TaskName);
               $("#modalTimeTrackingStatus").text("Time Tracking - " + task.TrackingStatus);
-              console.log(task.DueDate);
+
+              $.ajax({
+                url: urlREST + "/timetracking/" + encodeURIComponent(task.ID),
+                method: "GET",
+                processData: false,
+                contentType: "application/json",
+                data: task.ID,
+                success: function (e) {
+                  console.log(e.totalTime);
+                  $("#idTotalTime").text(e.totalTime);
+                }
+              });
 
               var taskDetails = [{
                 "ID": task.ID,
@@ -471,6 +482,32 @@ $(function () {
                   $("#btn-stopTrack").dxButton("instance").option("disabled", false);
                   $("#btn-startTrack").dxButton("instance").option("disabled", true);
                   $("#modalTimeTrackingStatus").text("Time Tracking - Running");
+
+                  $.ajax({
+                    url: urlREST + "/kanban/" + task.ID,
+                    method: "PUT",
+                    processData: false,
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                      TrackingStatus: "R"
+                    })
+                  }).done(function (msg) {
+                    //alert("Data Saved: " + msg);
+                  });
+
+                  var taskTimeTracking = [{
+                    "TaskId": task.ID,
+                    "UserId": 4
+                  }];
+
+                  $.ajax({
+                    url: urlREST + "/timetracking/" + task.ID,
+                    method: "POST",
+                    processData: false,
+                    contentType: "application/json",
+                    data: JSON.stringify(taskTimeTracking)
+                  });
+
                 }
               }).dxButton("instance");
 
@@ -482,8 +519,49 @@ $(function () {
                   $("#btn-stopTrack").dxButton("instance").option("disabled", true);
                   $("#btn-startTrack").dxButton("instance").option("disabled", false);
                   $("#modalTimeTrackingStatus").text("Time Tracking - Stopped");
+
+                  $.ajax({
+                    url: urlREST + "/kanban/" + task.ID,
+                    method: "PUT",
+                    processData: false,
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                      TrackingStatus: "S"
+                    })
+                  }).done(function (msg) {
+                    //alert("Data Saved: " + msg);
+                  });
+
+                  var taskTimeTracking = [{
+                    "TaskId": task.ID,
+                    "UserId": 4
+                  }];
+
+                  $.ajax({
+                    url: urlREST + "/timetracking/" + task.ID,
+                    method: "PUT",
+                    processData: false,
+                    contentType: "application/json",
+                    data: JSON.stringify(taskTimeTracking)
+                  }).done(function (msg) {
+                    //alert("Data Saved: " + msg);
+                  });
+
+                  $.ajax({
+                    url: urlREST + "/timetracking/" + encodeURIComponent(task.ID),
+                    method: "GET",
+                    processData: false,
+                    contentType: "application/json",
+                    data: task.ID,
+                    success: function (e) {
+                      console.log(e.totalTime);
+                      $("#idTotalTime").text(e.totalTime);
+                    }
+                  });
                 }
               }).dxButton("instance");
+
+              console.log(task.TrackingStatus);
 
               if (task.TrackingStatus == "Stopped") {
                 btnStop.option("disabled", true);
@@ -508,7 +586,53 @@ $(function () {
                 hint: "Log work against this issue",
                 type: "default",
                 onClick: function () {
-                  DevExpress.ui.notify("The stop button was clicked");
+
+                  var logHours = $("#logHours").dxNumberBox("instance").option("value");
+
+                  if (logHours) {
+
+                    var currentdate = new Date();
+
+                    var endTrackingDateTime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+                    currentdate.setHours(currentdate.getHours() - logHours);
+
+                    var startTrackingDateTime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+                    var taskTimeTracking = [{
+                      "TaskId": task.ID,
+                      "UserId": 4,
+                      "StartTracking": startTrackingDateTime,
+                      "EndTracking": endTrackingDateTime
+                    }];
+
+                    $.ajax({
+                      url: urlREST + "/timetracking/" + task.ID,
+                      method: "POST",
+                      processData: false,
+                      contentType: "application/json",
+                      data: JSON.stringify(taskTimeTracking[0]),
+                      success: function () {
+                        $.ajax({
+                          url: urlREST + "/timetracking/" + encodeURIComponent(task.ID),
+                          method: "GET",
+                          processData: false,
+                          contentType: "application/json",
+                          data: task.ID,
+                          success: function (e) {
+                            console.log(e.totalTime);
+                            $("#idTotalTime").text(e.totalTime);
+                          }
+                        });
+                      }
+                    });
+
+
+
+                  } else {
+                    DevExpress.ui.notify("Hours is Required", "error");
+                  }
+
                 }
               });
 
