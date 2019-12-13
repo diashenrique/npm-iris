@@ -1,13 +1,20 @@
 var urlOrigin = window.location.origin;
 var urlREST = urlOrigin + "/npm/rest";
 
-$(function() {
+$(function () {
+
+  // Button Add Task
+  $("#btnTaskResource").dxButton({
+    icon: "fas fa-user-tag",
+    hint: "Show|Hide Task Resources"
+  });
+
   var ganttStore = new DevExpress.data.CustomStore({
     key: "ID",
-    load: function() {
+    load: function () {
       return $.getJSON(urlREST + "/gantt");
     },
-    insert: function(values) {
+    insert: function (values) {
       return $.ajax({
         url: urlREST + "/gantt",
         method: "POST",
@@ -16,7 +23,7 @@ $(function() {
         data: JSON.stringify(values)
       });
     },
-    update: function(key, values) {
+    update: function (key, values) {
       return $.ajax({
         url: urlREST + "/gantt/" + encodeURIComponent(key),
         method: "PUT",
@@ -25,7 +32,7 @@ $(function() {
         data: JSON.stringify(values)
       });
     },
-    remove: function(key) {
+    remove: function (key) {
       return $.ajax({
         url: urlREST + "/gantt/" + encodeURIComponent(key),
         method: "DELETE"
@@ -43,11 +50,16 @@ $(function() {
       progressExpr: "Progress",
       titleExpr: "TaskName"
     },
+    dependencies: {
+      dataSource: ganttStore,
+      keyExpr: "ID",
+      predecessorIdExpr: "PredecessorId",
+      successorIdExpr: "SucessorId"
+    },
     editing: {
       enabled: true
     },
-    columns: [
-      {
+    columns: [{
         dataField: "TaskName",
         caption: "Subject",
         width: 200

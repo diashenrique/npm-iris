@@ -51,7 +51,7 @@
   <link rel="stylesheet" type="text/css" href="resources/plugins/extreme19.2/css/dx.common.css" />
   <link rel="dx-theme" data-theme="generic.light" href="resources/plugins/extreme19.2/css/dx.light.css" data-active="false" />
   <link rel="dx-theme" data-theme="generic.dark" href="resources/plugins/extreme19.2/css/dx.generic.custom-dark.css" data-active="false" />
-  <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/19.2.3/css/dx-gantt.min.css">
+  <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/19.2.4/css/dx-gantt.min.css">
   <link rel="stylesheet" type="text/css" href="resources/css/gantt.css">
 
   <!-- Disable unused skin immediately -->
@@ -301,11 +301,17 @@
                   </span>
                 </div>
                 <div class="account-summary">
-                  <h1 class="card-title"> IS Project - Tasks Management</h1>
+                  <h1 class="card-title"> IS Project - Tasks Management </h1>
                   <h6 class="card-subtitle text-muted"> 4 deadline - 2 overdue </h6>
                 </div>
               </a>
               <!-- /.btn-account -->
+              <!-- right actions -->
+              <div class="ml-auto">
+                <!-- Show|Hide Task Resources -->
+                <div id="btnTaskResource" style="border: none; -webkit-box-shadow: none"></div>
+              </div>
+              <!-- /right actions -->
             </header>
             <!-- /.page-navs -->
 
@@ -340,7 +346,7 @@
   <script src="resources/plugins/looper/assets/javascript/theme.min.js"></script>
   <!-- BEGIN DevExtreme library -->
   <script type="text/javascript" src="resources/plugins/extreme19.2/js/dx.all.js"></script>
-  <script src="https://cdn3.devexpress.com/jslib/19.2.3/js/dx-gantt.min.js"></script>
+  <script src="https://cdn3.devexpress.com/jslib/19.2.4/js/dx-gantt.min.js"></script> 
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
   <script type="text/javascript" src="resources/js/custom-theme-changer.js"></script>
