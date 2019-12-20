@@ -72,6 +72,18 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <!-- ./TimeTracking -->
 
 <!-- .Gantt --> 
+<!-- ./Gantt Dependence-->
+<Route Url="/gantt/dependence" Method="GET" Call="REST.Routes.Gantt:Dependence" Cors="true"/>
+<Route Url="/gantt/dependence" Method="POST" Call="REST.Routes.Gantt:NewTaskDependence" Cors="true"/>
+<Route Url="/gantt/resource" Method="GET" Call="REST.Routes.Gantt:Resource" Cors="true"/>
+<Route Url="/gantt/resourceAssignments" Method="GET" Call="REST.Routes.Gantt:ResourceAssignment" Cors="true"/>
+
+<Route Url="/gantt/dependence/:id" Method="GET" Call="REST.Routes.Gantt:GetTaskDependence" Cors="true"/>
+<Route Url="/gantt/dependence/:id" Method="PUT" Call="REST.Routes.Gantt:UpdateDependence" Cors="true"/>
+<Route Url="/gantt/dependence/:id" Method="DELETE" Call="REST.Routes.Gantt:DeleteDependence" Cors="true"/>
+
+<Route Url="/gantt/resource/:id" Method="PUT" Call="REST.Routes.Gantt:UpdateResourceAssignment" Cors="true"/>
+
 <Route Url="/gantt" Method="GET" Call="REST.Routes.Gantt:List" Cors="true"/>
 <Route Url="/gantt" Method="POST" Call="REST.Routes.Gantt:NewTask" Cors="true"/>
 <Route Url="/gantt/:id" Method="GET" Call="REST.Routes.Gantt:GetTask" Cors="true"/>

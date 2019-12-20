@@ -308,6 +308,12 @@
               <!-- /.btn-account -->
               <!-- right actions -->
               <div class="ml-auto">
+                <!-- scaleType: "days" -->
+                <div id="btnScaleDays" style="border: none; -webkit-box-shadow: none"></div>
+                <!-- scaleType: "weeks" -->
+                <div id="btnScaleWeeks" style="border: none; -webkit-box-shadow: none"></div>
+                <!-- scaleType: "months" -->
+                <div id="btnScaleMonths" style="border: none; -webkit-box-shadow: none"></div>
                 <!-- Show|Hide Task Resources -->
                 <div id="btnTaskResource" style="border: none; -webkit-box-shadow: none"></div>
               </div>
@@ -345,8 +351,9 @@
   <!-- BEGIN THEME JS -->
   <script src="resources/plugins/looper/assets/javascript/theme.min.js"></script>
   <!-- BEGIN DevExtreme library -->
-  <script type="text/javascript" src="resources/plugins/extreme19.2/js/dx.all.js"></script>
-  <script src="https://cdn3.devexpress.com/jslib/19.2.4/js/dx-gantt.min.js"></script> 
+  <!-- DevExtreme common scripts -->
+  <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/19.2.4/js/dx.all.js"></script>
+  <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/19.2.4/js/dx-gantt.min.js"></script> 
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
   <script type="text/javascript" src="resources/js/custom-theme-changer.js"></script>

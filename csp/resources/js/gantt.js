@@ -3,10 +3,41 @@ var urlREST = urlOrigin + "/npm/rest";
 
 $(function () {
 
-  // Button Add Task
+  $("#btnScaleDays").dxButton({
+    icon: "fas fa-calendar-day",
+    hint: "Gantt Scale Days",
+    onClick: function (e) {
+      ganttIntance.option("scaleType", "days");
+    }
+  });
+
+  $("#btnScaleWeeks").dxButton({
+    icon: "fas fa-calendar-week",
+    hint: "Gantt Scale Weeks",
+    onClick: function (e) {
+      ganttIntance.option("scaleType", "weeks");
+    }
+  });
+
+  $("#btnScaleMonths").dxButton({
+    icon: "fas fa-calendar-alt",
+    hint: "Gantt Scale Months",
+    onClick: function (e) {
+      ganttIntance.option("scaleType", "months");
+    }
+  });
+
   $("#btnTaskResource").dxButton({
     icon: "fas fa-user-tag",
-    hint: "Show|Hide Task Resources"
+    hint: "Show|Hide Task Resources",
+    onClick: function (e) {
+      var resourceStatus = ganttIntance.option("showResources");
+      if (resourceStatus == false) {
+        ganttIntance.option("showResources", true);
+      } else {
+        ganttIntance.option("showResources", false);
+      }
+    }
   });
 
   var ganttStore = new DevExpress.data.CustomStore({
@@ -40,7 +71,62 @@ $(function () {
     }
   });
 
-  $("#gantt").dxGantt({
+  var dependenceStore = new DevExpress.data.CustomStore({
+    key: "ID",
+    load: function () {
+      return $.getJSON(urlREST + "/gantt/dependence");
+    },
+    insert: function (values) {
+      values.ProjectId = 0;
+      return $.ajax({
+        url: urlREST + "/gantt/dependence",
+        method: "POST",
+        processData: false,
+        contentType: "application/json",
+        data: JSON.stringify(values)
+      });
+    },
+    update: function (key, values) {
+      return $.ajax({
+        url: urlREST + "/gantt/dependence/" + encodeURIComponent(key),
+        method: "PUT",
+        processData: false,
+        contentType: "application/json",
+        data: JSON.stringify(values)
+      });
+    },
+    remove: function (key) {
+      return $.ajax({
+        url: urlREST + "/gantt/dependence/" + encodeURIComponent(key),
+        method: "DELETE"
+      });
+    }
+  });
+
+  var resourceStore = new DevExpress.data.CustomStore({
+    key: "ID",
+    load: function () {
+      return $.getJSON(urlREST + "/gantt/resource");
+    }
+  });
+
+  var resourceAssignmentStore = new DevExpress.data.CustomStore({
+    key: "ID",
+    load: function () {
+      return $.getJSON(urlREST + "/gantt/resourceAssignments");
+    },
+    update: function (key, values) {
+      return $.ajax({
+        url: urlREST + "/gantt/resource/" + encodeURIComponent(key),
+        method: "PUT",
+        processData: false,
+        contentType: "application/json",
+        data: JSON.stringify(values)
+      });
+    }
+  });
+
+  var ganttIntance = $("#gantt").dxGantt({
     tasks: {
       dataSource: ganttStore,
       keyExpr: "ID",
@@ -51,14 +137,28 @@ $(function () {
       titleExpr: "TaskName"
     },
     dependencies: {
-      dataSource: ganttStore,
+      dataSource: dependenceStore,
       keyExpr: "ID",
       predecessorIdExpr: "PredecessorId",
-      successorIdExpr: "SucessorId"
+      successorIdExpr: "SucessorId",
+      typeExpr: "Type",
+      projectExpr: "ProjectId"
+    },
+    resources: {
+      dataSource: resourceStore,
+      keyExpr: "ID",
+      textExpr: "UserName"
+    },
+    resourceAssignments: {
+      dataSource: resourceAssignmentStore,
+      keyExpr: "ID",
+      resourceIdExpr: "AssignedUser",
+      taskIdExpr: "ID"
     },
     editing: {
       enabled: true
     },
+    showResources: false,
     columns: [{
         dataField: "TaskName",
         caption: "Subject",
@@ -81,5 +181,5 @@ $(function () {
     ],
     scaleType: "weeks",
     taskListWidth: 550
-  });
+  }).dxGantt("instance");
 });
