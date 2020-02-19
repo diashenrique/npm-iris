@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- End Required meta tags -->
+    <!-- Begin SEO tag -->
+    <title>ISProject | Project & Task Management</title>
+    <meta property="og:title" content="ISProject | Project & Task Management" />
+    <meta name="author" content="Henrique Dias" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="Project & Task Management using InterSystems IRIS and Bootstrap 4" />
+    <meta property="og:description" content="Project & Task Management using InterSystems IRIS and Bootstrap 4" />
+    <link rel="canonical" href="https://github.com/diashenrique/" />
+    <meta property="og:url" content="https://github.com/diashenrique/" />
+    <meta property="og:site_name" content="ISProject - Project & Task Management" />
+    <script type="application/ld+json">
+        {
+            "name": "ISProject - Project & Task Management",
+            "description": "Project & Task Management using InterSystems IRIS and Bootstrap 4",
+            "author": {
+                "@type": "Person",
+                "name": "Henrique Dias"
+            },
+            "@type": "WebSite",
+            "url": "",
+            "headline": "Project & Task Management",
+            "@context": "http://schema.org"
+        }
+    </script>
+    <!-- End SEO tag -->
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/plugins/looper/assets/apple-touch-icon.png">
+    <link rel="shortcut icon" href="resources/plugins/looper/assets/favicon.ico">
+    <meta name="theme-color" content="#3063A0"><!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"><!-- End Google font -->
+    <!-- BEGIN PLUGINS STYLES -->
+    <link rel="stylesheet" href="resources/plugins/looper/assets/vendor/fontawesome/css/all.css"><!-- END PLUGINS STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/theme.min.css" data-skin="default">
+    <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/theme-dark.min.css" data-skin="dark">
+    <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/custom.css"><!-- Disable unused skin immediately -->
+    <script>
+        var skin = localStorage.getItem('skin') || 'default';
+        var unusedLink = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
+        unusedLink.setAttribute('rel', '');
+        unusedLink.setAttribute('disabled', true);
+    </script><!-- END THEME STYLES -->
+</head>
+
+<body>
+    <main class="empty-state empty-state-fullpage bg-black">
+        <!-- .empty-state-container -->
+        <div class="empty-state-container">
+            <div class="card">
+                <div class="card-header bg-light text-left">
+                    <i class="fa fa-fw fa-circle text-red"></i> <i class="fa fa-fw fa-circle text-yellow"></i> <i class="fa fa-fw fa-circle text-teal"></i>
+                </div>
+                <div class="card-body">
+                    <div class="state-figure">
+                        <img class="img-fluid" src="resources/plugins/looper/assets/images/illustration/img-2.svg" alt="" style="max-width: 320px">
+                    </div>
+                    <h3 class="state-header"> Page not found! </h3>
+                    <p class="state-description lead"> Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. </p>
+                    <div class="state-action">
+                        <a href="auth-error-v1.html" class="btn btn-lg btn-light"><i class="fa fa-angle-right"></i> Go Home</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.empty-state-container -->
+    </main><!-- /.empty-state -->
+    <!-- BEGIN BASE JS -->
+    <script src="resources/plugins/looper/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="resources/plugins/looper/assets/vendor/bootstrap/js/popper.min.js"></script>
+    <script src="resources/plugins/looper/assets/vendor/bootstrap/js/bootstrap.min.js"></script> <!-- END BASE JS -->
+    <!-- BEGIN THEME JS -->
+    <script src="resources/plugins/looper/assets/javascript/theme.min.js"></script> <!-- END THEME JS -->
+</body>
+
+</html>

@@ -1,32 +1,32 @@
-ARG IMAGE=store/intersystems/iris-community:2019.4.0.379.0
+ARG IMAGE=store/intersystems/iris-community:2019.4.0.383.0
 FROM $IMAGE
 
-#WORKDIR /opt/app
+USER root
 
-COPY ./csp /opt/app/csp
-COPY ./Installer.cls  /opt/app
-COPY ./src  /opt/app/src
-COPY ./gbl  /opt/gbl
+WORKDIR /opt/irisapp
+RUN chown ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
 
-ENV IRIS_USERNAME="SuperUser" 
-ENV IRIS_PASSWORD="sys"
+USER irisowner
 
-RUN iris start $ISC_PACKAGE_INSTANCENAME quietly && \
-    #/bin/echo -e "$IRIS_USERNAME\n$IRIS_PASSWORD\n" \
-    /bin/echo -e "\n" \
-    " zn \"%SYS\"\n" \
-    " Do ##class(Security.Users).UnExpireUserPasswords(\"*\")\n" \
-    " Do ##class(Security.Users).AddRoles(\"admin\", \"%ALL\")\n" \
-    " Do ##class(Security.System).Get(,.p)\n" \
-    " Set p(\"AutheEnabled\")=\$zb(p(\"AutheEnabled\"),16,7)\n" \
-    " Do ##class(Security.System).Modify(,.p)\n" \
-    " Do \$system.OBJ.Load(\"/opt/app/Installer.cls\",\"ck\")\n" \
-    " Set sc = ##class(App.Installer).custom()\n" \
-    " If '$get(sc) do \$zu(4, \$JOB, 1)\n" \
-    " halt" \
-    | iris session $ISC_PACKAGE_INSTANCENAME && \
-    /bin/echo -e "\n" \
-    #/bin/echo -e "$IRIS_USERNAME\n$IRIS_PASSWORD\n" \
-    | iris stop $ISC_PACKAGE_INSTANCENAME quietly
+RUN mkdir -p /tmp/deps \
+    && cd /tmp/deps \
+    && wget -q https://pm.community.intersystems.com/packages/zpm/latest/installer -O zpm.xml
 
+COPY  Installer.cls .
+COPY  src src
+COPY irissession.sh /
+
+# running IRIS and open IRIS termninal in USER namespace
+SHELL ["/irissession.sh"]
+# below is objectscript executed in terminal
+# each row is what you type in terminal and Enter
+# zpm "install webterminal" 
+RUN \
+    do $SYSTEM.OBJ.Load("Installer.cls", "ck") \
+    set sc = ##class(App.Installer).setup() \
+    do $system.OBJ.Load("/tmp/deps/zpm.xml", "ck") \
+    zn "NPM" 
+
+# bringing the standard shell back
+SHELL ["/bin/bash", "-c"]
 CMD [ "-l", "/usr/irissys/mgr/messages.log" ]

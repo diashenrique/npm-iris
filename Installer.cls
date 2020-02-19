@@ -10,8 +10,9 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
 <Manifest>
   <Default Name="NAMESPACE" Value="NPM"/>
   <Default Name="DBNAME" Value="NPM"/>
-  <Default Name="APPPATH" Dir="/opt/app/" />
+  <Default Name="APPPATH" Dir="/opt/irisapp/" />
   <Default Name="CSPURL" Dir="/csp/npm" />
+  <Default Name="RESTPATH" Dir="/npm/rest" />
   <Default Name="SOURCESPATH" Dir="${APPPATH}src" />
   <Default Name="RESOURCE" Value="%DB_${DBNAME}" /> 
 
@@ -22,47 +23,56 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
       <Database Name="${DBNAME}" Dir="${MGRDIR}data" Create="yes" Resource="${RESOURCE}" MountAtStartup="true"/>
     </Configuration>
     <CSPApplication Url="${CSPURL}" Directory="${APPPATH}csp/" AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="1" ServeFiles="1"/>
-    <LoadPage Dir="${CSPURL}" Flags="ck" IgnoreErrors="1" />
     <Import File="${SOURCESPATH}" Recurse="1"/>
-    <LoadPage Dir="/csp/npm" Flags="ck"/>
   </Namespace>
+
+  <Invoke Class="App.Installer" Method="createRESTApp" />
+    <Arg Value="${RESTPATH}"/>
+    <Arg Value="${NAMESPACE}"/>
+  </Invoke>
+
+  <Invoke Class="App.Installer" Method="CompileCSP">
+    <Arg Value="${CSPURL}"/>
+    <Arg Value="${NAMESPACE}"/>
+  </Invoke>
 </Manifest>
 }
 
 ClassMethod setup(ByRef pVars, pLogLevel As %Integer = 3, pInstaller As %Installer.Installer, pLogger As %Installer.AbstractLogger) As %Status [ CodeMode = objectgenerator, Internal ]
 {
-  return ##class(%Installer.Manifest).%Generate(%compiledclass, %code, "MyInstall")
-}
-
-/// Entry point
-ClassMethod custom() As %Status
-{
-    try {
-        write "START CUSTOM INSTALLER",!
-        set sc = ..setup(.vars)
-        set sc = ..createWebApp()
-    } catch (err) {
-        set sc = err.AsStatus()
-    }
-    return sc
+  Return ##class(%Installer.Manifest).%Generate(%compiledclass, %code, "MyInstall")
 }
 
 /// Modify web app REST
-ClassMethod createWebApp(appName As %String = "/isproject/rest") As %Status
+ClassMethod createRESTApp(appName As %String pNamespace As %String) As %Status
 {
-    set:$e(appName)'="/" appName = "/" _ appName
-    #dim sc As %Status = $$$OK
-    new $namespace
-    set $namespace = "%SYS"
-    if '##class(Security.Applications).Exists(appName) {
-        set props("AutheEnabled") = $$$AutheUnauthenticated
-        set props("NameSpace") = ..#Namespace
-        set props("IsNameSpaceDefault") = $$$NO
-        set props("DispatchClass") = "REST.Dispatch"
-        set props("MatchRoles")=":%All"
-        set sc = ##class(Security.Applications).Create(appName, .props)
-    }
-    quit sc
+  Set:$Extract(appName)'="/" appName = "/" _ appName
+
+  #dim sc As %Status = $$$OK
+
+  New $Namespace
+  Set $Namespace = "%SYS"
+
+  If '##class(Security.Applications).Exists(appName) {
+    Set props("AutheEnabled") = $$$AutheUnauthenticated
+    Set props("NameSpace") = pNamespace
+    Set props("IsNameSpaceDefault") = $$$NO
+    Set props("DispatchClass") = "diashenrique.npm.REST.Dispatch"
+    Set props("MatchRoles")=":%All"
+    Set sc = ##class(Security.Applications).Create(appName, .props)
+  }
+  Quit sc
+}
+
+ClassMethod CompileCSP(pApp As %String, pNamespace As %String) As %Status
+{
+  New $Namespace
+  Set $Namespace = pNamespace
+
+  Set list(pApp_"/*.csp") = "" 
+  Do $System.OBJ.CompileList(.list,"ck")
+
+  Quit $$$OK
 }
 
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!-- End Required meta tags -->
+    <!-- Begin SEO tag -->
+    <title> Forgot Username | Looper - Bootstrap 4 Admin Theme </title>
+    <meta property="og:title" content="ISProject | Project & Task Management" />
+    <meta name="author" content="Henrique Dias" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="Project & Task Management using InterSystems IRIS and Bootstrap 4" />
+    <meta property="og:description" content="Project & Task Management using InterSystems IRIS and Bootstrap 4" />
+    <link rel="canonical" href="https://github.com/diashenrique/" />
+    <meta property="og:url" content="https://github.com/diashenrique/" />
+    <meta property="og:site_name" content="ISProject - Project & Task Management" />
+    <script type="application/ld+json">
+        {
+            "name": "ISProject - Project & Task Management",
+            "description": "Project & Task Management using InterSystems IRIS and Bootstrap 4",
+            "author": {
+                "@type": "Person",
+                "name": "Henrique Dias"
+            },
+            "@type": "WebSite",
+            "url": "",
+            "headline": "Project & Task Management",
+            "@context": "http://schema.org"
+        }
+    </script>
+    <!-- End SEO tag -->
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/plugins/looper/assets/apple-touch-icon.png">
+    <link rel="shortcut icon" href="resources/plugins/looper/assets/favicon.ico">
+    <meta name="theme-color" content="#3063A0"><!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"><!-- End Google font -->
+    <!-- BEGIN PLUGINS STYLES -->
+    <link rel="stylesheet" href="resources/plugins/looper/assets/vendor/fontawesome/css/all.css"><!-- END PLUGINS STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/theme.min.css" data-skin="default">
+    <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/theme-dark.min.css" data-skin="dark">
+    <link rel="stylesheet" href="resources/plugins/looper/assets/stylesheets/custom.css"><!-- Disable unused skin immediately -->
+    <script>
+        var skin = localStorage.getItem('skin') || 'default';
+        var unusedLink = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
+        unusedLink.setAttribute('rel', '');
+        unusedLink.setAttribute('disabled', true);
+    </script><!-- END THEME STYLES -->
+</head>
+
+<body>
+    <!--[if lt IE 10]>
+    <div class="page-message" role="alert">You are using an <strong>outdated</strong> browser. Please <a class="alert-link" href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</div>
+    <![endif]-->
+    <!-- .auth -->
+    <main class="auth">
+        <!-- form -->
+        <form class="auth-form auth-form-reflow">
+            <div class="text-center mb-4">
+                <div class="mb-4">
+                    <img class="rounded" src="resources/plugins/looper/assets/apple-touch-icon.png" alt="" height="72">
+                </div>
+                <h1 class="h3"> Recover Your Username </h1>
+            </div>
+            <p class="mb-4"> Tempora iusto officia magnam fugiat sequi aliquam cum consectetur aperiam beatae, rerum obcaecati ea. </p><!-- Expansion Cards -->
+            <div id="recovery-mode" class="card-expansion">
+                <!-- .card-expansion-item -->
+                <div class="card card-reflow card-expansion-item expanded">
+                    <div class="card-header px-0 border-0" id="recoverByEmail">
+                        <button type="button" class="btn btn-reset" data-toggle="collapse" data-target="#byEmail" aria-expanded="true" aria-controls="byEmail"><span
+                                class="collapse-indicator mr-2"><i class="far fa-lg fa-circle"></i></span> <strong>Recover using your email address</strong></button>
+                    </div>
+                    <div id="byEmail" class="collapse show" aria-labelledby="recoverByEmail" data-parent="#recovery-mode">
+                        <div class="card-body pt-0 pl-5">
+                            <input type="email" name="recoverEmail" class="form-control form-control-lg" placeholder="Ex: john@uselooper.com">
+                        </div>
+                    </div>
+                </div><!-- /.card-expansion-item -->
+                <!-- .card-expansion-item -->
+                <div class="card card-reflow card-expansion-item">
+                    <div class="card-header px-0 border-0" id="recoverByMobile">
+                        <button type="button" class="btn btn-reset" data-toggle="collapse" data-target="#byMobile" aria-expanded="false" aria-controls="byMobile"><span
+                                class="collapse-indicator mr-2"><i class="far fa-lg fa-circle"></i></span> <strong>Recover using your mobile number</strong></button>
+                    </div>
+                    <div id="byMobile" class="collapse" aria-labelledby="recoverByMobile" data-parent="#recovery-mode">
+                        <div class="card-body pt-0 pl-5">
+                            <!-- .form-group -->
+                            <div class="form-group mb-4">
+                                <select name="inputCountry" class="custom-select custom-select-lg">
+                                    <option value=""> Select Country </option>
+                                </select>
+                            </div><!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group mb-4">
+                                <label class="d-block text-left" for="inputMobile">Mobile Number</label> <input type="text" id="inputMobile" name="inputMobile"
+                                    class="form-control form-control-lg">
+                            </div><!-- /.form-group -->
+                        </div>
+                    </div>
+                </div><!-- /.card-expansion-item -->
+            </div><!-- /Expansion Cards -->
+            <!-- actions -->
+            <div class="d-block d-md-inline-block mb-2">
+                <button class="btn btn-lg btn-block btn-primary" type="submit">Recover Username</button>
+            </div>
+            <div class="d-block d-md-inline-block">
+                <a href="auth-signin-v1.html" class="btn btn-block btn-light">Return to signin</a>
+            </div>
+        </form><!-- /.auth-form -->
+        <footer class="auth-footer mt-5"> © 2018 All Rights Reserved. Looper is Responsive Admin Theme build on top of latest Bootstrap 4. <a href="#">Privacy</a> and <a
+                href="#">Terms</a>
+        </footer>
+    </main><!-- /.auth -->
+    <!-- BEGIN BASE JS -->
+    <script src="resources/plugins/looper/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="resources/plugins/looper/assets/vendor/bootstrap/js/popper.min.js"></script>
+    <script src="resources/plugins/looper/assets/vendor/bootstrap/js/bootstrap.min.js"></script> <!-- END BASE JS -->
+    <!-- BEGIN THEME JS -->
+    <script src="resources/plugins/looper/assets/javascript/theme.min.js"></script> <!-- END THEME JS -->
+</body>
+
+</html>
