@@ -1,4 +1,4 @@
-Class diashenrique.npm.User.Calendar Extends (%Library.Persistent, %XML.Adaptor, %Library.Populate)
+Class diashenrique.npm.Data.Calendar Extends (%Persistent, %JSON.Adaptor)
 {
 
 Property Code As %String;
@@ -33,12 +33,12 @@ Storage Default
 <Value>Remarks</Value>
 </Value>
 </Data>
-<DataLocation>^User.CalendarD</DataLocation>
+<DataLocation>^diashenrique.npm4900.CalendarD</DataLocation>
 <DefaultData>CalendarDefaultData</DefaultData>
-<IdLocation>^User.CalendarD</IdLocation>
-<IndexLocation>^User.CalendarI</IndexLocation>
-<StreamLocation>^User.CalendarS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<IdLocation>^diashenrique.npm4900.CalendarD</IdLocation>
+<IndexLocation>^diashenrique.npm4900.CalendarI</IndexLocation>
+<StreamLocation>^diashenrique.npm4900.CalendarS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }

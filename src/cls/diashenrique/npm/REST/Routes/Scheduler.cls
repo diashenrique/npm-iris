@@ -12,7 +12,8 @@ ClassMethod List() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, TaskName, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, AssignedUser, ParentId, PredecessorId, SucessorId FROM SQLUser.Task"
+        Set sql = "SELECT ID, TaskName, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, "_
+                "AssignedUser, ParentId, PredecessorId, SucessorId FROM diashenrique_npm_Data.Task"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -60,7 +61,7 @@ ClassMethod Update(id As %Integer) As %Status
             Set $Property(objTask, key) = $ZDateh($Replace(value,"/",""),8)
         }
         ElseIf (key = "AssignedUser") {
-            Set $Property(objTask, key) = ##class(User.Person).%OpenId(value) 
+            Set $Property(objTask, key) = ##class(diashenrique.npm.Data.Person).%OpenId(value) 
         }	 
         Else {
             Set $Property(objTask, key) = value
@@ -78,23 +79,23 @@ ClassMethod Update(id As %Integer) As %Status
 
 ClassMethod Delete(id As %Integer) As %Status
 {
-    If '##class(User.Task).%ExistsId(id) {
+    If '##class(diashenrique.npm.Data.Task).%ExistsId(id) {
         Set %responde.Status = ..#HTTP404NOTFOUND
         Quit $$$OK	
     }
 
-    Do ##class(User.Task).%DeleteId(id)
+    Do ##class(diashenrique.npm.Data.Task).%DeleteId(id)
 
     Quit $$$OK
 }
 
 ClassMethod NewScheduler() As %Status
 {
-    #dim task As User.Task
+    #dim task As diashenrique.npm.Data.Task
 
-    Set obj = { } .%FromJSON(%request.Content)
+    Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
-    Set objTask = ##class(User.Task).%New()
+    Set objTask = ##class(diashenrique.npm.Data.Task).%New()
 
     Set objTask.TaskName = obj.TaskName
     Set objTask.StartDate = $ZDateh($Replace(obj.StartDate,"/",""),8)
@@ -102,7 +103,7 @@ ClassMethod NewScheduler() As %Status
     Set objTask.Progress = obj.Progress
     Set objTask.Priority = obj.Priority
     Set objTask.Status = obj.Status
-    Set objTask.AssignedUser = ##class(User.Person).%OpenId(obj.AssignedUser)
+    Set objTask.AssignedUser = ##class(diashenrique.npm.Data.Person).%OpenId(obj.AssignedUser)
     ;set objTask.ParentId = obj.ParentId
     ;set objTask.PredecessorId = obj.PredecessorId
     ;set objTask.SucessorId = obj.SucessorId
@@ -122,7 +123,7 @@ ClassMethod GetScheduler(id As %Integer) As %Status
 
     Set %response.ContentType = "application/json"
 
-    Set objTask = ##class(User.Task).%OpenId(id)
+    Set objTask = ##class(diashenrique.npm.Data.Task).%OpenId(id)
     Set obj = { }
 
     Do obj.%Set("id", objTask.%Id())

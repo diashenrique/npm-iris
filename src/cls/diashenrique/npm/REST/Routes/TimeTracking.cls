@@ -13,7 +13,8 @@ ClassMethod List() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, AssignedUser, TaskName, TO_CHAR(StartDate,'YYYY/MM/DD') As StartDate, TO_CHAR(DueDate,'YYYY/MM/DD') As DueDate, Status, Priority, Progress, %EXTERNAL(TrackingStatus) As TrackingStatus, ParentId FROM SQLUser.Task"
+        Set sql = "SELECT ID, AssignedUser, TaskName, TO_CHAR(StartDate,'YYYY/MM/DD') As StartDate, TO_CHAR(DueDate,'YYYY/MM/DD') As DueDate, "_
+                "Status, Priority, Progress, %EXTERNAL(TrackingStatus) As TrackingStatus, ParentId FROM diashenrique_npm_Data.Task"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -49,7 +50,7 @@ ClassMethod List() As %Status
 
 ClassMethod Update(id As %Integer) As %Status
 {
-    Set obj = { } .%FromJSON(%request.Content)
+    Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
     If (id = "") {
         Set %response.Status = ..#HTTP404NOTFOUND
@@ -58,9 +59,9 @@ ClassMethod Update(id As %Integer) As %Status
 
     Set idTimeTracking = ""
 
-    &SQL(SELECT ID INTO :idTimeTracking FROM SQLUser.TimeTracking WHERE TaskId = :id AND UserId = 4 AND EndTracking IS NULL)
+    &SQL(SELECT ID INTO :idTimeTracking FROM diashenrique_npm_Data.TimeTracking WHERE TaskId = :id AND UserId = 4 AND EndTracking IS NULL)
 
-    Set objTimeTracking = ##class(User.TimeTracking).%OpenId(idTimeTracking)
+    Set objTimeTracking = ##class(diashenrique.npm.Data.TimeTracking).%OpenId(idTimeTracking)
 
     Set objTimeTracking.EndTracking = $ZDatetime($Horolog,3)
 
@@ -77,7 +78,7 @@ ClassMethod GetTimeTrackingByTask(id As %Integer) As %Status
 {
     Set %response.ContentType = "application/json"
 
-    Set strTotalTime = ##class(Util.TimeTracking).GetTotalTimeByTask(id)
+    Set strTotalTime = ##class(diashenrique.npm.Util.TimeTracking).GetTotalTimeByTask(id)
 
     Set obj = { } 
 
@@ -92,17 +93,17 @@ ClassMethod NewTimeTracking(pTaskId As %Integer) As %Status
 {
     Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-    Set objTask = ##class(User.Task).%OpenId(pTaskId)
+    Set objTask = ##class(diashenrique.npm.Data.Task).%OpenId(pTaskId)
 
     If '$IsObject(objTask) {
         Set %response.Status = ..#HTTP404NOTFOUND
         Quit $$$OK
     }
 
-    Set objTimeTracking = ##class(User.TimeTracking).%New()
+    Set objTimeTracking = ##class(diashenrique.npm.Data.TimeTracking).%New()
 
     Set objTimeTracking.TaskId = objTask
-    Set objTimeTracking.UserId = ##class(User.Person).%OpenId(4)
+    Set objTimeTracking.UserId = ##class(diashenrique.npm.Data.Person).%OpenId(4)
 
     If obj.%IsDefined("StartTracking") {
         Set objTimeTracking.StartTracking = obj.StartTracking	

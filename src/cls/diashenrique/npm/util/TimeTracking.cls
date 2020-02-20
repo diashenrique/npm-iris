@@ -5,7 +5,7 @@ ClassMethod GetTotalTimeByTask(pTaskId) As %Integer
 {
     Set TotalTime = ""
 
-    &SQL(SELECT SUM({fn TIMESTAMPDIFF(SQL_TSI_SECOND, StartTracking, EndTracking)}) as Seconds INTO :TotalTime FROM SQLUser.TimeTracking WHERE TaskId = :pTaskId GROUP BY TaskId)
+    &SQL(SELECT SUM({fn TIMESTAMPDIFF(SQL_TSI_SECOND, StartTracking, EndTracking)}) as Seconds INTO :TotalTime FROM diashenrique_npm_Data.TimeTracking WHERE TaskId = :pTaskId GROUP BY TaskId)
 
     Quit ..CalcTimeConsumed(TotalTime)
 }

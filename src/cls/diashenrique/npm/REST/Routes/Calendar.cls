@@ -81,21 +81,21 @@ ClassMethod Update(id As %Integer) As %Status
 
 ClassMethod Delete(id As %Integer) As %Status
 {
-	If '##class(User.Person).%ExistsId(id) {
+	If '##class(diashenrique.npm.Data.Person).%ExistsId(id) {
 		Set %responde.Status = "404 AQUI"
 		Quit $$$OK	
 	}
 
-	Do ##class(User.Person).%DeleteId(id)
+	Do ##class(diashenrique.npm.Data.Person).%DeleteId(id)
 
 	Quit $$$OK
 }
 
 ClassMethod NewCalendar() As %Status
 {
-	Set obj = { } .%FromJSON(%request.Content)
+	Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
-	Set user = ##class(User.Person).%New()
+	Set user = ##class(diashenrique.npm.Data.Person).%New()
 
 	Set user.UserName = obj.UserName
 	Set user.Name = obj.Name
@@ -116,7 +116,7 @@ ClassMethod GetCalendar(id As %Integer) As %Status
 
 	Set %response.ContentType = "application/json"
 
-	Set user = ##class(User.Person).%OpenId(id)
+	Set user = ##class(diashenrique.npm.Data.Person).%OpenId(id)
 	Set obj = { }
 
 	Do obj.%Set("id", user.%Id())

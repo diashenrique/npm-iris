@@ -1,5 +1,5 @@
 /// Teams Definition 
-Class diashenrique.npm.User.Team Extends (%Library.Persistent, %XML.Adaptor, %Library.Populate)
+Class diashenrique.npm.Data.Team Extends (%Persistent, %JSON.Adaptor)
 {
 
 Property TeamName As %String [ Required ];
@@ -28,12 +28,12 @@ Storage Default
 <Value>Active</Value>
 </Value>
 </Data>
-<DataLocation>^User.TeamD</DataLocation>
+<DataLocation>^diashenrique.npm.Data.TeamD</DataLocation>
 <DefaultData>TeamDefaultData</DefaultData>
-<IdLocation>^User.TeamD</IdLocation>
-<IndexLocation>^User.TeamI</IndexLocation>
-<StreamLocation>^User.TeamS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<IdLocation>^diashenrique.npm.Data.TeamD</IdLocation>
+<IndexLocation>^diashenrique.npm.Data.TeamI</IndexLocation>
+<StreamLocation>^diashenrique.npm.Data.TeamS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }

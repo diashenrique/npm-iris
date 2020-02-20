@@ -1,4 +1,4 @@
-Class diashenrique.npm.User.Scheduler Extends (%Library.Persistent, %XML.Adaptor, %Library.Populate)
+Class diashenrique.npm.Data.Scheduler Extends (%Persistent, %JSON.Adaptor)
 {
 
 Property Description As %String;
@@ -38,12 +38,12 @@ Storage Default
 <Value>Priority</Value>
 </Value>
 </Data>
-<DataLocation>^User.SchedulerD</DataLocation>
+<DataLocation>^diashenrique.npm4900.SchedulerD</DataLocation>
 <DefaultData>SchedulerDefaultData</DefaultData>
-<IdLocation>^User.SchedulerD</IdLocation>
-<IndexLocation>^User.SchedulerI</IndexLocation>
-<StreamLocation>^User.SchedulerS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<IdLocation>^diashenrique.npm4900.SchedulerD</IdLocation>
+<IndexLocation>^diashenrique.npm4900.SchedulerI</IndexLocation>
+<StreamLocation>^diashenrique.npm4900.SchedulerS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }

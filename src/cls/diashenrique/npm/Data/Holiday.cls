@@ -1,7 +1,7 @@
-Class diashenrique.npm.User.Holiday Extends (%Library.Persistent, %XML.Adaptor, %Library.Populate)
+Class diashenrique.npm.Data.Holiday Extends (%Persistent, %JSON.Adaptor)
 {
 
-Property Calendar As User.Calendar;
+Property Calendar As diashenrique.npm.Data.Calendar;
 
 Property Code As %String;
 
@@ -20,27 +20,21 @@ Storage Default
 <Value>%%CLASSNAME</Value>
 </Value>
 <Value name="2">
-<Value>Calendar</Value>
-</Value>
-<Value name="3">
-<Value>Code</Value>
-</Value>
-<Value name="4">
 <Value>HolidayDescription</Value>
 </Value>
-<Value name="5">
+<Value name="3">
 <Value>HolidayDate</Value>
 </Value>
-<Value name="6">
+<Value name="4">
 <Value>Remarks</Value>
 </Value>
 </Data>
-<DataLocation>^User.HolidayD</DataLocation>
+<DataLocation>^diashenrique.npm.Data.HolidayD</DataLocation>
 <DefaultData>HolidayDefaultData</DefaultData>
-<IdLocation>^User.HolidayD</IdLocation>
-<IndexLocation>^User.HolidayI</IndexLocation>
-<StreamLocation>^User.HolidayS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<IdLocation>^diashenrique.npm.Data.HolidayD</IdLocation>
+<IndexLocation>^diashenrique.npm.Data.HolidayI</IndexLocation>
+<StreamLocation>^diashenrique.npm.Data.HolidayS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }

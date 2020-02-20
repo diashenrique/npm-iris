@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <script language="Cache" runat="server">
-	set URLPreparacao = "REST.User.cls"
+	set URLPreparacao = "diashenrique.npm.REST.User.cls"
 </script>
 <head>
     <!-- Required meta tags -->

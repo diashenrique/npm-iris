@@ -13,7 +13,8 @@ ClassMethod List() As %Status
 
 		Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID,UserName,Name,email,%External(DateOfBirth) as DateOfBirth,JobTitle,Company,ProfileHeading,PhotoProfile,Active,Password FROM SQLUser.Person"
+        Set sql = "SELECT ID,UserName,Name,email,%External(DateOfBirth) as DateOfBirth,JobTitle,Company,ProfileHeading,PhotoProfile,Active,"_
+				"Password FROM diashenrique_npm_Data.Person"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -53,7 +54,7 @@ ClassMethod Update(id As %Integer) As %Status
 {
 	Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-	Set objUser = ##class(User.Person).%OpenId(id)
+	Set objUser = ##class(diashenrique.npm.Data.Person).%OpenId(id)
 
 	If '$IsObject(objUser) {
 		Set %response.Status = ..#HTTP404NOTFOUND
@@ -81,21 +82,21 @@ ClassMethod Update(id As %Integer) As %Status
 
 ClassMethod Delete(id As %Integer) As %Status
 {
-	If '##class(User.Person).%ExistsId(id) {
+	If '##class(diashenrique.npm.Data.Person).%ExistsId(id) {
 		Set %responde.Status = "404 AQUI"
 		Quit $$$OK	
 	}
 
-	Do ##class(User.Person).%DeleteId(id)
+	Do ##class(diashenrique.npm.Data.Person).%DeleteId(id)
 
 	Quit $$$OK
 }
 
 ClassMethod NewUser() As %Status
 {
-	Set obj = { } .%FromJSON(%request.Content)
+	Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
-	Set user = ##class(User.Person).%New()
+	Set user = ##class(diashenrique.npm.Data.Person).%New()
 
 	Set user.UserName = obj.UserName
 	Set user.Name = obj.Name
@@ -116,7 +117,7 @@ ClassMethod GetUser(id As %Integer) As %Status
 
 	Set %response.ContentType = "application/json"
 
-	Set user = ##class(User.Person).%OpenId(id)
+	Set user = ##class(diashenrique.npm.Data.Person).%OpenId(id)
 	Set obj = { }
 
 	Do obj.%Set("id", user.%Id())
@@ -145,7 +146,7 @@ ClassMethod Lookup() As %Status
 
 		Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT %ID, UserName, Name FROM SQLUser.Person"
+        Set sql = "SELECT %ID, UserName, Name FROM diashenrique_npm_Data.Person"
 
         Set tSC = oRS.%Prepare(sql)
 

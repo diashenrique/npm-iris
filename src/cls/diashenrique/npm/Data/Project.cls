@@ -1,4 +1,4 @@
-Class diashenrique.npm.User.Project Extends (%Library.Persistent, %XML.Adaptor, %Library.Populate)
+Class diashenrique.npm.Data.Project Extends (%Persistent, %JSON.Adaptor)
 {
 
 Property Code As %String;
@@ -38,12 +38,12 @@ Storage Default
 <Value>Remarks</Value>
 </Value>
 </Data>
-<DataLocation>^User.ProjectD</DataLocation>
+<DataLocation>^diashenrique.npm.Data.ProjectD</DataLocation>
 <DefaultData>ProjectDefaultData</DefaultData>
-<IdLocation>^User.ProjectD</IdLocation>
-<IndexLocation>^User.ProjectI</IndexLocation>
-<StreamLocation>^User.ProjectS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<IdLocation>^diashenrique.npm.Data.ProjectD</IdLocation>
+<IndexLocation>^diashenrique.npm.Data.ProjectI</IndexLocation>
+<StreamLocation>^diashenrique.npm.Data.ProjectS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }

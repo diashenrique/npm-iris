@@ -1,10 +1,10 @@
 /// Members of the Teams
-Class diashenrique.npm.User.TeamMember Extends (%Library.Persistent, %XML.Adaptor, %Library.Populate)
+Class diashenrique.npm.Data.TeamMember Extends (%Persistent, %JSON.Adaptor)
 {
 
-Property Team As User.Team;
+Property Team As diashenrique.npm.Data.Team;
 
-Property Member As User.Person;
+Property Member As diashenrique.npm.Data.Person;
 
 Property Active As %Boolean;
 
@@ -27,12 +27,12 @@ Storage Default
 <Value>Responsibility</Value>
 </Value>
 </Data>
-<DataLocation>^User.TeamMemberD</DataLocation>
+<DataLocation>^diashenrique.np4900.TeamMemberD</DataLocation>
 <DefaultData>TeamMemberDefaultData</DefaultData>
-<IdLocation>^User.TeamMemberD</IdLocation>
-<IndexLocation>^User.TeamMemberI</IndexLocation>
-<StreamLocation>^User.TeamMemberS</StreamLocation>
-<Type>%Library.CacheStorage</Type>
+<IdLocation>^diashenrique.np4900.TeamMemberD</IdLocation>
+<IndexLocation>^diashenrique.np4900.TeamMemberI</IndexLocation>
+<StreamLocation>^diashenrique.np4900.TeamMemberS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }

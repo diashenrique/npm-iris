@@ -13,7 +13,7 @@ ClassMethod List() As %Status
 
 		Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, TeamName, Description, Active FROM SQLUser.Team"
+        Set sql = "SELECT ID, TeamName, Description, Active FROM diashenrique_npm_Data.Team"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -51,7 +51,7 @@ ClassMethod Update(id As %Integer) As %Status
 {
 	Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-	Set objTeam = ##class(User.Team).%OpenId(id)
+	Set objTeam = ##class(diashenrique.npm.Data.Team).%OpenId(id)
 
 	If '$IsObject(objTeam) {
 		Set %response.Status = ..#HTTP404NOTFOUND
@@ -81,10 +81,10 @@ ClassMethod Update(id As %Integer) As %Status
 			Set iter = obj.MemberID.%GetIterator()
 			While iter.%GetNext(.key , .value )  {
 				// Each value has the User ID 
-				If '##class(User.TeamMember).%ExistsId(id_"||"_value) {
-					Set tTeamMember = ##class(User.TeamMember).%New()
-					Set tTeamMember.Team = ##class(User.Team).%OpenId(id)
-					Set tTeamMember.Member = ##class(User.Person).%OpenId(value)
+				If '##class(diashenrique.npm.Data.TeamMember).%ExistsId(id_"||"_value) {
+					Set tTeamMember = ##class(diashenrique.npm.Data.TeamMember).%New()
+					Set tTeamMember.Team = ##class(diashenrique.npm.Data.Team).%OpenId(id)
+					Set tTeamMember.Member = ##class(diashenrique.npm.Data.Person).%OpenId(value)
 					Set tTeamMember.Active = 1
 					Set tSC = tTeamMember.%Save()
 				}
@@ -107,19 +107,19 @@ ClassMethod Update(id As %Integer) As %Status
 
 ClassMethod Delete(id As %Integer) As %Status
 {
-	If '##class(User.Team).%ExistsId(id) {
+	If '##class(diashenrique.npm.Data.Team).%ExistsId(id) {
 		Set %responde.Status = ..#HTTP404NOTFOUND
 		Quit $$$OK	
 	}
 
-	Do ##class(User.Team).%DeleteId(id)
+	Do ##class(diashenrique.npm.Data.Team).%DeleteId(id)
 
 	Quit $$$OK
 }
 
 ClassMethod NewTeam() As %Status
 {
-	Set obj = { } .%FromJSON(%request.Content)
+	Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
 	Set objTeam = ##class(User.Team).%New()
 
@@ -135,10 +135,10 @@ ClassMethod NewTeam() As %Status
 			Set iter = obj.MemberID.%GetIterator()
 			While iter.%GetNext(.key , .value )  {
 				// Each value has the User ID 
-				If '##class(User.TeamMember).%ExistsId(objTeam.%Id()_"||"_value) {
-					Set tTeamMember = ##class(User.TeamMember).%New()
+				If '##class(diashenrique.npm.Data.TeamMember).%ExistsId(objTeam.%Id()_"||"_value) {
+					Set tTeamMember = ##class(diashenrique.npm.Data.TeamMember).%New()
 					Set tTeamMember.Team = objTeam
-					Set tTeamMember.Member = ##class(User.Person).%OpenId(value)
+					Set tTeamMember.Member = ##class(diashenrique.npm.Data.Person).%OpenId(value)
 					Set tTeamMember.Active = 1
 					Set tSC = tTeamMember.%Save()
 				}
@@ -155,7 +155,7 @@ ClassMethod GetTeam(id As %Integer) As %Status
 
 	Set %response.ContentType = "application/json"
 
-	Set objTeam = ##class(User.Team).%OpenId(id)
+	Set objTeam = ##class(diashenrique.npm.Data.Team).%OpenId(id)
 	Set obj = { }
 
 	Do obj.%Set("id", objTeam.%Id())

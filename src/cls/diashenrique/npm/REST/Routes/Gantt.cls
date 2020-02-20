@@ -12,7 +12,8 @@ ClassMethod List() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, AssignedUser, TaskName, %EXTERNAL(StartDate) as StartDate, %EXTERNAL(DueDate) as DueDate, Status, Priority, Progress, NVL(ParentId,0) as ParentId, PredecessorId, SucessorId FROM SQLUser.Task"
+        Set sql = "SELECT ID, AssignedUser, TaskName, %EXTERNAL(StartDate) as StartDate, %EXTERNAL(DueDate) as DueDate, Status, Priority, Progress, "_
+                "NVL(ParentId,0) as ParentId, PredecessorId, SucessorId FROM diashenrique_npm_Data.Task"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -50,7 +51,7 @@ ClassMethod Update(id As %Integer) As %Status
 {
     Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-    Set objTask = ##class(User.Task).%OpenId(id)
+    Set objTask = ##class(diashenrique.npm.Data.Task).%OpenId(id)
 
     If '$IsObject(objTask) {
         Set %response.Status = ..#HTTP404NOTFOUND
@@ -84,7 +85,7 @@ ClassMethod GetTask(id As %Integer) As %Status
 
     Set %response.ContentType = "application/json"
 
-    Set objTask = ##class(User.Task).%OpenId(id)
+    Set objTask = ##class(diashenrique.npm.Data.Task).%OpenId(id)
     Set obj = { }
 
     Do obj.%Set("id", objTask.%Id())
@@ -106,11 +107,11 @@ ClassMethod GetTask(id As %Integer) As %Status
 
 ClassMethod NewTask() As %Status
 {
-    #dim task As User.Task
+    #dim task As diashenrique.npm.Data.Task
 
-    Set obj = { } .%FromJSON(%request.Content)
+    Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
-    Set objTask = ##class(User.Task).%New()
+    Set objTask = ##class(diashenrique.npm.Data.Task).%New()
 
     Set objTask.TaskName = obj.TaskName
     Set objTask.StartDate = $ZDateh($Replace(obj.StartDate,"/",""),8)
@@ -134,12 +135,12 @@ ClassMethod NewTask() As %Status
 
 ClassMethod Delete(id As %Integer) As %Status
 {
-    If '##class(User.Task).%ExistsId(id) {
+    If '##class(diashenrique.npm.Data.Task).%ExistsId(id) {
         Set %responde.Status = ..#HTTP404NOTFOUND
         Quit $$$OK	
     }
 
-    Do ##class(User.Task).%DeleteId(id)
+    Do ##class(diashenrique.npm.Data.Task).%DeleteId(id)
 
     Quit $$$OK
 }
@@ -155,7 +156,7 @@ ClassMethod Dependence() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, PredecessorId, SucessorId, Type FROM SQLUser.TaskDependence"
+        Set sql = "SELECT ID, PredecessorId, SucessorId, Type FROM diashenrique_npm_Data.TaskDependence"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -191,14 +192,14 @@ ClassMethod Dependence() As %Status
 
 ClassMethod NewTaskDependence() As %Status
 {
-    #dim objTaskDependence As User.TaskDependence
+    #dim objTaskDependence As diashenrique.npm.Data.TaskDependence
 
     Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-    Set objTaskDependence = ##class(User.TaskDependence).%New()
+    Set objTaskDependence = ##class(diashenrique.npm.Data.TaskDependence).%New()
 
-    Set objTaskDependence.PredecessorId = ##class(User.Task).%OpenId(obj.PredecessorId)
-    Set objTaskDependence.SucessorId = ##class(User.Task).%OpenId(obj.SucessorId)
+    Set objTaskDependence.PredecessorId = ##class(diashenrique.npm.Data.Task).%OpenId(obj.PredecessorId)
+    Set objTaskDependence.SucessorId = ##class(diashenrique.npm.Data.Task).%OpenId(obj.SucessorId)
     Set objTaskDependence.Type = obj.Type
 
     Set tSC = objTaskDependence.%Save()
@@ -215,7 +216,7 @@ ClassMethod GetTaskDependence(id As %Integer) As %Status
 
     Set %response.ContentType = "application/json"
 
-    Set objTaskDependence = ##class(User.TaskDependence).%OpenId(id)
+    Set objTaskDependence = ##class(diashenrique.npm.Data.TaskDependence).%OpenId(id)
     Set obj = { }
 
     Do obj.%Set("id", objTaskDependence.%Id())
@@ -232,7 +233,7 @@ ClassMethod UpdateDependence(id As %Integer) As %Status
 {
     Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-    Set objTaskDependence = ##class(User.TaskDependence).%OpenId(id)
+    Set objTaskDependence = ##class(diashenrique.npm.Data.TaskDependence).%OpenId(id)
 
     If '$IsObject(objTaskDependence) {
         Set %response.Status = ..#HTTP404NOTFOUND
@@ -242,7 +243,7 @@ ClassMethod UpdateDependence(id As %Integer) As %Status
     Set iter = obj.%GetIterator()
     While iter.%GetNext(.key , .value )  {
         If ((key = "PredecessorId") || (key = "SucessorId")) {
-            Set $Property(objTaskDependence, key) = ##class(User.Task).%OpenId(value)
+            Set $Property(objTaskDependence, key) = ##class(diashenrique.npm.Data.Task).%OpenId(value)
         }
         Else {
             Set $Property(objTaskDependence, key) = value
@@ -260,12 +261,12 @@ ClassMethod UpdateDependence(id As %Integer) As %Status
 
 ClassMethod DeleteDependence(id As %Integer) As %Status
 {
-    If '##class(User.TaskDependence).%ExistsId(id) {
+    If '##class(diashenrique.npm.Data.TaskDependence).%ExistsId(id) {
         Set %responde.Status = ..#HTTP404NOTFOUND
         Quit $$$OK	
     }
 
-    Do ##class(User.TaskDependence).%DeleteId(id)
+    Do ##class(diashenrique.npm.Data.TaskDependence).%DeleteId(id)
 
     Quit $$$OK
 }
@@ -281,7 +282,7 @@ ClassMethod Resource() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, UserName FROM SQLUser.Person"
+        Set sql = "SELECT ID, UserName FROM diashenrique_npm_Data.Person"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -326,7 +327,7 @@ ClassMethod ResourceAssignment() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, AssignedUser FROM SQLUser.Task"
+        Set sql = "SELECT ID, AssignedUser FROM diashenrique_npm_Data.Task"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -364,7 +365,7 @@ ClassMethod UpdateResourceAssignment(id As %Integer) As %Status
 {
     Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-    Set objTask = ##class(User.Task).%OpenId(id)
+    Set objTask = ##class(diashenrique.npm.Data.Task).%OpenId(id)
 
     If '$IsObject(objTask) {
         Set %response.Status = ..#HTTP404NOTFOUND
@@ -374,7 +375,7 @@ ClassMethod UpdateResourceAssignment(id As %Integer) As %Status
     Set iter = obj.%GetIterator()
     While iter.%GetNext(.key , .value )  {
         If (key = "AssignedUser") {
-            Set $Property(objTask, key) = ##class(User.Person).%OpenId(value) 
+            Set $Property(objTask, key) = ##class(diashenrique.npm.Data.Person).%OpenId(value) 
         }	 
         Else {
             Set $Property(objTask, key) = value

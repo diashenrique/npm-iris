@@ -331,7 +331,7 @@
     	var urlPreparacao = '#(URLPreparacao)#';
     	
     	var urlOrigin = window.location.origin;
-    	var urlREST = urlOrigin + "/isproject/rest/";
+    	var urlREST = urlOrigin + "/npm/rest";
     	
 		$(document).ready(function () {
 			var searchBox = $("#searchBox").dxSelectBox({

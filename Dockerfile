@@ -1,3 +1,5 @@
+ARG IMAGE=store/intersystems/iris-community:2019.3.0.309.0
+ARG IMAGE=store/intersystems/iris-community:2019.4.0.379.0
 ARG IMAGE=store/intersystems/iris-community:2019.4.0.383.0
 FROM $IMAGE
 
@@ -25,7 +27,7 @@ RUN \
     do $SYSTEM.OBJ.Load("Installer.cls", "ck") \
     set sc = ##class(App.Installer).setup() \
     do $system.OBJ.Load("/tmp/deps/zpm.xml", "ck") \
-    zn "NPM" 
+    zn "NPM"
 
 # bringing the standard shell back
 SHELL ["/bin/bash", "-c"]

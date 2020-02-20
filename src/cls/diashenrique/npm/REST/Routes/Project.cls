@@ -13,7 +13,7 @@ ClassMethod List() As %Status
 
 		Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, Code, Description, Status, %External(BeginDate) As BeginDate, %External(EndDate) As EndDate, Remarks FROM SQLUser.Project"
+        Set sql = "SELECT ID, Code, Description, Status, %External(BeginDate) As BeginDate, %External(EndDate) As EndDate, Remarks FROM diashenrique_npm_Data.Project"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -53,7 +53,7 @@ ClassMethod Update(id As %Integer) As %Status
 {
 	Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-	Set objProject = ##class(User.Project).%OpenId(id)
+	Set objProject = ##class(diashenrique.npm.Data.Project).%OpenId(id)
 
 	If '$IsObject(objProject) {
 		Set %response.Status = ..#HTTP404NOTFOUND
@@ -81,21 +81,21 @@ ClassMethod Update(id As %Integer) As %Status
 
 ClassMethod Delete(id As %Integer) As %Status
 {
-	If '##class(User.Project).%ExistsId(id) {
-		Set %responde.Status = "404 AQUI"
+	If '##class(diashenrique.npm.Data.Project).%ExistsId(id) {
+		Set %responde.Status = ..#HTTP404NOTFOUND
 		Quit $$$OK	
 	}
 
-	Do ##class(User.Project).%DeleteId(id)
+	Do ##class(diashenrique.npm.Data.Project).%DeleteId(id)
 
 	Quit $$$OK
 }
 
 ClassMethod NewProject() As %Status
 {
-	Set obj = { } .%FromJSON(%request.Content)
+	Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
-	Set project = ##class(User.Project).%New()
+	Set project = ##class(diashenrique.npm.Data.Project).%New()
 
 	Set project.Code = obj.Code
 	Set project.Description = obj.Description
@@ -114,7 +114,7 @@ ClassMethod GetProject(id As %Integer) As %Status
 
 	Set %response.ContentType = "application/json"
 
-	Set project = ##class(User.Project).%OpenId(id)
+	Set project = ##class(diashenrique.npm.Data.Project).%OpenId(id)
 	Set obj = { }
 
 	Do obj.%Set("id", project.%Id())
@@ -141,7 +141,7 @@ ClassMethod Lookup() As %Status
 
 		Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT %ID, Code, Description FROM SQLUser.Project"
+        Set sql = "SELECT %ID, Code, Description FROM diashenrique_npm_Data.Project"
 
         Set tSC = oRS.%Prepare(sql)
 

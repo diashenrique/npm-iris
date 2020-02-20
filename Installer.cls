@@ -3,8 +3,6 @@ Include %occInclude
 Class App.Installer
 {
 
-Parameter Namespace = "NPM";
-
 XData MyInstall [ XMLNamespace = INSTALLER ]
 {
 <Manifest>
@@ -23,10 +21,10 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
       <Database Name="${DBNAME}" Dir="${MGRDIR}data" Create="yes" Resource="${RESOURCE}" MountAtStartup="true"/>
     </Configuration>
     <CSPApplication Url="${CSPURL}" Directory="${APPPATH}csp/" AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="1" ServeFiles="1"/>
-    <Import File="${SOURCESPATH}" Recurse="1"/>
+    <Import File="${SOURCESPATH}/cls" Recurse="1"/>
   </Namespace>
 
-  <Invoke Class="App.Installer" Method="createRESTApp" />
+  <Invoke Class="App.Installer" Method="createRESTApp">
     <Arg Value="${RESTPATH}"/>
     <Arg Value="${NAMESPACE}"/>
   </Invoke>
@@ -35,19 +33,18 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
     <Arg Value="${CSPURL}"/>
     <Arg Value="${NAMESPACE}"/>
   </Invoke>
+
 </Manifest>
 }
 
 ClassMethod setup(ByRef pVars, pLogLevel As %Integer = 3, pInstaller As %Installer.Installer, pLogger As %Installer.AbstractLogger) As %Status [ CodeMode = objectgenerator, Internal ]
 {
-  Return ##class(%Installer.Manifest).%Generate(%compiledclass, %code, "MyInstall")
+  Quit ##class(%Installer.Manifest).%Generate(%compiledclass, %code, "MyInstall")
 }
 
 /// Modify web app REST
-ClassMethod createRESTApp(appName As %String pNamespace As %String) As %Status
+ClassMethod createRESTApp(appName As %String, pNamespace As %String) As %Status
 {
-  Set:$Extract(appName)'="/" appName = "/" _ appName
-
   #dim sc As %Status = $$$OK
 
   New $Namespace

@@ -9,6 +9,6 @@ services:
       - ${IRIS_PORT}:52773
       - 53773
     volumes:
+      - ./src/csp:/opt/irisapp/csp
       - ~/iris.key:/usr/irissys/mgr/iris.key
       - ./:/irisdev/app
-      - ./src/csp:/opt/irisapp/csp
