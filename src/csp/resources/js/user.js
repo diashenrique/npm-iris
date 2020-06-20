@@ -1,13 +1,13 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/npm/rest";
+var urlREST = urlOrigin + "/npm/api";
 
-$(document).ready(function() {
+$(document).ready(function () {
   var userStore = new DevExpress.data.CustomStore({
     key: "ID",
-    load: function() {
+    load: function () {
       return $.getJSON(urlREST + "/user");
     },
-    insert: function(values) {
+    insert: function (values) {
       return $.ajax({
         url: urlREST + "/user",
         method: "POST",
@@ -16,7 +16,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    update: function(key, values) {
+    update: function (key, values) {
       return $.ajax({
         url: urlREST + "/user/" + encodeURIComponent(key),
         method: "PUT",
@@ -25,7 +25,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    remove: function(key) {
+    remove: function (key) {
       return $.ajax({
         url: urlREST + "/user/" + encodeURIComponent(key),
         method: "DELETE"
@@ -56,33 +56,31 @@ $(document).ready(function() {
           }
         },
         form: {
-          items: [
-            {
-              itemType: "group",
-              colCount: 2,
-              colSpan: 2,
-              items: [
-                "UserName",
-                "Name",
-                "Company",
-                "JobTitle",
-                "email",
-                "DateOfBirth",
-                {
-                  colSpan: 2,
-                  dataField: "ProfileHeading",
-                  editorType: "dxTextArea",
-                  editorOptions: {
-                    placeholder: "Add notes..."
-                  }
-                },
-                {
-                  dataField: "Active",
-                  colSpan: 2
+          items: [{
+            itemType: "group",
+            colCount: 2,
+            colSpan: 2,
+            items: [
+              "UserName",
+              "Name",
+              "Company",
+              "JobTitle",
+              "email",
+              "DateOfBirth",
+              {
+                colSpan: 2,
+                dataField: "ProfileHeading",
+                editorType: "dxTextArea",
+                editorOptions: {
+                  placeholder: "Add notes..."
                 }
-              ]
-            }
-          ]
+              },
+              {
+                dataField: "Active",
+                colSpan: 2
+              }
+            ]
+          }]
         }
       },
       searchPanel: {
@@ -92,31 +90,25 @@ $(document).ready(function() {
       paging: {
         pageSize: 15
       },
-      columns: [
-        {
+      columns: [{
           dataField: "ID",
           visible: false
         },
         {
           dataField: "UserName",
-          validationRules: [
-            {
-              type: "required"
-            }
-          ]
+          validationRules: [{
+            type: "required"
+          }]
         },
         {
           dataField: "Name",
-          validationRules: [
-            {
-              type: "required"
-            }
-          ]
+          validationRules: [{
+            type: "required"
+          }]
         },
         {
           dataField: "email",
-          validationRules: [
-            {
+          validationRules: [{
               type: "required"
             },
             {
@@ -127,11 +119,9 @@ $(document).ready(function() {
         {
           dataField: "DateOfBirth",
           dataType: "date",
-          validationRules: [
-            {
-              type: "required"
-            }
-          ]
+          validationRules: [{
+            type: "required"
+          }]
         },
         {
           dataField: "JobTitle"

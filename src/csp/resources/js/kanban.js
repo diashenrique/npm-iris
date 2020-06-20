@@ -1,5 +1,5 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/npm/rest";
+var urlREST = urlOrigin + "/npm/api";
 
 var tasks, idTask, newStatus;
 

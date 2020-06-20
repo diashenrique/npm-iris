@@ -9,8 +9,8 @@ XData MyInstall [ XMLNamespace = INSTALLER ]
   <Default Name="NAMESPACE" Value="NPM"/>
   <Default Name="DBNAME" Value="NPM"/>
   <Default Name="APPPATH" Dir="/opt/irisapp/" />
-  <Default Name="CSPURL" Dir="/csp/npm" />
-  <Default Name="RESTPATH" Dir="/npm/rest" />
+  <Default Name="CSPURL" Dir="/npm" />
+  <Default Name="RESTPATH" Dir="/npm/api" />
   <Default Name="SOURCESPATH" Dir="${APPPATH}src" />
   <Default Name="RESOURCE" Value="%DB_${DBNAME}" /> 
 

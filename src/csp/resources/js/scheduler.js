@@ -1,13 +1,13 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/npm/rest";
+var urlREST = urlOrigin + "/npm/api";
 
-$(document).ready(function() {
+$(document).ready(function () {
   var calendarStore = new DevExpress.data.DataSource({
     key: "ID",
-    load: function() {
+    load: function () {
       return $.getJSON(urlREST + "/scheduler");
     },
-    insert: function(values) {
+    insert: function (values) {
       return $.ajax({
         url: urlREST + "/scheduler",
         method: "POST",
@@ -16,7 +16,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    update: function(key, values) {
+    update: function (key, values) {
       return $.ajax({
         url: urlREST + "/scheduler/" + encodeURIComponent(key),
         method: "PUT",
@@ -25,7 +25,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    remove: function(key) {
+    remove: function (key) {
       return $.ajax({
         url: urlREST + "/scheduler/" + encodeURIComponent(key),
         method: "DELETE"
@@ -41,56 +41,54 @@ $(document).ready(function() {
     startDayHour: 9,
     height: 650,
     recurrenceEditMode: "series",
-    onAppointmentContextMenu: function(e) {
+    onAppointmentContextMenu: function (e) {
       var contextMenuEvent = e;
 
       $("#appointment-context-menu").dxContextMenu({
         dataSource: appointmentContextMenuItems,
         width: 200,
         target: ".dx-scheduler-appointment",
-        itemTemplate: function(itemData) {
+        itemTemplate: function (itemData) {
           var template = getAppointmentMenuTemplate(itemData);
           return template;
         },
-        onItemClick: function(e) {
+        onItemClick: function (e) {
           if (!e.itemData.items && e.itemData.onItemClick) {
             e.itemData.onItemClick(contextMenuEvent, e);
           }
         }
       });
     },
-    onCellContextMenu: function(e) {
+    onCellContextMenu: function (e) {
       var contextMenuEvent = e;
 
       $("#context-menu").dxContextMenu({
         dataSource: cellContextMenuItems,
         width: 200,
         target: ".dx-scheduler-date-table-cell",
-        onItemClick: function(e) {
+        onItemClick: function (e) {
           e.itemData.onItemClick(contextMenuEvent);
         }
       });
     }
   });
 
-  var createAppointment = function(e) {
+  var createAppointment = function (e) {
     var scheduler = e.component,
       data = e.cellData;
 
-    scheduler.showAppointmentPopup(
-      {
+    scheduler.showAppointmentPopup({
         startDate: data.startDate
       },
       true
     );
   };
 
-  var createRecurringAppointment = function(e) {
+  var createRecurringAppointment = function (e) {
     var scheduler = e.component,
       data = e.cellData;
 
-    scheduler.showAppointmentPopup(
-      {
+    scheduler.showAppointmentPopup({
         startDate: data.startDate,
         recurrenceRule: "FREQ=DAILY"
       },
@@ -98,27 +96,27 @@ $(document).ready(function() {
     );
   };
 
-  var showCurrentDate = function(e) {
+  var showCurrentDate = function (e) {
     var scheduler = e.component;
 
     scheduler.option("currentDate", new Date());
   };
 
-  var showAppointment = function(e) {
+  var showAppointment = function (e) {
     var scheduler = e.component,
       itemData = e.appointmentData;
 
     scheduler.showAppointmentPopup(itemData);
   };
 
-  var deleteAppointment = function(e) {
+  var deleteAppointment = function (e) {
     var scheduler = e.component,
       itemData = e.appointmentData;
 
     scheduler.deleteAppointment(itemData);
   };
 
-  var repeatAppointmentWeekly = function(e) {
+  var repeatAppointmentWeekly = function (e) {
     var scheduler = e.component,
       itemData = e.appointmentData,
       targetedAppointmentData = e.targetedAppointmentData;
@@ -132,7 +130,7 @@ $(document).ready(function() {
     );
   };
 
-  var setResource = function(e, clickEvent) {
+  var setResource = function (e, clickEvent) {
     var scheduler = e.component,
       itemData = e.appointmentData;
 
@@ -144,8 +142,7 @@ $(document).ready(function() {
     );
   };
 
-  var cellContextMenuItems = [
-    {
+  var cellContextMenuItems = [{
       text: "New Appointment",
       onItemClick: createAppointment
     },
@@ -159,8 +156,7 @@ $(document).ready(function() {
     }
   ];
 
-  var appointmentContextMenuItems = [
-    {
+  var appointmentContextMenuItems = [{
       text: "Open",
       onItemClick: showAppointment
     },
@@ -175,7 +171,7 @@ $(document).ready(function() {
     }
   ];
 
-  var getAppointmentMenuTemplate = function(itemData) {
+  var getAppointmentMenuTemplate = function (itemData) {
     var template = $("<div></div>");
 
     if (itemData.color) {

@@ -1,14 +1,14 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/npm/rest";
+var urlREST = urlOrigin + "/npm/api";
 var idFormPopup;
 
-$(document).ready(function() {
+$(document).ready(function () {
   var userStore = new DevExpress.data.CustomStore({
     key: "ID",
-    load: function() {
+    load: function () {
       return $.getJSON(urlREST + "/team");
     },
-    insert: function(values) {
+    insert: function (values) {
       return $.ajax({
         url: urlREST + "/team",
         method: "POST",
@@ -17,7 +17,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    update: function(key, values) {
+    update: function (key, values) {
       return $.ajax({
         url: urlREST + "/team/" + encodeURIComponent(key),
         method: "PUT",
@@ -26,7 +26,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    remove: function(key) {
+    remove: function (key) {
       return $.ajax({
         url: urlREST + "/team/" + encodeURIComponent(key),
         method: "DELETE"
@@ -38,7 +38,7 @@ $(document).ready(function() {
     store: new DevExpress.data.CustomStore({
       key: "ID",
       loadMode: "raw",
-      load: function() {
+      load: function () {
         return $.getJSON(urlREST + "/user/lookup");
       }
     }),
@@ -68,38 +68,43 @@ $(document).ready(function() {
           }
         },
         form: {
-          items: [
-            { dataField: "TeamName" },
-            { dataField: "Active", dataType: "boolean" },
-            { dataField: "Description", colSpan: 2 },
+          items: [{
+              dataField: "TeamName"
+            },
+            {
+              dataField: "Active",
+              dataType: "boolean"
+            },
+            {
+              dataField: "Description",
+              colSpan: 2
+            },
             {
               itemType: "group",
               caption: "Team Members",
-              items: [
-                {
-                  dataField: "MemberID",
-                  colSpan: 2,
-                  calculateDisplayValue: function(rowData) {
-                    var texts = [];
-                    if (rowData.MemberID && rowData.MemberID.length) {
-                      for (var i = 0; i < rowData.MemberID.length; i++) {
-                        var value = rowData.MemberID[i];
-                        var displayText = states.filter(function(item) {
-                          return item.ID == value;
-                        })[0].Name;
-                        if (displayText) texts.push(displayText);
-                      }
+              items: [{
+                dataField: "MemberID",
+                colSpan: 2,
+                calculateDisplayValue: function (rowData) {
+                  var texts = [];
+                  if (rowData.MemberID && rowData.MemberID.length) {
+                    for (var i = 0; i < rowData.MemberID.length; i++) {
+                      var value = rowData.MemberID[i];
+                      var displayText = states.filter(function (item) {
+                        return item.ID == value;
+                      })[0].Name;
+                      if (displayText) texts.push(displayText);
                     }
-                    return texts.toString();
-                  },
-                  caption: "Team Member",
-                  lookup: {
-                    dataSource: lookupDataSource,
-                    valueExpr: "ID",
-                    displayExpr: "userName"
                   }
+                  return texts.toString();
+                },
+                caption: "Team Member",
+                lookup: {
+                  dataSource: lookupDataSource,
+                  valueExpr: "ID",
+                  displayExpr: "userName"
                 }
-              ]
+              }]
             }
           ]
         }
@@ -111,26 +116,21 @@ $(document).ready(function() {
       paging: {
         pageSize: 15
       },
-      columns: [
-        {
+      columns: [{
           dataField: "ID",
           visible: false
         },
         {
           dataField: "TeamName",
-          validationRules: [
-            {
-              type: "required"
-            }
-          ]
+          validationRules: [{
+            type: "required"
+          }]
         },
         {
           dataField: "Description",
-          validationRules: [
-            {
-              type: "required"
-            }
-          ]
+          validationRules: [{
+            type: "required"
+          }]
         },
         {
           dataField: "Active",
@@ -139,12 +139,12 @@ $(document).ready(function() {
         {
           dataField: "MemberID",
           width: 350,
-          calculateDisplayValue: function(rowData) {
+          calculateDisplayValue: function (rowData) {
             var texts = [];
             if (rowData.MemberID && rowData.MemberID.length) {
               for (var i = 0; i < rowData.MemberID.length; i++) {
                 var value = rowData.MemberID[i];
-                var displayText = states.filter(function(item) {
+                var displayText = states.filter(function (item) {
                   return item.ID == value;
                 })[0].Name;
                 if (displayText) texts.push(displayText);
@@ -161,29 +161,38 @@ $(document).ready(function() {
           }
         }
       ],
-      onEditorPreparing: function(e) {
+      onEditorPreparing: function (e) {
         if (e.dataField == "MemberID" && e.parentType == "dataRow") {
           e.editorName = "dxDropDownBox";
           e.editorOptions.dropDownOptions = {
             height: 500,
             width: 800
           };
-          e.editorOptions.contentTemplate = function(args, container) {
+          e.editorOptions.contentTemplate = function (args, container) {
             var value = args.component.option("value"),
               $dataGrid = $("<div>").dxDataGrid({
                 width: "100%",
                 dataSource: args.component.option("dataSource"),
                 keyExpr: "ID",
                 hoverStateEnabled: true,
-                paging: { enabled: true, pageSize: 10 },
-                filterRow: { visible: true },
-                scrolling: { mode: "infinite" },
+                paging: {
+                  enabled: true,
+                  pageSize: 10
+                },
+                filterRow: {
+                  visible: true
+                },
+                scrolling: {
+                  mode: "infinite"
+                },
                 height: "90%",
                 showRowLines: true,
                 showBorders: true,
-                selection: { mode: "multiple" },
+                selection: {
+                  mode: "multiple"
+                },
                 selectedRowKeys: value,
-                onSelectionChanged: function(selectedItems) {
+                onSelectionChanged: function (selectedItems) {
                   var keys = selectedItems.selectedRowKeys;
                   args.component.option("value", keys);
                 }
@@ -191,7 +200,7 @@ $(document).ready(function() {
 
             var dataGrid = $dataGrid.dxDataGrid("instance");
 
-            args.component.on("valueChanged", function(args) {
+            args.component.on("valueChanged", function (args) {
               var value = args.value;
               dataGrid.selectRows(value, false);
             });
@@ -200,11 +209,14 @@ $(document).ready(function() {
               .dxButton({
                 text: "Close",
 
-                onClick: function(ev) {
+                onClick: function (ev) {
                   args.component.close();
                 }
               })
-              .css({ float: "right", marginTop: "10px" })
+              .css({
+                float: "right",
+                marginTop: "10px"
+              })
               .appendTo(container);
             return container;
           };

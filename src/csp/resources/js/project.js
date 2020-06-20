@@ -1,13 +1,13 @@
 var urlOrigin = window.location.origin;
-var urlREST = urlOrigin + "/npm/rest";
+var urlREST = urlOrigin + "/npm/api";
 
-$(document).ready(function() {
+$(document).ready(function () {
   var userStore = new DevExpress.data.CustomStore({
     key: "ID",
-    load: function() {
+    load: function () {
       return $.getJSON(urlREST + "/project");
     },
-    insert: function(values) {
+    insert: function (values) {
       return $.ajax({
         url: urlREST + "/project",
         method: "POST",
@@ -16,7 +16,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    update: function(key, values) {
+    update: function (key, values) {
       return $.ajax({
         url: urlREST + "/project/" + encodeURIComponent(key),
         method: "PUT",
@@ -25,7 +25,7 @@ $(document).ready(function() {
         data: JSON.stringify(values)
       });
     },
-    remove: function(key) {
+    remove: function (key) {
       return $.ajax({
         url: urlREST + "/project/" + encodeURIComponent(key),
         method: "DELETE"
@@ -56,85 +56,75 @@ $(document).ready(function() {
           }
         },
         form: {
-          items: [
-            {
-              itemType: "group",
-              colCount: 2,
-              colSpan: 2,
-              items: [
-                {
-                  dataField: "Code",
-                  validationRules: [
+          items: [{
+            itemType: "group",
+            colCount: 2,
+            colSpan: 2,
+            items: [{
+                dataField: "Code",
+                validationRules: [{
+                  type: "required"
+                }]
+              },
+              {
+                dataField: "Status",
+                editorOptions: {
+                  dataSource: [{
+                      id: 1,
+                      name: "Not Started"
+                    },
                     {
-                      type: "required"
-                    }
-                  ]
-                },
-                {
-                  dataField: "Status",
-                  editorOptions: {
-                    dataSource: [
-                      {
-                        id: 1,
-                        name: "Not Started"
-                      },
-                      {
-                        id: 2,
-                        name: "In Progress"
-                      },
-                      {
-                        id: 3,
-                        name: "Deferred"
-                      },
-                      {
-                        id: 4,
-                        name: "Need Assistance"
-                      },
-                      {
-                        id: 5,
-                        name: "Completed"
-                      }
-                    ],
-                    valueExpr: "name",
-                    displayExpr: "name"
-                  },
-                  validationRules: [
+                      id: 2,
+                      name: "In Progress"
+                    },
                     {
-                      type: "required"
-                    }
-                  ]
-                },
-                {
-                  dataField: "Description",
-                  colSpan: 2,
-                  validationRules: [
+                      id: 3,
+                      name: "Deferred"
+                    },
                     {
-                      type: "required"
+                      id: 4,
+                      name: "Need Assistance"
+                    },
+                    {
+                      id: 5,
+                      name: "Completed"
                     }
-                  ]
+                  ],
+                  valueExpr: "name",
+                  displayExpr: "name"
                 },
-                {
-                  dataField: "BeginDate",
-                  dataType: "date"
-                },
-                {
-                  dataField: "EndDate",
-                  dataType: "date"
-                },
-                {
-                  dataField: "Remarks",
-                  colSpan: 2,
-                  editorType: "dxTextArea",
-                  editorOptions: {
-                    placeholder: "Add notes..."
-                  }
+                validationRules: [{
+                  type: "required"
+                }]
+              },
+              {
+                dataField: "Description",
+                colSpan: 2,
+                validationRules: [{
+                  type: "required"
+                }]
+              },
+              {
+                dataField: "BeginDate",
+                dataType: "date"
+              },
+              {
+                dataField: "EndDate",
+                dataType: "date"
+              },
+              {
+                dataField: "Remarks",
+                colSpan: 2,
+                editorType: "dxTextArea",
+                editorOptions: {
+                  placeholder: "Add notes..."
                 }
-              ]
-            }
-          ]
+              }
+            ]
+          }]
         }
       },
-      onEditorPreparing: function(e) {
+      onEditorPreparing: function (e) {
         if (e.dataField == "Status" && e.parentType == "dataRow") {
           e.editorName = "dxSelectBox";
         }
@@ -154,8 +144,7 @@ $(document).ready(function() {
       paging: {
         pageSize: 15
       },
-      columns: [
-        {
+      columns: [{
           dataField: "ID",
           visible: false
         },
