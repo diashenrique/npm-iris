@@ -167,7 +167,15 @@ $(document).ready(function () {
           dataField: "ProjectId",
           caption: "Project",
           lookup: {
-            dataSource: lookupProject,
+            dataSource: {
+              store: new DevExpress.data.CustomStore({
+                key: "ID",
+                loadMode: "raw",
+                load: function () {
+                  return sendRequest(urlREST + "/project/lookup");
+                }
+              })
+            },
             valueExpr: "ID",
             displayExpr: "code"
           },
@@ -255,13 +263,22 @@ $(document).ready(function () {
           dataField: "AssignedUser",
           caption: "Assigned User",
           lookup: {
-            dataSource: lookupDataSource,
+            dataSource: {
+              store: new DevExpress.data.CustomStore({
+                key: "ID",
+                loadMode: "raw",
+                load: function () {
+                  return sendRequest(urlREST + "/user/lookup");
+                }
+              })
+            },
             valueExpr: "ID",
             displayExpr: "userName"
           },
           validationRules: [{
             type: "required"
           }]
+
         }
       ],
       onInitNewRow: function (e) {
