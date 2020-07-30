@@ -307,6 +307,7 @@
                 <!-- Add Tasks -->
                 <div id="btnAddTask" style="border: none; -webkit-box-shadow: none"></div>
                 <div id="btnAddList" style="border: none; -webkit-box-shadow: none"></div>
+                <div id="divAddTask"></div>
                 <div id="popup">
                   <div class="popup"></div>
                 </div> 
@@ -399,6 +400,7 @@
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
   <script type="text/javascript" src="resources/js/custom-theme-changer.js"></script>
+  <script type="text/javascript" src="resources/js/util.js"></script>
   <script type="text/javascript" src="resources/js/kanban.js"></script>
   <!-- END ISProject Custom -->
 </body>

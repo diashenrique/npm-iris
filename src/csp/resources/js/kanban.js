@@ -55,13 +55,15 @@ var lookupUser = {
 };
 
 var lookupProject = {
-  store: new DevExpress.data.CustomStore({
-    key: "ID",
-    loadMode: "raw",
-    load: function () {
-      return $.getJSON(urlREST + "/project/lookup");
-    }
-  }),
+  dataSource: {
+    store: new DevExpress.data.CustomStore({
+      key: "ID",
+      loadMode: "raw",
+      load: function () {
+        return sendRequest(urlREST + "/project/lookup");
+      }
+    })
+  },
   sort: "code"
 };
 
@@ -86,7 +88,7 @@ $(function () {
           items: [{
               dataField: "Project",
               editorType: "dxSelectBox",
-              lookup: {
+              editorOptions: {
                 dataSource: lookupProject,
                 valueExpr: "ID",
                 displayExpr: "code"
@@ -644,6 +646,8 @@ $(function () {
           return user.ID === task.AssignedUser;
         })[0];
 
+        console.log(user);
+
         $("<div>")
           .addClass("card-priority")
           .addClass(task.Priority)
@@ -656,10 +660,10 @@ $(function () {
           .addClass("card-assignee")
           .html("<i class='far fa-clock'></i> " + task.DueDate)
           .appendTo($item);
-        $("<div>")
+        /*$("<div>")
           .addClass("card-assignee")
           .text(user.UserName)
-          .appendTo($item);
+          .appendTo($item);*/
       }
     })
     .fail(function () {

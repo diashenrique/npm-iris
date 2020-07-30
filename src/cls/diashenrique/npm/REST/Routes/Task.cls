@@ -14,7 +14,7 @@ ClassMethod TreeList() As %Status
         Set oRS = ##class(%SQL.Statement).%New()
 
         Set sql = "SELECT ID, TaskName, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, "_
-                "AssignedUser, NVL(ParentId,0) as ParentId, ProjectId FROM diashenrique_npm_Data.Task"
+                "TO_NUMBER(AssignedUser) As AssignedUser, NVL(ParentId,0) as ParentId, TO_NUMBER(ProjectId) As ProjectId FROM diashenrique_npm_Data.Task"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -118,6 +118,7 @@ ClassMethod NewTask() As %Status
     Set objTask.Status = obj.Status
     Set objTask.AssignedUser = ##class(diashenrique.npm.Data.Person).%OpenId(obj.AssignedUser)
     Set objTask.ParentId = ##class(diashenrique.npm.Data.Task).%OpenId(obj.ParentId)
+    Set objTask.ProjectId = ##class(diashenrique.npm.Data.Project).%OpenId(obj.ProjectId)
     ;set objTask.PredecessorId = obj.PredecessorId
     ;set objTask.SucessorId = obj.SucessorId
 

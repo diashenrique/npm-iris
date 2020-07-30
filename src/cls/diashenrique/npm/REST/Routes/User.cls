@@ -141,6 +141,7 @@ ClassMethod Lookup() As %Status
 
 	Set tSC = $System.Status.OK()
 	Set arrayUser = []
+	Set dynamicUser = { }
 
     Try {
 
@@ -173,7 +174,9 @@ ClassMethod Lookup() As %Status
         Set tSC = oException.AsStatus()
     }
 
-   Write arrayUser.%ToJSON() 
+	Do dynamicUser.%Set("data",arrayUser)
+
+    Write dynamicUser.%ToJSON() 
 
     Quit tSC
 }

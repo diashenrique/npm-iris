@@ -135,7 +135,8 @@ ClassMethod Lookup() As %Status
 	Set %response.ContentType = "application/json"
 
 	Set tSC = $System.Status.OK()
-	Set arrayUser = []
+	Set arrayProject = []
+	Set dynamicProject = { }
 
     Try {
 
@@ -157,7 +158,7 @@ ClassMethod Lookup() As %Status
 	        	Do json.%Set("ID",$Number(result.ID))
 	        	Do json.%Set("code", result.Code)
 	        	Do json.%Set("description", result.Description)
-				Do arrayUser.%Push(json)
+				Do arrayProject.%Push(json)
             }
         }
         Else {
@@ -168,7 +169,10 @@ ClassMethod Lookup() As %Status
         Set tSC = oException.AsStatus()
     }
 
-   Write arrayUser.%ToJSON() 
+	Do dynamicProject.%Set("data",arrayProject)
+
+    Write dynamicProject.%ToJSON() 
+	;Write arrayProject.%ToJSON() 
 
     Quit tSC
 }

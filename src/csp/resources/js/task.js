@@ -39,28 +39,6 @@ $(document).ready(function () {
     }
   });
 
-  var lookupDataSource = {
-    store: new DevExpress.data.CustomStore({
-      key: "ID",
-      loadMode: "raw",
-      load: function () {
-        return $.getJSON(urlREST + "/user/lookup");
-      }
-    }),
-    sort: "userName"
-  };
-
-  var lookupProject = {
-    store: new DevExpress.data.CustomStore({
-      key: "ID",
-      loadMode: "raw",
-      load: function () {
-        return $.getJSON(urlREST + "/project/lookup");
-      }
-    }),
-    sort: "code"
-  };
-
   var treeList = $("#formTask")
     .dxTreeList({
       dataSource: taskStore,
@@ -109,13 +87,16 @@ $(document).ready(function () {
             taskStore.splice(targetIndex, 0, sourceData);
           }
 
+          console.log(e.itemData.ProjectId + " - " + targetData.ProjectId);
+
           $.ajax({
             url: urlREST + "/task/" + e.itemData.ID,
             method: "PUT",
             processData: false,
             contentType: "application/json",
             data: JSON.stringify({
-              ParentId: e.itemData.ParentId
+              ParentId: e.itemData.ParentId,
+              ProjectId: targetData.ProjectId
             })
           }).done(function (msg) {
             //alert("Data Saved: " + msg);
