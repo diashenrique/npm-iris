@@ -48,6 +48,15 @@ $(document).ready(function () {
       showRowLines: true,
       rowAlternationEnabled: true,
       wordWrapEnabled: true,
+      filterRow: {
+        visible: true
+      },
+      filterPanel: {
+        visible: true
+      },
+      headerFilter: {
+        visible: true
+      },
       keyExpr: "ID",
       rowDragging: {
         allowDropInsideItem: true,
@@ -86,8 +95,6 @@ $(document).ready(function () {
             taskStore.splice(sourceIndex, 1);
             taskStore.splice(targetIndex, 0, sourceData);
           }
-
-          console.log(e.itemData.ProjectId + " - " + targetData.ProjectId);
 
           $.ajax({
             url: urlREST + "/task/" + e.itemData.ID,
