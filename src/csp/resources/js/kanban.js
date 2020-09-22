@@ -43,42 +43,27 @@ $.ajax({
   }
 });
 
-var lookupUser = {
-  store: new DevExpress.data.CustomStore({
-    key: "ID",
-    loadMode: "raw",
-    load: function () {
-      return $.getJSON(urlREST + "/user/lookup");
-    }
-  }),
-  sort: "userName"
-};
 
-var lookupProject = {
-  dataSource: {
-    store: new DevExpress.data.CustomStore({
-      key: "ID",
-      loadMode: "raw",
-      load: function () {
-        return sendRequest(urlREST + "/project/lookup");
-      }
-    })
-  },
-  sort: "code"
-};
 
 $(function () {
-  // Popup to create new tasks
-  var popup = null;
-  var popupOptions = {
-    width: 600,
-    height: 420,
-    contentTemplate: function (e) {
-      var formContainer = $("<div id='formPopup'>");
-      formContainer
-        .dxForm({
-          dataSource: taskStore,
-          keyExpr: "ID",
+
+  function addTask() {
+    $("#divAddTask").dxPopup({
+      visible: true,
+      showTitle: true,
+      title: 'Add New Task',
+      width: 500,
+      height: 420,
+      position: {
+        my: 'center',
+        at: 'center',
+        of: window
+      },
+      dragEnabled: true,
+      closeOnOutsideClick: false,
+      contentTemplate: function (e) {
+        var formContainer = $("<div id='formPopup'>");
+        formContainer.dxForm({
           readOnly: false,
           showColonAfterLabel: false,
           labelLocation: "top",
@@ -86,13 +71,24 @@ $(function () {
           showValidationSummary: true,
           colCount: 2,
           items: [{
-              dataField: "Project",
+              dataField: "ProjectId",
               editorType: "dxSelectBox",
               editorOptions: {
-                dataSource: lookupProject,
+                dataSource: {
+                  store: new DevExpress.data.CustomStore({
+                    key: "ID",
+                    loadMode: "raw",
+                    load: function () {
+                      return sendRequest(urlREST + "/project/lookup");
+                    }
+                  })
+                },
                 valueExpr: "ID",
                 displayExpr: "code"
-              }
+              },
+              validationRules: [{
+                type: "required"
+              }]
             },
             {
               dataField: "TaskName"
@@ -182,68 +178,71 @@ $(function () {
             {
               dataField: "AssignedUser",
               editorType: "dxSelectBox",
-              lookup: {
-                dataSource: lookupUser,
+              editorOptions: {
+                dataSource: {
+                  store: new DevExpress.data.CustomStore({
+                    key: "ID",
+                    loadMode: "raw",
+                    load: function () {
+                      return sendRequest(urlREST + "/user/lookup");
+                    }
+                  })
+                },
                 valueExpr: "ID",
                 displayExpr: "userName"
-              }
+              },
+              validationRules: [{
+                type: "required"
+              }]
             },
             {
               itemType: "button",
               colSpan: 2,
               horizontalAlignment: "right",
               buttonOptions: {
-                text: "Update Task",
+                text: "Add Task",
                 type: "success",
                 onClick: function () {
-                  var dataForm = $("#formPopup")
-                    .dxForm("instance")
-                    .option("formData");
+                  if (!$("#formPopup").dxForm("instance").validate().isValid) {
+                    DevExpress.ui.notify("Há campos obrigatórios não preenchidos!", "warning", 4000);
+                  } else {
+                    var dataForm = $("#formPopup")
+                      .dxForm("instance")
+                      .option("formData");
 
-                  $.ajax({
-                    url: urlREST + "/kanban",
-                    method: "POST",
-                    processData: false,
-                    contentType: "application/json",
-                    data: JSON.stringify(dataForm)
-                  }).done(function (msg) {
-                    DevExpress.ui.notify("New task save");
-                  });
+                    console.log(dataForm);
 
-                  $(".popup").remove();
+                    $.ajax({
+                      url: urlREST + "/kanban",
+                      method: "POST",
+                      processData: false,
+                      contentType: "application/json",
+                      data: JSON.stringify(dataForm)
+                    }).done(function (msg) {
+                      DevExpress.ui.notify("New task saved");
+                    });
+
+                    $(".popup").remove();
+
+                    location.reload();
+                  }
+
                 }
               }
             }
           ]
-        })
-        .dxForm("instance");
-      e.append(formContainer);
-    },
-    showTitle: true,
-    title: "Add New Task",
-    visible: false,
-    dragEnabled: true,
-    closeOnOutsideClick: false
-  };
-
-  var showPopup = function (data) {
-    console.log(data);
-    if (popup) {
-      $(".popup").remove();
-    }
-    var $popupContainer = $("<div />")
-      .addClass("popup")
-      .appendTo($("#popup"));
-    popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
-    popup.show();
-  };
+        }).dxForm("instance");
+        e.append(formContainer);
+      }
+    });
+  }
 
   // Button Add Task
   $("#btnAddTask").dxButton({
     icon: "fas fa-tasks",
-    hint: "Add Task",
+    hint: "Add New List",
     onClick: function (e) {
-      showPopup();
+      addTask();
     }
   });
 
@@ -252,11 +251,19 @@ $(function () {
     icon: "fas fa-th-list",
     hint: "Add New List",
     onClick: function (e) {
-      showPopup();
+      addTask();
     }
   });
 
-  // Script to render Kanban cards and lists
+  kanbanPanel();
+
+
+
+});
+
+
+// Script to render Kanban cards and lists
+function kanbanPanel() {
   var retTasks = $.getJSON(urlREST + "/kanban")
     .done(function () {
       var tasks = retTasks.responseJSON;
@@ -352,19 +359,6 @@ $(function () {
           .bind({
             click: function () {
               $("#modalViewTaskLabel").text(task.TaskName);
-              $("#modalTimeTrackingStatus").text("Time Tracking - " + task.TrackingStatus);
-
-              $.ajax({
-                url: urlREST + "/timetracking/" + encodeURIComponent(task.ID),
-                method: "GET",
-                processData: false,
-                contentType: "application/json",
-                data: task.ID,
-                success: function (e) {
-                  console.log(e.totalTime);
-                  $("#idTotalTime").text(e.totalTime);
-                }
-              });
 
               var taskDetails = [{
                 "ID": task.ID,
@@ -374,11 +368,11 @@ $(function () {
                 "Progress": task.Progress,
                 "Priority": task.Priority,
                 "Status": task.Status,
-                "AssignedUser": task.AssignedUser,
-                "TrackingStatus": task.TrackingStatus
+                "ProjectId": task.ProjectId,
+                "AssignedUser": parseInt(task.AssignedUser)
               }];
 
-              console.log(taskDetails[0]);
+              //console.log(taskDetails[0]);
 
               var form = $("#form").dxForm({
                 dateSerializationFormat: "MM-dd-yyyy",
@@ -393,11 +387,17 @@ $(function () {
                   },
                   {
                     dataField: "StartDate",
-                    editorType: "dxDateBox"
+                    editorType: "dxDateBox",
+                    editorOptions: {
+                      disabled: true
+                    }
                   },
                   {
                     dataField: "DueDate",
-                    editorType: "dxDateBox"
+                    editorType: "dxDateBox",
+                    editorOptions: {
+                      disabled: true
+                    }
                   },
                   {
                     dataField: "Progress",
@@ -419,6 +419,7 @@ $(function () {
                     dataField: "Priority",
                     editorType: "dxSelectBox",
                     editorOptions: {
+                      disabled: true,
                       dataSource: [{
                           id: 1,
                           name: "Normal"
@@ -444,10 +445,22 @@ $(function () {
                     dataField: "AssignedUser",
                     editorType: "dxSelectBox",
                     editorOptions: {
-                      dataSource: lookupUser,
-                      displayExpr: "userName",
-                      valueExpr: "ID"
-                    }
+                      disabled: true,
+                      dataSource: {
+                        store: new DevExpress.data.CustomStore({
+                          key: "ID",
+                          loadMode: "raw",
+                          load: function () {
+                            return sendRequest(urlREST + "/user/lookup");
+                          }
+                        })
+                      },
+                      valueExpr: "ID",
+                      displayExpr: "userName"
+                    },
+                    validationRules: [{
+                      type: "required"
+                    }]
                   },
                   {
                     itemType: "button",
@@ -468,7 +481,8 @@ $(function () {
                           contentType: "application/json",
                           data: JSON.stringify(dataForm)
                         }).done(function (msg) {
-                          DevExpress.ui.notify("Task saved", "success");
+                          DevExpress.ui.notify("Task saved", "success", 3000);
+                          location.reload();
                         });
                       }
                     }
@@ -476,177 +490,13 @@ $(function () {
                 ]
               }).dxForm("instance");
 
-              var btnStart = $("#btn-startTrack").dxButton({
-                icon: "fas fa-play-circle",
-                hint: "Start Tracking",
-                type: "success",
-                onClick: function () {
-                  $("#btn-stopTrack").dxButton("instance").option("disabled", false);
-                  $("#btn-startTrack").dxButton("instance").option("disabled", true);
-                  $("#modalTimeTrackingStatus").text("Time Tracking - Running");
-
-                  $.ajax({
-                    url: urlREST + "/kanban/" + task.ID,
-                    method: "PUT",
-                    processData: false,
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                      TrackingStatus: "R"
-                    })
-                  }).done(function (msg) {
-                    //alert("Data Saved: " + msg);
-                  });
-
-                  var taskTimeTracking = [{
-                    "TaskId": task.ID,
-                    "UserId": 4
-                  }];
-
-                  $.ajax({
-                    url: urlREST + "/timetracking/" + task.ID,
-                    method: "POST",
-                    processData: false,
-                    contentType: "application/json",
-                    data: JSON.stringify(taskTimeTracking)
-                  });
-
-                }
-              }).dxButton("instance");
-
-              var btnStop = $("#btn-stopTrack").dxButton({
-                icon: "fas fa-stop-circle",
-                hint: "Stop Tracking",
-                type: "danger",
-                onClick: function () {
-                  $("#btn-stopTrack").dxButton("instance").option("disabled", true);
-                  $("#btn-startTrack").dxButton("instance").option("disabled", false);
-                  $("#modalTimeTrackingStatus").text("Time Tracking - Stopped");
-
-                  $.ajax({
-                    url: urlREST + "/kanban/" + task.ID,
-                    method: "PUT",
-                    processData: false,
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                      TrackingStatus: "S"
-                    })
-                  }).done(function (msg) {
-                    //alert("Data Saved: " + msg);
-                  });
-
-                  var taskTimeTracking = [{
-                    "TaskId": task.ID,
-                    "UserId": 4
-                  }];
-
-                  $.ajax({
-                    url: urlREST + "/timetracking/" + task.ID,
-                    method: "PUT",
-                    processData: false,
-                    contentType: "application/json",
-                    data: JSON.stringify(taskTimeTracking)
-                  }).done(function (msg) {
-                    //alert("Data Saved: " + msg);
-                  });
-
-                  $.ajax({
-                    url: urlREST + "/timetracking/" + encodeURIComponent(task.ID),
-                    method: "GET",
-                    processData: false,
-                    contentType: "application/json",
-                    data: task.ID,
-                    success: function (e) {
-                      console.log(e.totalTime);
-                      $("#idTotalTime").text(e.totalTime);
-                    }
-                  });
-                }
-              }).dxButton("instance");
-
-              console.log(task.TrackingStatus);
-
-              if (task.TrackingStatus == "Stopped") {
-                btnStop.option("disabled", true);
-              } else {
-                btnStart.option("disabled", true);
-              }
-
-              $("#logHours").dxNumberBox({
-                placeholder: "Hours...",
-                showSpinButtons: true,
-                showClearButton: true,
-                value: "",
-                min: 0,
-                maxLength: 10,
-                width: 120
-              });
-
-
-              $("#updateHours").dxButton({
-                icon: "fas fa-stopwatch",
-                text: "Log work",
-                hint: "Log work against this issue",
-                type: "default",
-                onClick: function () {
-
-                  var logHours = $("#logHours").dxNumberBox("instance").option("value");
-
-                  if (logHours) {
-
-                    var currentdate = new Date();
-
-                    var endTrackingDateTime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-
-                    currentdate.setHours(currentdate.getHours() - logHours);
-
-                    var startTrackingDateTime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-
-                    var taskTimeTracking = [{
-                      "TaskId": task.ID,
-                      "UserId": 4,
-                      "StartTracking": startTrackingDateTime,
-                      "EndTracking": endTrackingDateTime
-                    }];
-
-                    $.ajax({
-                      url: urlREST + "/timetracking/" + task.ID,
-                      method: "POST",
-                      processData: false,
-                      contentType: "application/json",
-                      data: JSON.stringify(taskTimeTracking[0]),
-                      success: function () {
-                        $.ajax({
-                          url: urlREST + "/timetracking/" + encodeURIComponent(task.ID),
-                          method: "GET",
-                          processData: false,
-                          contentType: "application/json",
-                          data: task.ID,
-                          success: function (e) {
-                            console.log(e.totalTime);
-                            $("#idTotalTime").text(e.totalTime);
-                          }
-                        });
-                      }
-                    });
-
-
-
-                  } else {
-                    DevExpress.ui.notify("Hours is Required", "error");
-                  }
-
-                }
-              });
-
             }
           })
           .appendTo($container);
 
         var user = users.filter(function (user) {
-          return user.ID === task.AssignedUser;
+          return user.ID == task.AssignedUser;
         })[0];
-
-        console.log(user);
 
         $("<div>")
           .addClass("card-priority")
@@ -660,15 +510,20 @@ $(function () {
           .addClass("card-assignee")
           .html("<i class='far fa-clock'></i> " + task.DueDate)
           .appendTo($item);
-        /*$("<div>")
+        $("<div>")
           .addClass("card-assignee")
-          .text(user.UserName)
-          .appendTo($item);*/
+          .text(user.userName)
+          .appendTo($item);
+
       }
     })
     .fail(function () {
       console.log("error");
     });
+}
+
+var users = $.getJSON(urlREST + "/user/lookup", function (usersJSON) {
+  users = usersJSON.data;
 });
 
 var selectBoxStatus = [{
@@ -690,189 +545,5 @@ var selectBoxStatus = [{
   {
     id: 5,
     name: "Completed"
-  }
-];
-
-var users = [{
-    ID: "4",
-    UserName: "diashenrique",
-    Name: "Henrique Dias",
-    email: "henrique@gmail.com",
-    DateOfBirth: "02/10/1984",
-    JobTitle: "CTO",
-    Company: "Nishimura CO",
-    ProfileHeading: "Craaazy",
-    PhotoProfile: "B5924",
-    Active: 1,
-    Password: "I6226"
-  },
-  {
-    ID: "7",
-    UserName: "ninaroberson",
-    Name: "Darren Barker",
-    email: "jorgetrevino@yahoo.com",
-    DateOfBirth: "10/19/2019",
-    JobTitle: "Analyst Dynamic",
-    Company: "Utilities",
-    ProfileHeading: "Fast learner",
-    PhotoProfile: "F8728",
-    Active: 0,
-    Password: "N6600"
-  },
-  {
-    ID: "9",
-    UserName: "ruben_perry",
-    Name: "Benjamin Gibbs",
-    email: "jimmiemoran83@gmail.com",
-    DateOfBirth: "12/29/2018",
-    JobTitle: "Director  Legal Internal",
-    Company: "Cosmetics",
-    ProfileHeading: "Leadership",
-    PhotoProfile: "G3775",
-    Active: 1,
-    Password: "Y770"
-  },
-  {
-    ID: "10",
-    UserName: "donbarber",
-    Name: "Claudia Spencer Ballard",
-    email: "marlene_george21@yahoo.com",
-    DateOfBirth: "10/31/2018",
-    JobTitle: "Executive  Banking Lead",
-    Company: "Alternative Dispute Resolution",
-    ProfileHeading: "Teamwork",
-    PhotoProfile: "V491",
-    Active: 1,
-    Password: "E7051"
-  },
-  {
-    ID: "11",
-    UserName: "lawrence53",
-    Name: "Ivan Hodge",
-    email: "tracy.wiley39@yahoo.com",
-    DateOfBirth: "06/11/2019",
-    JobTitle: "Developer  Retail",
-    Company: "Farming",
-    ProfileHeading: "Work under pressure",
-    PhotoProfile: "Z6670",
-    Active: 0,
-    Password: "N6971"
-  },
-  {
-    ID: "12",
-    UserName: "timsilva67",
-    Name: "Nicholas Lambert",
-    email: "nataliedean@gmail.com",
-    DateOfBirth: "10/27/2018",
-    JobTitle: "Planner  Farming",
-    Company: "Restaurants",
-    ProfileHeading: "Work under pressure",
-    PhotoProfile: "M9752",
-    Active: 1,
-    Password: "T8208"
-  },
-  {
-    ID: "13",
-    UserName: "russell.reed",
-    Name: "Hilda Nguyen",
-    email: "connie_sutton92@hotmail.com",
-    DateOfBirth: "12/24/2018",
-    JobTitle: "Supervisor  Education",
-    Company: " Travel & Tourism",
-    ProfileHeading: "Fast learner",
-    PhotoProfile: "Q5997",
-    Active: 0,
-    Password: "Y4561"
-  },
-  {
-    ID: "14",
-    UserName: "katherineclark43",
-    Name: "Daisy Cameron Saunders Lang",
-    email: "rebecca.greene@yahoo.com",
-    DateOfBirth: "12/26/2018",
-    JobTitle: "Assistant  Marketing Corporate",
-    Company: "Health",
-    ProfileHeading: "Fast learner",
-    PhotoProfile: "C8338",
-    Active: 0,
-    Password: "U3860"
-  },
-  {
-    ID: "15",
-    UserName: "megan.owen34",
-    Name: "Penny Buchanan Montoya Hartman",
-    email: "kim.davis34@gmail.com",
-    DateOfBirth: "01/29/2019",
-    JobTitle: "Facilitator  Real-Estate",
-    Company: "Security and Investigations",
-    ProfileHeading: "Work under pressure",
-    PhotoProfile: "X8101",
-    Active: 1,
-    Password: "T8232"
-  },
-  {
-    ID: "16",
-    UserName: "derek_saunders",
-    Name: "Victoria Young",
-    email: "kathryn_hale38@hotmail.com",
-    DateOfBirth: "02/10/2019",
-    JobTitle: "Executive Direct",
-    Company: "Entertainment",
-    ProfileHeading: "Self-motivated",
-    PhotoProfile: "V6067",
-    Active: 0,
-    Password: "C5218"
-  },
-  {
-    ID: "17",
-    UserName: "carla_parrish66",
-    Name: "Maria Goodwin Fowler",
-    email: "danielfletcher@yahoo.com",
-    DateOfBirth: "03/23/2019",
-    JobTitle: "Producer  Marketing Dynamic",
-    Company: "Judiciary",
-    ProfileHeading: "Work under pressure",
-    PhotoProfile: "H6302",
-    Active: 0,
-    Password: "R2127"
-  },
-  {
-    ID: "18",
-    UserName: "ross54",
-    Name: "Hector Newman",
-    email: "marjorie_patel@gmail.com",
-    DateOfBirth: "06/10/2019",
-    JobTitle: "Engineer  Sales",
-    Company: "Medical Devices",
-    ProfileHeading: "Technical savvy",
-    PhotoProfile: "W6274",
-    Active: 0,
-    Password: "J5791"
-  },
-  {
-    ID: "19",
-    UserName: "waynewilliams27",
-    Name: "Holly Shelton Reynolds Fields",
-    email: "jason35@yahoo.com",
-    DateOfBirth: "03/26/2019",
-    JobTitle: "Facilitator  Technology Legacy",
-    Company: "Sports",
-    ProfileHeading: "Networking skills",
-    PhotoProfile: "R6818",
-    Active: 0,
-    Password: "B9174"
-  },
-  {
-    ID: "25",
-    UserName: "danieljun",
-    Name: "Daniel Jun Nakata Goncalves Dias",
-    email: "daniel.nakata.dias@gmail.com",
-    DateOfBirth: "06/23/2012",
-    JobTitle: "Tech Genius",
-    Company: "Nishimura Co",
-    ProfileHeading: "",
-    PhotoProfile: "",
-    Active: 1,
-    Password: ""
   }
 ];

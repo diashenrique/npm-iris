@@ -307,7 +307,8 @@
                 <!-- Add Tasks -->
                 <div id="btnAddTask" style="border: none; -webkit-box-shadow: none"></div>
                 <div id="btnAddList" style="border: none; -webkit-box-shadow: none"></div>
-                <div id="divAddTask"></div>
+                <div id="btnAddTaskNew"></div>
+                <div id="divAddTask" class="popup"></div>
                 <div id="popup">
                   <div class="popup"></div>
                 </div> 
@@ -346,32 +347,6 @@
                   <hr>
                   <div class="widget-container">
                     <div id="form"></div>
-                  </div>
-                  <hr>
-                  <h5 id="modalTimeTrackingStatus" class="modal-title">Time Tracking</h5>
-                  <div class="widget-container">
-                      <div id="btn-startTrack" style="border: none; -webkit-box-shadow: none"></div>
-                      <div id="btn-stopTrack" style="border: none; -webkit-box-shadow: none"></div>
-                      <span style="font-size: 20px;font-weight: bold;">&nbsp;&nbsp;&nbsp;Time Spent: </span><span id="idTotalTime" style="font-size: 20px;font-weight: bold;"></span>
-                  </div>
-                  <hr>
-                  <h5 class="modal-title">Log work</h5>
-                  <div class="widget-container">
-
-                    <div class="column">
-                        <div class="field">
-                            <div class="value">
-                                <div id="logHours"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="field">
-                            <div class="value">
-                                <div id="updateHours"></div>
-                            </div>
-                        </div>
-                    </div>
                   </div>
                 </div><!-- /.modal-body -->
               </div><!-- /.modal-content -->

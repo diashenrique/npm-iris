@@ -123,9 +123,8 @@ ClassMethod NewTask() As %Status
     Set objTask.Progress = obj.Progress
     Set objTask.Priority = obj.Priority
     Set objTask.Status = obj.Status
-    If (obj.AssignedUser '= "") {
-        Set objTask.AssignedUser = ##class(diashenrique.npm.Data.Person).%OpenId(obj.AssignedUser)
-    }
+    Set objTask.ProjectId = ##class(diashenrique.npm.Data.Project).%OpenId(obj.ProjectId)
+    Set objTask.AssignedUser = ##class(diashenrique.npm.Data.Person).%OpenId(obj.AssignedUser)
 
     Set tSC = objTask.%Save()
 
