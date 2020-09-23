@@ -1,8 +1,8 @@
 version: "3.3"
 services:
   iris:
-    build: .
-    restart: always
+    build:
+      context: .
     container_name: npm-iris
     ports:
       - 51773
@@ -10,5 +10,4 @@ services:
       - 53773
     volumes:
       - ./src/csp:/opt/irisapp/csp
-      - ~/iris.key:/usr/irissys/mgr/iris.key
       - ./:/irisdev/app
