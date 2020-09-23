@@ -10,8 +10,6 @@ WORKDIR /opt/irisapp
 
 RUN chown ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} .
 
-USER irisowner
-
 COPY irissession.sh /
 
 USER ${ISC_PACKAGE_MGRUSER}
