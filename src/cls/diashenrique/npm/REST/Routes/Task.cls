@@ -13,7 +13,7 @@ ClassMethod TreeList() As %Status
 
         Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, TaskName, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, "_
+        Set sql = "SELECT ID, TaskName, TO_Number(Estimate) As Estimate, %EXTERNAL(StartDate) As StartDate, %EXTERNAL(DueDate) As DueDate, Priority, Status, Progress, "_
                 "TO_NUMBER(AssignedUser) As AssignedUser, NVL(ParentId,0) as ParentId, TO_NUMBER(ProjectId) As ProjectId FROM diashenrique_npm_Data.Task"
 
         Set tSC = oRS.%Prepare(sql)
@@ -63,7 +63,7 @@ ClassMethod Update(id As %Integer) As %Status
 
     Set iter = obj.%GetIterator()
     While iter.%GetNext(.key , .value )  {
-        Set ^zHGD($ZName,"Update",key) = value
+        ;Set ^zHGD($ZName,"Update",key) = value
         If ((key = "StartDate") || (key = "DueDate")) {
             Set $Property(objTask, key) = $ZDateh($Replace(value,"/",""),8)
         }
@@ -111,6 +111,7 @@ ClassMethod NewTask() As %Status
     Set objTask = ##class(diashenrique.npm.Data.Task).%New()
 
     Set objTask.TaskName = obj.TaskName
+    Set objTask.Estimate = obj.Estimate
     Set objTask.StartDate = $ZDateh($Replace(obj.StartDate,"/",""),8)
     Set objTask.DueDate = $ZDateh($Replace(obj.DueDate,"/",""),8)
     Set objTask.Progress = obj.Progress
@@ -123,11 +124,6 @@ ClassMethod NewTask() As %Status
     ;set objTask.SucessorId = obj.SucessorId
 
     Set tSC = objTask.%Save()
-
-    If $$$ISOK(tSC) {
-        Set ^zHGD("NewTask","%Oid")=objTask.%Oid()
-        Set ^zHGD("NewTask","%Id")=objTask.%Id()
-    }
 
     Quit tSC
 }
@@ -142,6 +138,7 @@ ClassMethod GetTask(id As %Integer) As %Status
 
     Do obj.%Set("id", objTask.%Id())
     Do obj.%Set("TaskName", objTask.TaskName)
+    Do obj.%Set("Estimate", objTask.Estimate)
     Do obj.%Set("StartDate", objTask.StartDate)
     Do obj.%Set("DueDate", objTask.DueDate)
     Do obj.%Set("Progress", objTask.Progress)
