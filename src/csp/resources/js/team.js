@@ -100,7 +100,15 @@ $(document).ready(function () {
                 },
                 caption: "Team Member",
                 lookup: {
-                  dataSource: lookupDataSource,
+                  dataSource: {
+                    store: new DevExpress.data.CustomStore({
+                      key: "ID",
+                      loadMode: "raw",
+                      load: function () {
+                        return sendRequest(urlREST + "/user/lookup");
+                      }
+                    })
+                  },
                   valueExpr: "ID",
                   displayExpr: "userName"
                 }
@@ -155,10 +163,18 @@ $(document).ready(function () {
           caption: "Team Member",
           colSpan: 2,
           lookup: {
-            dataSource: lookupDataSource,
+            dataSource: {
+              store: new DevExpress.data.CustomStore({
+                key: "ID",
+                loadMode: "raw",
+                load: function () {
+                  return sendRequest(urlREST + "/user/lookup");
+                }
+              })
+            },
             valueExpr: "ID",
             displayExpr: "userName"
-          }
+          },
         }
       ],
       onEditorPreparing: function (e) {

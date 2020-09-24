@@ -346,6 +346,7 @@
   <!-- END DevExtreme library -->
   <!-- BEGIN ISProject Custom -->
   <script type="text/javascript" src="resources/js/custom-theme-changer.js"></script>
+  <script type="text/javascript" src="resources/js/util.js"></script>
   <script type="text/javascript" src="resources/js/team.js"></script>
   <!-- END ISProject Custom -->
 </body>
