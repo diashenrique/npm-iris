@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- End Required meta tags -->
     <!-- Begin SEO tag -->
-    <title>ISProject | Project & Task Management</title>
+    <title>NPM | Project & Task Management</title>
     <meta property="og:title" content="ISProject | Project & Task Management" />
     <meta name="author" content="Henrique Dias" />
     <meta property="og:locale" content="en_US" />
@@ -15,19 +15,15 @@
     <meta property="og:description" content="Project & Task Management using InterSystems IRIS and Bootstrap 4" />
     <link rel="canonical" href="https://github.com/diashenrique/" />
     <meta property="og:url" content="https://github.com/diashenrique/" />
-    <meta property="og:site_name" content="ISProject - Project & Task Management" />
+    <meta property="og:site_name" content="NPM, No Project Mess - Project & Task Management" />
     <script type="application/ld+json">
         {
-            "name": "ISProject - Project & Task Management",
+            "name": "NPM - No Project Mess",
             "description": "Project & Task Management using InterSystems IRIS and Bootstrap 4",
             "author": {
                 "@type": "Person",
-                "name": "Henrique Dias"
-            },
-            "@type": "WebSite",
-            "url": "",
-            "headline": "Project & Task Management",
-            "@context": "http://schema.org"
+                "name": "Henrique Gonçalves Dias"
+            }
         }
     </script>
     <!-- End SEO tag -->
