@@ -121,7 +121,7 @@ ClassMethod NewTeam() As %Status
 {
 	Set obj = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
 
-	Set objTeam = ##class(User.Team).%New()
+	Set objTeam = ##class(diashenrique.npm.Data.Team).%New()
 
 	Set objTeam.TeamName = obj.TeamName	
 	Set objTeam.Description = obj.Description	
