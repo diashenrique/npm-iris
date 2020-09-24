@@ -273,7 +273,6 @@ $(document).ready(function () {
         e.data.Status = "Not Started";
         e.data.Priority = "Normal";
         e.data.StartDate = new Date();
-        e.data.DueDate = new Date();
       }
     })
     .dxTreeList("instance");
