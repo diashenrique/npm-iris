@@ -152,23 +152,23 @@ $(function () {
               editorOptions: {
                 dataSource: [{
                     id: 1,
-                    name: "Not Started"
+                    name: "Backlog"
                   },
                   {
                     id: 2,
-                    name: "In Progress"
+                    name: "To-Do"
                   },
                   {
                     id: 3,
-                    name: "Deferred"
+                    name: "In-Progress"
                   },
                   {
                     id: 4,
-                    name: "Need Assistance"
+                    name: "Done"
                   },
                   {
                     id: 5,
-                    name: "Completed"
+                    name: "Accepted"
                   }
                 ],
                 valueExpr: "name",
@@ -268,11 +268,11 @@ function kanbanPanel() {
     .done(function () {
       var tasks = retTasks.responseJSON;
       var statuses = [
-        "Not Started",
-        "Need Assistance",
-        "In Progress",
-        "Deferred",
-        "Completed"
+        "Backlog",
+        "To-Do",
+        "In-Progress",
+        "Done",
+        "Accepted"
       ];
 
       renderKanban($("#kanban"), statuses);
@@ -528,22 +528,22 @@ var users = $.getJSON(urlREST + "/user/lookup", function (usersJSON) {
 
 var selectBoxStatus = [{
     id: 1,
-    name: "Not Started"
+    name: "Backlog"
   },
   {
     id: 2,
-    name: "In Progress"
+    name: "To-Do"
   },
   {
     id: 3,
-    name: "Deferred"
+    name: "In-Progress"
   },
   {
     id: 4,
-    name: "Need Assistance"
+    name: "Done"
   },
   {
     id: 5,
-    name: "Completed"
+    name: "Accepted"
   }
 ];

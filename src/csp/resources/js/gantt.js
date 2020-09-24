@@ -2,44 +2,6 @@ var urlOrigin = window.location.origin;
 var urlREST = urlOrigin + "/npm/api";
 
 $(function () {
-
-  $("#btnScaleDays").dxButton({
-    icon: "fas fa-calendar-day",
-    hint: "Gantt Scale Days",
-    onClick: function (e) {
-      ganttIntance.option("scaleType", "days");
-    }
-  });
-
-  $("#btnScaleWeeks").dxButton({
-    icon: "fas fa-calendar-week",
-    hint: "Gantt Scale Weeks",
-    onClick: function (e) {
-      ganttIntance.option("scaleType", "weeks");
-    }
-  });
-
-  $("#btnScaleMonths").dxButton({
-    icon: "fas fa-calendar-alt",
-    hint: "Gantt Scale Months",
-    onClick: function (e) {
-      ganttIntance.option("scaleType", "months");
-    }
-  });
-
-  $("#btnTaskResource").dxButton({
-    icon: "fas fa-user-tag",
-    hint: "Show|Hide Task Resources",
-    onClick: function (e) {
-      var resourceStatus = ganttIntance.option("showResources");
-      if (resourceStatus == false) {
-        ganttIntance.option("showResources", true);
-      } else {
-        ganttIntance.option("showResources", false);
-      }
-    }
-  });
-
   var projectSelectBox = $("#projectSelection").dxSelectBox({
     dataSource: new DevExpress.data.DataSource({
       store: new DevExpress.data.CustomStore({
@@ -192,6 +154,40 @@ $(function () {
       enabled: true
     },
     showResources: false,
+    validation: {
+      autoUpdateParentTasks: true
+    },
+    toolbar: {
+      items: [
+        "undo",
+        "redo",
+        "separator",
+        "collapseAll",
+        "expandAll",
+        "separator",
+        "addTask",
+        "deleteTask",
+        "separator",
+        "zoomIn",
+        "zoomOut",
+        {
+          widget: "dxButton",
+          options: {
+            stylingMode: "text",
+            icon: "fas fa-user-tag",
+            hint: "Show|Hide Task Resources",
+            onClick: function (e) {
+              var resourceStatus = ganttIntance.option("showResources");
+              if (resourceStatus == false) {
+                ganttIntance.option("showResources", true);
+              } else {
+                ganttIntance.option("showResources", false);
+              }
+            }
+          }
+        }
+      ]
+    },
     columns: [{
         dataField: "TaskName",
         caption: "Subject",

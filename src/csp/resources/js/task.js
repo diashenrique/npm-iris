@@ -224,23 +224,23 @@ $(document).ready(function () {
           editorOptions: {
             dataSource: [{
                 id: 1,
-                name: "Not Started"
+                name: "Backlog"
               },
               {
                 id: 2,
-                name: "In Progress"
+                name: "To-Do"
               },
               {
                 id: 3,
-                name: "Deferred"
+                name: "In-Progress"
               },
               {
                 id: 4,
-                name: "Need Assistance"
+                name: "Done"
               },
               {
                 id: 5,
-                name: "Completed"
+                name: "Accepted"
               }
             ],
             valueExpr: "name",
