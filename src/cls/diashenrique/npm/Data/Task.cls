@@ -3,9 +3,9 @@ Class diashenrique.npm.Data.Task Extends (%Persistent, %JSON.Adaptor)
 
 Property TaskName As %String [ Required ];
 
-Property StartDate As %Date;
+Property StartDate As %TimeStamp;
 
-Property DueDate As %Date;
+Property DueDate As %TimeStamp;
 
 Property Progress As %Float;
 

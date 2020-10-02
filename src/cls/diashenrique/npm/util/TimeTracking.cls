@@ -26,4 +26,27 @@ ClassMethod CalcTimeConsumed(pTotalSeconds As %Integer) As %String
     Quit strTotalTime
 }
 
+ClassMethod calcEndDateTask(pProjectId, pDate As %Date, pEstimateHour As %Integer) As %TimeStamp
+{
+    Set (objProject, tDailyHours, estimateDays, estimateHour, dayHorolog) = ""
+    Set startingHour = 9    // Assuming 9AM as starting time 
+    
+    // Get Daily Hour for the Specific Project
+    Set objProject = ##class(diashenrique.npm.Data.Project).%OpenId(pProjectId)
+    Set tDailyHours = objProject.DailyHours
+    
+    If (pEstimateHour > tDailyHours) {
+        Set estimateDays = pEstimateHour\tDailyHours
+        Set estimateHour = (startingHour + pEstimateHour#tDailyHours) * 3600
+    }
+    Else {
+        Set estimateHour = (startingHour + pEstimateHour) * 3600
+    }
+    
+    Set dayHorolog = $ZDateh(pDate,8) + estimateDays
+    Set finalDate = $ZDatetime(dayHorolog_","_estimateHour,3)
+
+    Quit finalDate
+}
+
 }

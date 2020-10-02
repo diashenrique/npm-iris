@@ -13,7 +13,7 @@ ClassMethod List() As %Status
 
 		Set oRS = ##class(%SQL.Statement).%New()
 
-        Set sql = "SELECT ID, Code, Description, Status, %External(BeginDate) As BeginDate, %External(EndDate) As EndDate, Remarks FROM diashenrique_npm_Data.Project"
+        Set sql = "SELECT ID, Code, Description, Status, %External(BeginDate) As BeginDate, %External(EndDate) As EndDate, DailyHours, Remarks FROM diashenrique_npm_Data.Project"
 
         Set tSC = oRS.%Prepare(sql)
 
@@ -102,6 +102,7 @@ ClassMethod NewProject() As %Status
 	Set project.Status = obj.Status
 	Set project.BeginDate = $ZDateh($Replace(obj.BeginDate,"/",""),8)
 	Set project.EndDate = $ZDateh($Replace(obj.EndDate,"/",""),8)
+	Set project.DailyHours = obj.DailyHours
 	Set project.Remarks = obj.Remarks
 
 	Set tSC = project.%Save()
@@ -123,6 +124,7 @@ ClassMethod GetProject(id As %Integer) As %Status
 	Do obj.%Set("Status", project.Status)
 	Do obj.%Set("BeginDate", project.BeginDate)
 	Do obj.%Set("EndDate", project.EndDate)
+	Do obj.%Set("DailyHours", project.DailyHours)
 	Do obj.%Set("Remarks", project.Remarks)
 
 	Write obj.%ToJSON()

@@ -11,6 +11,8 @@ Property BeginDate As %Date;
 
 Property EndDate As %Date;
 
+Property DailyHours As %Integer;
+
 Property Remarks As %String;
 
 Storage Default
@@ -36,6 +38,12 @@ Storage Default
 </Value>
 <Value name="7">
 <Value>Remarks</Value>
+</Value>
+<Value name="8">
+<Value>BaseHour</Value>
+</Value>
+<Value name="9">
+<Value>DailyHours</Value>
 </Value>
 </Data>
 <DataLocation>^diashenrique.npm.Data.ProjectD</DataLocation>

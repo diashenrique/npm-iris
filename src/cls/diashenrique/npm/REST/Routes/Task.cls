@@ -63,7 +63,7 @@ ClassMethod Update(id As %Integer) As %Status
 
     Set iter = obj.%GetIterator()
     While iter.%GetNext(.key , .value )  {
-        ;Set ^zHGD($ZName,"Update",key) = value
+        Set ^zHGD($ZName,"Update",key) = value
         If ((key = "StartDate") || (key = "DueDate")) {
             Set $Property(objTask, key) = $ZDateh($Replace(value,"/",""),8)
         }
@@ -75,7 +75,12 @@ ClassMethod Update(id As %Integer) As %Status
         }	 
         ElseIf (key = "ProjectId") {
             Set $Property(objTask, key) = ##class(diashenrique.npm.Data.Project).%OpenId(value)
-        }	 
+        }
+        ElseIf (key = "Estimate") {
+            Set $Property(objTask, key) = value
+            Set beginDate = $Extract(objTask.StartDate,1,10)
+            Set objTask.DueDate = ##class(diashenrique.npm.util.TimeTracking).calcEndDateTask(objTask.ProjectId.%Id(),beginDate,value)
+        }		 
         Else {
             Set $Property(objTask, key) = value
         }
@@ -112,8 +117,10 @@ ClassMethod NewTask() As %Status
 
     Set objTask.TaskName = obj.TaskName
     Set objTask.Estimate = obj.Estimate
-    Set objTask.StartDate = $ZDateh($Replace(obj.StartDate,"/",""),8)
-    Set objTask.DueDate = $ZDateh($Replace(obj.DueDate,"/",""),8)
+
+    Set beginDate = $Extract(obj.StartDate,1,10)
+    Set objTask.StartDate = beginDate_" 09:00:00"
+    Set objTask.DueDate = ##class(diashenrique.npm.util.TimeTracking).calcEndDateTask(obj.ProjectId,obj.StartDate,obj.Estimate)
     Set objTask.Progress = obj.Progress
     Set objTask.Priority = obj.Priority
     Set objTask.Status = obj.Status

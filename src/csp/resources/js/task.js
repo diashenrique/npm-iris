@@ -134,6 +134,11 @@ $(document).ready(function () {
         }
         if (e.dataField === "StartDate" && e.parentType === "dataRow") {
           e.editorOptions.max = e.row.data.DueDate;
+          e.editorOptions.onValueChanged = function (arg) {
+            const newDate = arg.value;
+            newDate.setHours(arg.value.getHours() + e.row.data.Estimate);
+            e.row.data.DueDate = newDate;
+          }
         }
         if (e.dataField === "DueDate" && e.parentType === "dataRow") {
           e.editorOptions.min = e.row.data.StartDate;
@@ -180,7 +185,10 @@ $(document).ready(function () {
         {
           caption: "Estimate (Hours)",
           dataField: "Estimate",
-          dataType: "number"
+          dataType: "number",
+          validationRules: [{
+            type: "required"
+          }]
         },
         {
           dataField: "StartDate",
@@ -270,8 +278,9 @@ $(document).ready(function () {
         }
       ],
       onInitNewRow: function (e) {
-        e.data.Status = "Not Started";
+        e.data.Status = "Backlog";
         e.data.Priority = "Normal";
+        e.data.Progress = 0;
         e.data.StartDate = new Date();
       }
     })
