@@ -3,17 +3,20 @@
   <Document name="no-project-mess.ZPM">
     <Module>
       <Name>no-project-mess</Name>
-      <Version>1.0.0</Version>
+      <Version>0.1.0</Version>
+      <Description>Project & Task Management using InterSystems IRIS and Bootstrap 4</Description>
+      <Keywords>zpm,task,gantt,kanban,todo</Keywords>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
       <Resource Name="diashenrique.npm.PKG"/>
+      <SourcesRoot>src</SourcesRoot>
       <CSPApplication
-        Url="/csp/npm"
+        Url="/npm"
         Path="/src/csp"
         Directory="{$cspdir}/npm"
         ServeFiles="1"
         Recurse="1"
-        CookiePath="/csp/npm"
+        CookiePath="/npm"
         UseCookies="2"
         MatchRoles=":{$dbrole}"
         PasswordAuthEnabled="32"
