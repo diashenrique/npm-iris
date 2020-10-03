@@ -48,7 +48,7 @@ ClassMethod Update(id As %Integer) As %Status
 {
     Set obj = ##class(%DynamicObject).%FromJSON(%request.Content)
 
-    Set objTask = ##class(User.Task).%OpenId(id)
+    Set objTask = ##class(diashenrique.npm.Data.Task).%OpenId(id)
 
     If '$IsObject(objTask) {
         Set %response.Status = ..#HTTP404NOTFOUND
@@ -57,14 +57,14 @@ ClassMethod Update(id As %Integer) As %Status
 
     Set iter = obj.%GetIterator()
     While iter.%GetNext(.key , .value )  {
-        If ((key = "StartDate") || (key = "DueDate")) {
-            Set $Property(objTask, key) = $ZDateh($Replace(value,"/",""),8)
-        }
-        ElseIf (key = "AssignedUser") {
-            Set $Property(objTask, key) = ##class(diashenrique.npm.Data.Person).%OpenId(value) 
+        If (key = "startDate") {
+            Set objTask.StartDate = $Replace(value,"/","-")
+        } 
+        ElseIf (key = "endDate") {
+            Set objTask.DueDate = $Replace(value,"/","-")
         }	 
-        Else {
-            Set $Property(objTask, key) = value
+        ElseIf (key = "text") {
+            Set objTask.TaskName = value
         }
     }
 
@@ -97,23 +97,18 @@ ClassMethod NewScheduler() As %Status
 
     Set objTask = ##class(diashenrique.npm.Data.Task).%New()
 
-    Set objTask.TaskName = obj.TaskName
-    Set objTask.StartDate = $ZDateh($Replace(obj.StartDate,"/",""),8)
-    Set objTask.DueDate = $ZDateh($Replace(obj.DueDate,"/",""),8)
-    Set objTask.Progress = obj.Progress
-    Set objTask.Priority = obj.Priority
-    Set objTask.Status = obj.Status
-    Set objTask.AssignedUser = ##class(diashenrique.npm.Data.Person).%OpenId(obj.AssignedUser)
+    Set objTask.TaskName = obj.text
+    Set objTask.StartDate = $Replace(obj.startDate,"/","-")
+    Set objTask.DueDate = $Replace(obj.endDate,"/","-")
+    Set objTask.Estimate = 0
+    Set objTask.Progress = 0
+    Set objTask.Priority = "Normal"
+    Set objTask.Status = "Backlog"
     ;set objTask.ParentId = obj.ParentId
     ;set objTask.PredecessorId = obj.PredecessorId
     ;set objTask.SucessorId = obj.SucessorId
 
     Set tSC = objTask.%Save()
-
-    If $$$ISOK(tSC) {
-        Set ^zHGD("NewTask","%Oid")=objTask.%Oid()
-        Set ^zHGD("NewTask","%Id")=objTask.%Id()
-    }
 
     Quit tSC
 }
