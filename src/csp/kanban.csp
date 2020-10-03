@@ -198,21 +198,6 @@
                 <h6 class="card-subtitle text-muted"> See your activities and stay on the flow </h6>
               </div>
               <!-- /.btn-account -->
-              <!-- right actions -->
-              <div class="ml-auto">
-                <!-- Add Tasks -->
-                <div id="btnAddTask" style="border: none; -webkit-box-shadow: none"></div>
-                <div id="btnAddList" style="border: none; -webkit-box-shadow: none"></div>
-                <div id="btnAddTaskNew"></div>
-                <div id="divAddTask" class="popup"></div>
-                <div id="popup">
-                  <div class="popup"></div>
-                </div> 
-                <div id="popupNewList">
-                  <div class="popup"></div>
-                </div>  
-              </div>
-              <!-- /right actions -->
             </header>
             <!-- /.page-navs -->
 

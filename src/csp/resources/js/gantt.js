@@ -2,7 +2,7 @@ var urlOrigin = window.location.origin;
 var urlREST = urlOrigin + "/npm/api";
 
 $(function () {
-  var projectSelectBox = $("#projectSelection").dxSelectBox({
+  /*var projectSelectBox = $("#projectSelection").dxSelectBox({
     dataSource: new DevExpress.data.DataSource({
       store: new DevExpress.data.CustomStore({
         byKey: function (args) {
@@ -18,7 +18,8 @@ $(function () {
     displayExpr: "description",
     showClearButton: true,
     placeholder: "Choose a project ..."
-    /*,
+    
+    ,
     onValueChanged: function (e) {
       if (!e.value) {
         formGeral.resetValues();
@@ -32,8 +33,9 @@ $(function () {
         formGeral.option("formData", retorno.geral)
         formControle.option("formData", retorno.controle)
       });
-    }*/
+    }
   }).dxSelectBox("instance");
+  */
 
   var ganttStore = new DevExpress.data.CustomStore({
     key: "ID",
@@ -165,9 +167,6 @@ $(function () {
         "collapseAll",
         "expandAll",
         "separator",
-        "addTask",
-        "deleteTask",
-        "separator",
         "zoomIn",
         "zoomOut",
         {
@@ -196,11 +195,13 @@ $(function () {
       {
         dataField: "StartDate",
         caption: "Start Date",
+        dataType: "date",
         width: 100
       },
       {
         dataField: "DueDate",
         caption: "Due Date",
+        dataType: "date",
         width: 100
       },
       {
