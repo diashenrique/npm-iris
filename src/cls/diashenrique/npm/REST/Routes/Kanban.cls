@@ -59,19 +59,13 @@ ClassMethod Update(id As %Integer) As %Status
         Quit $$$OK
     }
 
-    Kill ^zHGD
-
     Set iter = obj.%GetIterator()
     While iter.%GetNext(.key , .value )  {
-        Continue:key="ID"
-        If ((key = "StartDate") || (key = "DueDate")) {
-            Set $Property(objTask, key) = $ZDateh($Replace(value,"/","-"),3)
-        }
-        ElseIf (key = "AssignedUser") {
-            Set $Property(objTask, key) = ##class(diashenrique.npm.Data.Person).%OpenId(value) 
+        If (key = "Status") {
+            Set objTask.Status = value
         }	 
-        Else {
-            Set $Property(objTask, key) = value
+        ElseIf (key = "Progress") {
+            Set objTask.Progress = value
         }
     }
 
