@@ -39,7 +39,7 @@ The foundation of this project are the following pages:
 
 Those pages are the base for everything else.
 
-Scheduler, Kanban, and Gant are just different views from the same tasks that are created in the Task page.
+Scheduler, Kanban, and Gantt are just different views from the same tasks that are created in the Task page.
 
 ### Initial Setup
 
@@ -63,19 +63,37 @@ The second thing you **should** create it's the users that will be working on th
 
 #### Tasks
 
+The task view it's easy to use as filling cells in an Excel spreadsheet.
+
 ![Tasks](https://raw.githubusercontent.com/diashenrique/npm-iris/master/images/tasks.png)
 
 #### Scheduler
+
+Scheduler view gives you the option to see your tasks as appointments, in the week, month, and Agenda viewer, acting as a Google Calendar clone.
 
 ![Scheduler](https://raw.githubusercontent.com/diashenrique/npm-iris/master/images/scheduler.png)
 
 #### Kanban
 
+For those who prefers deal with the tasks in a Kanban Style, this view it's perfect to do it.
+
 ![Kanban](https://raw.githubusercontent.com/diashenrique/npm-iris/master/images/kanban.png)
+
+You can move the tasks around the phases (Backlog, To-Do, In-Progress, Done, Accepted),  and change their progress (%).
+
+![Kanban](https://raw.githubusercontent.com/diashenrique/npm-iris/master/images/kanbanDetail.png)
 
 #### Gantt
 
+Finally, for the Project Managers out there, looking forward to follow the project in real time, using a MS Project style, this view is for you!
+
 ![Gantt](https://raw.githubusercontent.com/diashenrique/npm-iris/master/images/gantt.png)
+
+## Roadmap
+
+I created a project in Github to share my ideas to improve this application. If you want to collaborate with some ideas, you are very welcome!  
+
+[Brainstorming New Features / Improvements](https://github.com/diashenrique/npm-iris/projects/2)
 
 ## Other information
 
