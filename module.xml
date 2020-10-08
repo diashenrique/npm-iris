@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
-  <Document name="no-project-mess.ZPM">
+  <Document name="npm-iris.ZPM">
     <Module>
-      <Name>no-project-mess</Name>
-      <Version>0.1.0</Version>
-      <Description>Project & Task Management using InterSystems IRIS and Bootstrap 4</Description>
+      <Name>npm-iris</Name>
+      <Version>0.1.3</Version>
+      <Description>Project &amp; Task Management using InterSystems IRIS and Bootstrap 4</Description>
       <Keywords>zpm,task,gantt,kanban,todo</Keywords>
       <Packaging>module</Packaging>
+      <Resource Directory="cls" Name="diashenrique.PKG"/>
+      <CSPApplication CookiePath="/npm/" DefaultTimeout="900" DeployPath="/opt/irisapp/csp/" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" SourcePath="/src/csp" UnauthenticatedEnabled="0" Url="/npm" UseSessionCookie="2"/>
+      <CSPApplication CookiePath="/npm/api/" DefaultTimeout="900" DispatchClass="diashenrique.npm.REST.Dispatch" MatchRoles=":%All" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" UnauthenticatedEnabled="0" Url="/npm/api" UseSessionCookie="2"/>
       <SourcesRoot>src</SourcesRoot>
-      <Resource Name="diashenrique.npm.PKG"/>
-      <SourcesRoot>src</SourcesRoot>
-      <CSPApplication
-        Url="/npm"
-        Path="/src/csp"
-        Directory="{$cspdir}/npm"
-        ServeFiles="1"
-        Recurse="1"
-        CookiePath="/npm"
-        UseCookies="2"
-        MatchRoles=":{$dbrole}"
-        PasswordAuthEnabled="32"
-        UnauthenticatedEnabled="0"
-       />
     </Module>
   </Document>
 </Export>
