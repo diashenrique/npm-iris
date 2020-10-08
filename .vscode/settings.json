@@ -7,7 +7,7 @@
         "ns": "NPM",
         "port": 52773,
         "links": {
-            "NPM": "http://${host}:${port}/npm/home.csp"
+            "NPM": "http://${host}:${port}/${namespace}/home.csp"
         }
     }
 }
