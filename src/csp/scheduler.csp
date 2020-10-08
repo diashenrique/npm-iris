@@ -239,7 +239,7 @@
   <script src="resources/plugins/looper/assets/vendor/sortablejs/Sortable.min.js"></script>
   <!-- END PLUGINS JS -->
   <!-- BEGIN THEME JS -->
-  <script src="resources/plugins/looper/assets/javascript/theme.js"></script>
+  <script src="resources/plugins/looper/assets/javascript/theme.min.js"></script>
   <!-- BEGIN DevExtreme library -->
   <script type="text/javascript" src="resources/plugins/extreme20.1.4/js/dx.all.js"></script>
   <!-- END DevExtreme library -->
