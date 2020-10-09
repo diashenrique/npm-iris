@@ -100,8 +100,15 @@ ClassMethod NewProject() As %Status
 	Set project.Code = obj.Code
 	Set project.Description = obj.Description
 	Set project.Status = obj.Status
-	Set project.BeginDate = $ZDateh($Replace(obj.BeginDate,"/",""),8)
-	Set project.EndDate = $ZDateh($Replace(obj.EndDate,"/",""),8)
+	
+	If (obj.BeginDate '= "") {
+		Set project.BeginDate = $ZDateh($Replace(obj.BeginDate,"/",""),8)
+	}
+
+	If (obj.EndDate '= "") {
+		Set project.EndDate = $ZDateh($Replace(obj.EndDate,"/",""),8)
+	}
+
 	Set project.DailyHours = obj.DailyHours
 	Set project.Remarks = obj.Remarks
 
