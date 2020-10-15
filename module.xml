@@ -8,7 +8,7 @@
       <Keywords>zpm,task,gantt,kanban,todo</Keywords>
       <Packaging>module</Packaging>
       <Resource Directory="cls" Name="diashenrique.PKG"/>
-      <CSPApplication CookiePath="/npm/" DefaultTimeout="900" DeployPath="/opt/irisapp/csp/" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" SourcePath="/src/csp" UnauthenticatedEnabled="0" Url="/npm" UseSessionCookie="2"/>
+      <CSPApplication CookiePath="/npm/" DefaultTimeout="900" DeployPath="${cspdir}/npm" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" SourcePath="/src/csp" UnauthenticatedEnabled="0" Url="/npm" UseSessionCookie="2"/>
       <CSPApplication CookiePath="/npm/api/" DefaultTimeout="900" DispatchClass="diashenrique.npm.REST.Dispatch" MatchRoles=":%All" PasswordAuthEnabled="1" Recurse="1" ServeFiles="1" ServeFilesTimeout="3600" UnauthenticatedEnabled="0" Url="/npm/api" UseSessionCookie="2"/>
       <SourcesRoot>src</SourcesRoot>
     </Module>
