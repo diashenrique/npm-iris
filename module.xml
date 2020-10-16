@@ -3,7 +3,7 @@
   <Document name="npm-iris.ZPM">
     <Module>
       <Name>npm-iris</Name>
-      <Version>0.1.4</Version>
+      <Version>0.1.5</Version>
       <Description>Project &amp; Task Management using InterSystems IRIS and Bootstrap 4</Description>
       <Keywords>zpm,task,gantt,kanban,todo</Keywords>
       <Packaging>module</Packaging>
