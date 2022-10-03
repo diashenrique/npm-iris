@@ -4,6 +4,7 @@ services:
     build:
       context: .
     container_name: npm-iris
+    comand: --check-caps false
     ports:
       - 51773
       - ${IRIS_PORT}:52773
